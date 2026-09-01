@@ -3,3 +3,8 @@ export * from './common/response';
 export * from './common/localized-text';
 export * from './auth/auth.schema';
 export * from './user/user.schema';
+export * from './vehicle-catalog/brand.schema';
+export * from './vehicle-catalog/model.schema';
+export * from './vehicle-catalog/generation.schema';
+export * from './vehicle-catalog/engine-option.schema';
+export * from './my-garage/user-vehicle.schema';

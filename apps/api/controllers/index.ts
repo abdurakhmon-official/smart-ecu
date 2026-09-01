@@ -5,4 +5,6 @@
 export * from "./auth.controller";
 export * from "./aws.controller";
 export * from "./health.controller";
+export * from "./my-garage.controller";
 export * from "./user.controller";
+export * from "./vehicle-catalog.controller";

@@ -2,13 +2,23 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookie from 'js-cookie';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
 import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput } from '@repo/contracts';
 import { TOKEN_COOKIE } from '@/lib/axios';
 import { queryKeys } from '@/lib/query-keys';
 import { authService } from '@/lib/services';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout, setCredentials } from '@/store/slices/auth.slice';
+
+/**
+ * `document.cookie` faqat brauzerda mavjud, shuning uchun uni to'g'ridan-to'g'ri
+ * render paytida o'qish server va klientning birinchi (hydration) render'ida har
+ * xil natija berib, hydration mismatch keltirib chiqaradi. `useSyncExternalStore`
+ * ikkalasida ham `false` bilan boshlanishini kafolatlaydi — `useEffect` +
+ * `setState` idiomasidan farqli, bu qo'shimcha render tsiklisiz ishlaydi.
+ */
+const noopSubscribe = () => () => {};
+const useHasMounted = (): boolean => useSyncExternalStore(noopSubscribe, () => true, () => false);
 
 const storeToken = (token: AccessTokenOutput): void => {
   Cookie.set(TOKEN_COOKIE, token.accessToken, {
@@ -21,7 +31,8 @@ const storeToken = (token: AccessTokenOutput): void => {
 export const useSession = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const hasToken = typeof window !== 'undefined' && Boolean(Cookie.get(TOKEN_COOKIE));
+  const mounted = useHasMounted();
+  const hasToken = mounted && Boolean(Cookie.get(TOKEN_COOKIE));
 
   const query = useQuery({
     queryKey: queryKeys.me,

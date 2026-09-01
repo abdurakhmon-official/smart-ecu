@@ -39,6 +39,58 @@
     },
     "comingSoonNote": "This section will come fully online in the next build phases."
   },
+  "vehiclePicker": {
+    "title": "Choose your car",
+    "brand": "Brand",
+    "model": "Model",
+    "generation": "Year",
+    "engine": "Engine",
+    "selectBrand": "Select a brand",
+    "selectModel": "Select a model",
+    "selectGeneration": "Select a year",
+    "selectEngine": "Select an engine",
+    "save": "Save my car",
+    "saved": "Car added to My Garage",
+    "goToGarage": "Go to My Garage",
+    "signInToSave": "Sign in first to save your car"
+  },
+  "fuelType": {
+    "PETROL": "Petrol",
+    "DIESEL": "Diesel",
+    "HYBRID": "Hybrid",
+    "ELECTRIC": "Electric",
+    "LPG": "LPG"
+  },
+  "transmissionType": {
+    "MANUAL": "Manual",
+    "AUTOMATIC": "Automatic",
+    "CVT": "CVT",
+    "ROBOT": "Robot"
+  },
+  "myGarage": {
+    "title": "My Garage",
+    "signInRequired": "Sign in to view My Garage",
+    "signIn": "Sign in",
+    "empty": "No cars added yet",
+    "addVehicle": "Add a car",
+    "addCustom": "Can't find it in the catalog? Enter it manually",
+    "customBrand": "Brand",
+    "customModel": "Model",
+    "customYear": "Year",
+    "vin": "VIN",
+    "plateNumber": "Plate number",
+    "mileageKm": "Mileage (km)",
+    "primary": "Primary",
+    "setPrimary": "Set as primary",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Delete car",
+    "deleteConfirmDescription": "This cannot be undone. Are you sure you want to delete it?",
+    "cancel": "Cancel",
+    "confirmDelete": "Yes, delete",
+    "save": "Save",
+    "saving": "Saving…"
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -63,7 +115,34 @@
   },
   "admin": {
     "nav": {
-      "users": "Users"
+      "users": "Users",
+      "vehicleCatalog": "Vehicle catalog"
+    },
+    "vehicleCatalog": {
+      "title": "Vehicle catalog",
+      "tabs": {
+        "brands": "Brands",
+        "models": "Models",
+        "generations": "Generations",
+        "engines": "Engines"
+      },
+      "selectBrand": "Select a brand",
+      "selectModel": "Select a model",
+      "selectGeneration": "Select a generation",
+      "selectBrandFirst": "Select a brand first",
+      "selectModelFirst": "Select a model first",
+      "selectGenerationFirst": "Select a generation first",
+      "name": "Name",
+      "yearFrom": "Year from",
+      "yearTo": "Year to (optional)",
+      "volumeLiters": "Volume (L)",
+      "powerHp": "Power (HP)",
+      "fuel": "Fuel",
+      "transmission": "Transmission",
+      "add": "Add",
+      "delete": "Delete",
+      "empty": "Nothing yet",
+      "deleteConfirm": "Are you sure you want to delete this?"
     },
     "users": {
       "title": "Users",

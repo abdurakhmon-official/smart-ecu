@@ -39,6 +39,119 @@ model User {
   updatedAt         DateTime  @updatedAt @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
 
+  vehicles UserVehicle[]
+
   @@index([email])
   @@map("users")
+}
+
+// ── Avtomobil katalogi (Bosqich 1) ──────────────────────────────────────────
+// Ierarxiya: Brand → Model → Generation → EngineOption. My Garage yozuvlari
+// EngineOption'ga bog'lanadi (yoki, katalogda topilmasa, erkin matn bilan).
+
+enum FUEL_TYPE {
+  PETROL
+  DIESEL
+  HYBRID
+  ELECTRIC
+  LPG
+}
+
+enum TRANSMISSION_TYPE {
+  MANUAL
+  AUTOMATIC
+  CVT
+  ROBOT
+}
+
+model Brand {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  logo      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  models Model[]
+
+  @@map("brands")
+}
+
+model Model {
+  id        String   @id @default(uuid())
+  brandId   String   @map("brand_id")
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  brand       Brand        @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  generations Generation[]
+
+  @@unique([brandId, name])
+  @@index([brandId])
+  @@map("models")
+}
+
+model Generation {
+  id        String   @id @default(uuid())
+  modelId   String   @map("model_id")
+  name      String
+  yearFrom  Int      @map("year_from")
+  yearTo    Int?     @map("year_to")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  model   Model          @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  engines EngineOption[]
+
+  @@unique([modelId, name])
+  @@index([modelId])
+  @@map("generations")
+}
+
+model EngineOption {
+  id           String             @id @default(uuid())
+  generationId String             @map("generation_id")
+  name         String
+  volumeLiters Float?             @map("volume_liters")
+  fuel         FUEL_TYPE
+  transmission TRANSMISSION_TYPE
+  powerHp      Int?               @map("power_hp")
+  createdAt    DateTime           @default(now()) @map("created_at")
+  updatedAt    DateTime           @updatedAt @map("updated_at")
+
+  generation   Generation    @relation(fields: [generationId], references: [id], onDelete: Cascade)
+  userVehicles UserVehicle[]
+
+  @@unique([generationId, name])
+  @@index([generationId])
+  @@map("engine_options")
+}
+
+// ── My Garage (Bosqich 1) ───────────────────────────────────────────────────
+
+model UserVehicle {
+  id             String  @id @default(uuid())
+  userId         String  @map("user_id")
+  engineOptionId String? @map("engine_option_id")
+
+  // Katalogda topilmagan avtomobil uchun erkin kiritish (engineOptionId bo'sh bo'lganda ishlatiladi).
+  customBrand String? @map("custom_brand")
+  customModel String? @map("custom_model")
+  customYear  Int?    @map("custom_year")
+
+  vin         String?
+  plateNumber String?  @map("plate_number")
+  mileageKm   Int?     @map("mileage_km")
+  photo       String?
+  isPrimary   Boolean  @default(false) @map("is_primary")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  engineOption EngineOption? @relation(fields: [engineOptionId], references: [id])
+
+  @@index([userId])
+  @@map("user_vehicles")
 }

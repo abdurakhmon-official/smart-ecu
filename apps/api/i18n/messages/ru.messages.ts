@@ -15,4 +15,9 @@ export const ru: Record<MessageCode, string> = {
   RATE_LIMITED: 'Слишком много запросов, подождите немного',
   UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER: 'Этот тип файла не разрешён для данной папки',
   ADMIN_CANNOT_MODIFY_SELF: 'Вы не можете изменить роль или статус активности своего аккаунта',
+  VEHICLE_CATALOG_BRAND_NOT_FOUND: 'Бренд не найден',
+  VEHICLE_CATALOG_MODEL_NOT_FOUND: 'Модель не найдена',
+  VEHICLE_CATALOG_GENERATION_NOT_FOUND: 'Поколение не найдено',
+  VEHICLE_CATALOG_ENGINE_OPTION_NOT_FOUND: 'Вариант двигателя не найден',
+  USER_VEHICLE_NOT_FOUND: 'Автомобиль не найден',
 };

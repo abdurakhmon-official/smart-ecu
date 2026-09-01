@@ -4,4 +4,6 @@
 
 export * from "./auth.input";
 export * from "./basic.search";
+export * from "./my-garage.input";
 export * from "./user.input";
+export * from "./vehicle-catalog.input";

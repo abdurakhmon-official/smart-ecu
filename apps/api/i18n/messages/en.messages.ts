@@ -15,4 +15,9 @@ export const en: Record<MessageCode, string> = {
   RATE_LIMITED: 'Too many requests, please slow down',
   UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER: 'This file type is not allowed for this folder',
   ADMIN_CANNOT_MODIFY_SELF: "You cannot change your own account's role or active status",
+  VEHICLE_CATALOG_BRAND_NOT_FOUND: 'Brand not found',
+  VEHICLE_CATALOG_MODEL_NOT_FOUND: 'Model not found',
+  VEHICLE_CATALOG_GENERATION_NOT_FOUND: 'Generation not found',
+  VEHICLE_CATALOG_ENGINE_OPTION_NOT_FOUND: 'Engine option not found',
+  USER_VEHICLE_NOT_FOUND: 'Vehicle not found',
 };

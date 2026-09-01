@@ -39,6 +39,58 @@
     },
     "comingSoonNote": "Этот раздел полностью заработает на следующих этапах разработки."
   },
+  "vehiclePicker": {
+    "title": "Выберите автомобиль",
+    "brand": "Марка",
+    "model": "Модель",
+    "generation": "Год",
+    "engine": "Двигатель",
+    "selectBrand": "Выберите марку",
+    "selectModel": "Выберите модель",
+    "selectGeneration": "Выберите год",
+    "selectEngine": "Выберите двигатель",
+    "save": "Сохранить автомобиль",
+    "saved": "Автомобиль добавлен в Мой гараж",
+    "goToGarage": "Перейти в Мой гараж",
+    "signInToSave": "Сначала войдите, чтобы сохранить"
+  },
+  "fuelType": {
+    "PETROL": "Бензин",
+    "DIESEL": "Дизель",
+    "HYBRID": "Гибрид",
+    "ELECTRIC": "Электро",
+    "LPG": "Газ"
+  },
+  "transmissionType": {
+    "MANUAL": "Механика",
+    "AUTOMATIC": "Автомат",
+    "CVT": "Вариатор",
+    "ROBOT": "Робот"
+  },
+  "myGarage": {
+    "title": "Мой гараж",
+    "signInRequired": "Войдите, чтобы увидеть Мой гараж",
+    "signIn": "Войти",
+    "empty": "Автомобили пока не добавлены",
+    "addVehicle": "Добавить автомобиль",
+    "addCustom": "Не нашли в каталоге? Введите вручную",
+    "customBrand": "Марка",
+    "customModel": "Модель",
+    "customYear": "Год",
+    "vin": "VIN",
+    "plateNumber": "Гос. номер",
+    "mileageKm": "Пробег (км)",
+    "primary": "Основной",
+    "setPrimary": "Сделать основным",
+    "edit": "Изменить",
+    "delete": "Удалить",
+    "deleteConfirmTitle": "Удалить автомобиль",
+    "deleteConfirmDescription": "Это действие необратимо. Вы уверены?",
+    "cancel": "Отмена",
+    "confirmDelete": "Да, удалить",
+    "save": "Сохранить",
+    "saving": "Сохранение…"
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -63,7 +115,34 @@
   },
   "admin": {
     "nav": {
-      "users": "Пользователи"
+      "users": "Пользователи",
+      "vehicleCatalog": "Каталог авто"
+    },
+    "vehicleCatalog": {
+      "title": "Каталог автомобилей",
+      "tabs": {
+        "brands": "Марки",
+        "models": "Модели",
+        "generations": "Поколения",
+        "engines": "Двигатели"
+      },
+      "selectBrand": "Выберите марку",
+      "selectModel": "Выберите модель",
+      "selectGeneration": "Выберите поколение",
+      "selectBrandFirst": "Сначала выберите марку",
+      "selectModelFirst": "Сначала выберите модель",
+      "selectGenerationFirst": "Сначала выберите поколение",
+      "name": "Название",
+      "yearFrom": "Год начала",
+      "yearTo": "Год окончания (необязательно)",
+      "volumeLiters": "Объём (л)",
+      "powerHp": "Мощность (л.с.)",
+      "fuel": "Топливо",
+      "transmission": "Коробка передач",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "empty": "Пока пусто",
+      "deleteConfirm": "Вы уверены, что хотите удалить?"
     },
     "users": {
       "title": "Пользователи",

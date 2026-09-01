@@ -39,6 +39,58 @@
     },
     "comingSoonNote": "Bu bo'lim keyingi qurish bosqichlarida to'liq ishga tushadi."
   },
+  "vehiclePicker": {
+    "title": "Avtomobilingizni tanlang",
+    "brand": "Marka",
+    "model": "Model",
+    "generation": "Yil",
+    "engine": "Motor",
+    "selectBrand": "Marka tanlang",
+    "selectModel": "Model tanlang",
+    "selectGeneration": "Yilini tanlang",
+    "selectEngine": "Motorni tanlang",
+    "save": "Avtomobilimni saqlash",
+    "saved": "Avtomobil My Garage'ga qo'shildi",
+    "goToGarage": "My Garage'ga o'tish",
+    "signInToSave": "Saqlash uchun avval ro'yxatdan o'ting"
+  },
+  "fuelType": {
+    "PETROL": "Benzin",
+    "DIESEL": "Dizel",
+    "HYBRID": "Gibrid",
+    "ELECTRIC": "Elektr",
+    "LPG": "Gaz"
+  },
+  "transmissionType": {
+    "MANUAL": "Mexanika",
+    "AUTOMATIC": "Avtomat",
+    "CVT": "Variator",
+    "ROBOT": "Robot"
+  },
+  "myGarage": {
+    "title": "My Garage",
+    "signInRequired": "My Garage'ni ko'rish uchun avval tizimga kiring",
+    "signIn": "Kirish",
+    "empty": "Hozircha avtomobil qo'shilmagan",
+    "addVehicle": "Avtomobil qo'shish",
+    "addCustom": "Katalogda topa olmadingizmi? Qo'lda kiriting",
+    "customBrand": "Marka",
+    "customModel": "Model",
+    "customYear": "Yil",
+    "vin": "VIN",
+    "plateNumber": "Davlat raqami",
+    "mileageKm": "Yurilgan masofa (km)",
+    "primary": "Asosiy",
+    "setPrimary": "Asosiy qilish",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "deleteConfirmTitle": "Avtomobilni o'chirish",
+    "deleteConfirmDescription": "Bu amalni ortga qaytarib bo'lmaydi. Rostdan ham o'chirmoqchimisiz?",
+    "cancel": "Bekor qilish",
+    "confirmDelete": "Ha, o'chirish",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda…"
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -63,7 +115,34 @@
   },
   "admin": {
     "nav": {
-      "users": "Foydalanuvchilar"
+      "users": "Foydalanuvchilar",
+      "vehicleCatalog": "Avtomobil katalogi"
+    },
+    "vehicleCatalog": {
+      "title": "Avtomobil katalogi",
+      "tabs": {
+        "brands": "Brendlar",
+        "models": "Modellar",
+        "generations": "Generatsiyalar",
+        "engines": "Motorlar"
+      },
+      "selectBrand": "Brend tanlang",
+      "selectModel": "Model tanlang",
+      "selectGeneration": "Generatsiya tanlang",
+      "selectBrandFirst": "Avval brend tanlang",
+      "selectModelFirst": "Avval model tanlang",
+      "selectGenerationFirst": "Avval generatsiya tanlang",
+      "name": "Nomi",
+      "yearFrom": "Boshlanish yili",
+      "yearTo": "Tugash yili (ixtiyoriy)",
+      "volumeLiters": "Hajmi (L)",
+      "powerHp": "Quvvat (HP)",
+      "fuel": "Yoqilg'i",
+      "transmission": "Transmissiya",
+      "add": "Qo'shish",
+      "delete": "O'chirish",
+      "empty": "Hozircha yo'q",
+      "deleteConfirm": "Rostdan ham o'chirmoqchimisiz?"
     },
     "users": {
       "title": "Foydalanuvchilar",

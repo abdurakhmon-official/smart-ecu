@@ -20,20 +20,19 @@ import { useSession, useSignOut } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
 
 /**
- * Yo'nalishlarning aksariyati (Xizmatlar, Servislar, AI Assistant, My Garage,
- * Buyurtmalar, Yangiliklar, Aloqa) hali qurilmagan — keyingi bosqichlarda
- * (packages: vehicle-catalog, service-marketplace, orders, ai-assistant) real
- * sahifa bilan almashtiriladi. Hozircha vizual joy egallovchi sifatida
- * ko'rsatiladi, shuning uchun `href: null`.
+ * Ba'zi yo'nalishlar (Xizmatlar, Servislar, AI Assistant, Buyurtmalar, Yangiliklar,
+ * Aloqa) hali qurilmagan — keyingi bosqichlarda (service-marketplace, orders,
+ * ai-assistant) real sahifa bilan almashtiriladi. Hozircha vizual joy egallovchi
+ * sifatida ko'rsatiladi, shuning uchun `href: null`.
  */
 type NavLinkKey = 'home' | 'services' | 'workshops' | 'aiAssistant' | 'myGarage' | 'orders' | 'news' | 'contact';
 
-const NAV_LINKS: { key: NavLinkKey; href: '/' | null }[] = [
+const NAV_LINKS: { key: NavLinkKey; href: '/' | '/my-garage' | null }[] = [
   { key: 'home', href: '/' },
   { key: 'services', href: null },
   { key: 'workshops', href: null },
   { key: 'aiAssistant', href: null },
-  { key: 'myGarage', href: null },
+  { key: 'myGarage', href: '/my-garage' },
   { key: 'orders', href: null },
   { key: 'news', href: null },
   { key: 'contact', href: null },

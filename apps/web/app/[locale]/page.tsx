@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { HeroVehiclePicker } from '@/components/vehicle/HeroVehiclePicker';
 
 const QUICK_SERVICES = [
   { key: 'diagnostics', icon: Gauge },
@@ -20,9 +21,12 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
 
   return (
     <main className="flex flex-1 flex-col">
-      <section className="mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-4 py-20 text-center sm:py-28">
+      <section className="mx-auto flex w-full max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:py-28">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">{t('title')}</h1>
         <p className="max-w-xl text-lg text-muted-foreground">{t('subtitle')}</p>
+
+        <HeroVehiclePicker />
+
         <div className="flex flex-wrap justify-center gap-3">
           <Link href="/sign-up">
             <Button size="lg">{t('getStarted')}</Button>
