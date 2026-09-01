@@ -5,13 +5,22 @@
     "signUp": "Регистрация",
     "signOut": "Выйти",
     "admin": "Админ-панель",
+    "myService": "Кабинет сервиса",
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню",
     "location": "Местоположение",
     "comingSoon": "Скоро",
     "notifications": {
       "title": "Уведомления",
-      "empty": "Пока нет уведомлений"
+      "empty": "Пока нет уведомлений",
+      "markAllRead": "Отметить все как прочитанные",
+      "types": {
+        "ORDER_RECEIVED": "Получен новый заказ",
+        "ORDER_ACCEPTED": "Ваш заказ принят",
+        "ORDER_COMPLETED": "Ваш заказ завершён",
+        "ORDER_CANCELLED": "Заказ отменён",
+        "REVIEW_RECEIVED": "Вы получили новый отзыв"
+      }
     },
     "links": {
       "home": "Главная",
@@ -91,6 +100,136 @@
     "save": "Сохранить",
     "saving": "Сохранение…"
   },
+  "services": {
+    "title": "Найти сервис",
+    "searchPlaceholder": "Поиск по названию сервиса",
+    "filterCity": "Город",
+    "filterBrand": "Марка",
+    "filterService": "Вид услуги",
+    "allCities": "Все города",
+    "allBrands": "Все марки",
+    "allServices": "Все услуги",
+    "empty": "Ничего не найдено",
+    "viewProfile": "Смотреть профиль",
+    "reviewsCount": "{count} отзывов"
+  },
+  "serviceProfile": {
+    "back": "Назад к сервисам",
+    "workingHours": "Режим работы",
+    "address": "Адрес",
+    "contact": "Контакты",
+    "call": "Позвонить",
+    "offerings": "Услуги",
+    "brands": "Работает с марками",
+    "noOfferings": "Услуги пока не добавлены",
+    "noBrands": "Не указано",
+    "reviewsTitle": "Отзывы",
+    "noReviews": "Отзывов пока нет",
+    "priceFrom": "от {price} сум",
+    "priceRange": "{min}–{max} сум"
+  },
+  "myService": {
+    "title": "Кабинет сервиса",
+    "signInRequired": "Войдите, чтобы открыть кабинет сервиса",
+    "signIn": "Войти",
+    "applyTitle": "Регистрация в качестве сервиса",
+    "applyDescription": "Заполните данные вашего сервиса. После проверки администратором профиль появится в каталоге.",
+    "apply": "Отправить заявку",
+    "applying": "Отправка…",
+    "status": {
+      "PENDING": "На рассмотрении",
+      "VERIFIED": "Подтверждён",
+      "SUSPENDED": "Заблокирован"
+    },
+    "statusNote": {
+      "PENDING": "Ваша заявка рассматривается администратором — пока не видна клиентам.",
+      "VERIFIED": "Ваш сервис активен и виден в каталоге.",
+      "SUSPENDED": "Ваш сервис заблокирован администратором и скрыт из каталога."
+    },
+    "tabs": {
+      "profile": "Профиль",
+      "offerings": "Услуги и цены",
+      "brands": "Марки",
+      "orders": "Заказы"
+    },
+    "inbox": {
+      "empty": "Заказов пока нет",
+      "accept": "Принять",
+      "complete": "Завершить",
+      "acceptedByYou": "Принято вами",
+      "takenByOther": "Принято другим сервисом"
+    },
+    "name": "Название сервиса",
+    "description": "Описание",
+    "city": "Город",
+    "address": "Адрес",
+    "phone": "Телефон",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "workingHours": "Режим работы",
+    "save": "Сохранить",
+    "saving": "Сохранение…",
+    "saved": "Сохранено",
+    "addOffering": "Добавить услугу",
+    "selectService": "Выберите вид услуги",
+    "priceMin": "Цена от",
+    "priceMax": "Цена до",
+    "add": "Добавить",
+    "delete": "Удалить",
+    "noOfferings": "Услуги пока не добавлены",
+    "selectBrands": "Выберите марки автомобилей, с которыми вы работаете"
+  },
+  "orders": {
+    "createTitle": "Новый запрос",
+    "vehicle": "Автомобиль",
+    "noVehicle": "Автомобиль не выбран",
+    "serviceType": "Вид услуги",
+    "selectService": "Выберите вид услуги",
+    "problemDescription": "Опишите проблему",
+    "city": "Город",
+    "phone": "Телефон",
+    "cancel": "Отмена",
+    "send": "Отправить запрос",
+    "sending": "Отправка…",
+    "signInToOrder": "Войдите, чтобы отправить запрос",
+    "title": "Мои заказы",
+    "empty": "Заказов пока нет",
+    "status": {
+      "NEW": "Новый",
+      "IN_PROGRESS": "В процессе",
+      "COMPLETED": "Завершён",
+      "CANCELLED": "Отменён"
+    },
+    "cancelOrder": "Отменить заказ",
+    "leaveReview": "Оставить отзыв",
+    "reviewTitle": "Оставить отзыв",
+    "rating": "Оценка",
+    "comment": "Комментарий (необязательно)",
+    "submitReview": "Отправить",
+    "reviewSubmitted": "Отзыв отправлен"
+  },
+  "aiAssistant": {
+    "title": "AI Ассистент",
+    "subtitle": "Опишите симптомы вашего автомобиля и получите вероятные причины — это не диагноз.",
+    "signInRequired": "Войдите, чтобы пообщаться с AI Ассистентом",
+    "placeholder": "Опишите проблему, например «Мой BMW 530i расходует слишком много топлива»…",
+    "send": "Отправить",
+    "newChat": "Новый диалог",
+    "newChatConfirm": "Начать новый диалог? Текущая история будет очищена.",
+    "cancel": "Отмена",
+    "confirmNewChat": "Да, начать заново",
+    "empty": "Задайте вопрос, чтобы начать",
+    "disclaimer": "Ответы AI носят справочный характер и не являются диагнозом. Всегда уточняйте у сертифицированного сервиса.",
+    "thinking": "Печатает…",
+    "quickQuestions": {
+      "title": "Быстрые вопросы",
+      "checkEngine": "Загорелся индикатор Check Engine",
+      "vibration": "Машина вибрирует при движении",
+      "coldStart": "Плохо заводится на холодную",
+      "fuelConsumption": "Увеличился расход топлива"
+    }
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -116,7 +255,9 @@
   "admin": {
     "nav": {
       "users": "Пользователи",
-      "vehicleCatalog": "Каталог авто"
+      "vehicleCatalog": "Каталог авто",
+      "serviceCatalog": "Виды услуг",
+      "serviceProviders": "Сервисы"
     },
     "vehicleCatalog": {
       "title": "Каталог автомобилей",
@@ -143,6 +284,31 @@
       "delete": "Удалить",
       "empty": "Пока пусто",
       "deleteConfirm": "Вы уверены, что хотите удалить?"
+    },
+    "serviceCatalog": {
+      "title": "Виды услуг",
+      "slug": "Slug",
+      "name": "Название",
+      "description": "Описание",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "empty": "Пока пусто",
+      "deleteConfirm": "Вы уверены, что хотите удалить?"
+    },
+    "serviceProviders": {
+      "title": "Сервисы",
+      "name": "Название",
+      "city": "Город",
+      "statusLabel": "Статус",
+      "allStatuses": "Все статусы",
+      "status": {
+        "PENDING": "На рассмотрении",
+        "VERIFIED": "Подтверждён",
+        "SUSPENDED": "Заблокирован"
+      },
+      "verify": "Подтвердить",
+      "suspend": "Заблокировать",
+      "empty": "Сервисы не найдены"
     },
     "users": {
       "title": "Пользователи",
@@ -176,6 +342,12 @@
     "VALIDATION_FAILED": "Проверка не пройдена",
     "RATE_LIMITED": "Слишком много запросов, подождите немного",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "Этот тип файла не разрешён для данной папки",
-    "ADMIN_CANNOT_MODIFY_SELF": "Вы не можете изменить роль или статус активности своего аккаунта"
+    "ADMIN_CANNOT_MODIFY_SELF": "Вы не можете изменить роль или статус активности своего аккаунта",
+    "SERVICE_CATALOG_ITEM_NOT_FOUND": "Вид услуги не найден",
+    "SERVICE_PROVIDER_NOT_FOUND": "Сервис не найден",
+    "SERVICE_PROVIDER_ALREADY_EXISTS": "У вас уже есть профиль сервиса",
+    "SERVICE_OFFERING_NOT_FOUND": "Предложение услуги не найдено",
+    "AI_ASSISTANT_NOT_CONFIGURED": "AI Ассистент временно недоступен",
+    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Ассистент не смог ответить, попробуйте ещё раз"
   }
 }

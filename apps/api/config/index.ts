@@ -59,6 +59,10 @@ const config = merge(
       password: process.env.MAIL_PASSWORD || '',
       from: process.env.MAIL_FROM || 'App <no-reply@example.com>',
     },
+
+    anthropic: {
+      apiKey: process.env.ANTHROPIC_API_KEY || '',
+    },
   },
   envConfig,
 );

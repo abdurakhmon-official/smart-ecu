@@ -84,7 +84,7 @@ export const useUpdateModel = () => {
   return useMutation({
     mutationFn: ({ modelId, input }: { modelId: string; input: UpdateModelInput }) =>
       vehicleCatalogService.updateModel(modelId, input),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['models'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.modelsBase }),
   });
 };
 
@@ -92,7 +92,7 @@ export const useDeleteModel = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (modelId: string) => vehicleCatalogService.deleteModel(modelId),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['models'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.modelsBase }),
   });
 };
 
@@ -109,7 +109,7 @@ export const useUpdateGeneration = () => {
   return useMutation({
     mutationFn: ({ generationId, input }: { generationId: string; input: UpdateGenerationInput }) =>
       vehicleCatalogService.updateGeneration(generationId, input),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['generations'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.generationsBase }),
   });
 };
 
@@ -117,7 +117,7 @@ export const useDeleteGeneration = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (generationId: string) => vehicleCatalogService.deleteGeneration(generationId),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['generations'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.generationsBase }),
   });
 };
 
@@ -134,7 +134,7 @@ export const useUpdateEngineOption = () => {
   return useMutation({
     mutationFn: ({ engineOptionId, input }: { engineOptionId: string; input: UpdateEngineOptionInput }) =>
       vehicleCatalogService.updateEngineOption(engineOptionId, input),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['engine-options'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.engineOptionsBase }),
   });
 };
 
@@ -142,6 +142,6 @@ export const useDeleteEngineOption = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (engineOptionId: string) => vehicleCatalogService.deleteEngineOption(engineOptionId),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['engine-options'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.engineOptionsBase }),
   });
 };

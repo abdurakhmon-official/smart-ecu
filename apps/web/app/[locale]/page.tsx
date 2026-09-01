@@ -4,13 +4,14 @@ import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { HeroVehiclePicker } from '@/components/vehicle/HeroVehiclePicker';
+import { cn } from '@/lib/utils';
 
 const QUICK_SERVICES = [
-  { key: 'diagnostics', icon: Gauge },
-  { key: 'tuning', icon: Cpu },
-  { key: 'eco', icon: Leaf },
-  { key: 'findService', icon: MapPin },
-  { key: 'aiAssistant', icon: Bot },
+  { key: 'diagnostics', icon: Gauge, href: null },
+  { key: 'tuning', icon: Cpu, href: null },
+  { key: 'eco', icon: Leaf, href: null },
+  { key: 'findService', icon: MapPin, href: '/services' },
+  { key: 'aiAssistant', icon: Bot, href: '/ai-assistant' },
 ] as const;
 
 export default async function HomePage({ params }: PageProps<'/[locale]'>) {
@@ -42,17 +43,27 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
       <section className="mx-auto w-full max-w-6xl px-4 pb-24">
         <h2 className="mb-5 text-xl font-bold tracking-tight">{t('quickServices.title')}</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {QUICK_SERVICES.map(({ key, icon: Icon }) => (
-            <Card key={key} className="flex flex-col gap-3 p-5">
-              <span className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                <Icon className="size-5" />
-              </span>
-              <div>
-                <p className="font-semibold">{t(`quickServices.${key}.title`)}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{t(`quickServices.${key}.description`)}</p>
-              </div>
-            </Card>
-          ))}
+          {QUICK_SERVICES.map(({ key, icon: Icon, href }) => {
+            const card = (
+              <Card className={cn('flex h-full flex-col gap-3 p-5', href && 'transition-colors hover:bg-accent')}>
+                <span className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </span>
+                <div>
+                  <p className="font-semibold">{t(`quickServices.${key}.title`)}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{t(`quickServices.${key}.description`)}</p>
+                </div>
+              </Card>
+            );
+
+            return href ? (
+              <Link key={key} href={href}>
+                {card}
+              </Link>
+            ) : (
+              <div key={key}>{card}</div>
+            );
+          })}
         </div>
         <p className="mt-5 text-sm text-muted-foreground">{t('comingSoonNote')}</p>
       </section>

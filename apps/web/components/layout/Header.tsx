@@ -1,10 +1,11 @@
 'use client';
 
-import { Bell, ChevronDown, LayoutGrid, LogOut, MapPin, Menu, Shield, X } from 'lucide-react';
+import { ChevronDown, LayoutGrid, LogOut, MapPin, Menu, Shield, Store, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { NotificationBell } from '@/components/layout/NotificationBell';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
@@ -20,20 +21,19 @@ import { useSession, useSignOut } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
 
 /**
- * Ba'zi yo'nalishlar (Xizmatlar, Servislar, AI Assistant, Buyurtmalar, Yangiliklar,
- * Aloqa) hali qurilmagan — keyingi bosqichlarda (service-marketplace, orders,
- * ai-assistant) real sahifa bilan almashtiriladi. Hozircha vizual joy egallovchi
+ * Ba'zi yo'nalishlar (Xizmatlar, Yangiliklar, Aloqa) hali qurilmagan — keyingi
+ * bosqichlarda real sahifa bilan almashtiriladi. Hozircha vizual joy egallovchi
  * sifatida ko'rsatiladi, shuning uchun `href: null`.
  */
 type NavLinkKey = 'home' | 'services' | 'workshops' | 'aiAssistant' | 'myGarage' | 'orders' | 'news' | 'contact';
 
-const NAV_LINKS: { key: NavLinkKey; href: '/' | '/my-garage' | null }[] = [
+const NAV_LINKS: { key: NavLinkKey; href: '/' | '/my-garage' | '/services' | '/my-orders' | '/ai-assistant' | null }[] = [
   { key: 'home', href: '/' },
   { key: 'services', href: null },
-  { key: 'workshops', href: null },
-  { key: 'aiAssistant', href: null },
+  { key: 'workshops', href: '/services' },
+  { key: 'aiAssistant', href: '/ai-assistant' },
   { key: 'myGarage', href: '/my-garage' },
-  { key: 'orders', href: null },
+  { key: 'orders', href: '/my-orders' },
   { key: 'news', href: null },
   { key: 'contact', href: null },
 ];
@@ -106,20 +106,7 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {isAuthenticated && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="relative size-9 px-0" aria-label={t('notifications.title')}>
-                  <Bell className="size-4.5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64">
-                <DropdownMenuLabel>{t('notifications.title')}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <p className="px-2 py-4 text-center text-sm text-muted-foreground">{t('notifications.empty')}</p>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+          {isAuthenticated && <NotificationBell />}
 
           <LanguageSwitcher />
           <ThemeToggle />
@@ -139,6 +126,12 @@ export function Header() {
                   <span className="truncate text-xs font-normal text-muted-foreground">{user?.email}</span>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/my-service" className="flex items-center gap-2">
+                    <Store className="size-4" />
+                    {t('myService')}
+                  </Link>
+                </DropdownMenuItem>
                 {isPrivileged && (
                   <DropdownMenuItem asChild>
                     <Link href="/admin" className="flex items-center gap-2">
@@ -206,6 +199,11 @@ export function Header() {
 
           {isAuthenticated ? (
             <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
+              <Link href="/my-service" onClick={closeMenu}>
+                <Button variant="ghost" size="sm" className="w-full justify-start">
+                  {t('myService')}
+                </Button>
+              </Link>
               {isPrivileged && (
                 <Link href="/admin" onClick={closeMenu}>
                   <Button variant="ghost" size="sm" className="w-full justify-start">

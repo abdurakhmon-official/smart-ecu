@@ -23,6 +23,47 @@ enum USER_ROLE {
   SUPER_ADMIN
 }
 
+enum FUEL_TYPE {
+  PETROL
+  DIESEL
+  HYBRID
+  ELECTRIC
+  LPG
+}
+
+enum TRANSMISSION_TYPE {
+  MANUAL
+  AUTOMATIC
+  CVT
+  ROBOT
+}
+
+enum SERVICE_STATUS {
+  PENDING
+  VERIFIED
+  SUSPENDED
+}
+
+enum ORDER_STATUS {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum NOTIFICATION_TYPE {
+  ORDER_RECEIVED
+  ORDER_ACCEPTED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  REVIEW_RECEIVED
+}
+
+enum AI_MESSAGE_ROLE {
+  USER
+  ASSISTANT
+}
+
 model User {
   id                String    @id @default(uuid())
   fullName          String    @map("full_name")
@@ -39,7 +80,12 @@ model User {
   updatedAt         DateTime  @updatedAt @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
 
-  vehicles UserVehicle[]
+  vehicles        UserVehicle[]
+  serviceProvider ServiceProvider?
+  orders          Order[]
+  reviews         Review[]
+  notifications   Notification[]
+  aiConversation  AiConversation?
 
   @@index([email])
   @@map("users")
@@ -49,21 +95,6 @@ model User {
 // Ierarxiya: Brand → Model → Generation → EngineOption. My Garage yozuvlari
 // EngineOption'ga bog'lanadi (yoki, katalogda topilmasa, erkin matn bilan).
 
-enum FUEL_TYPE {
-  PETROL
-  DIESEL
-  HYBRID
-  ELECTRIC
-  LPG
-}
-
-enum TRANSMISSION_TYPE {
-  MANUAL
-  AUTOMATIC
-  CVT
-  ROBOT
-}
-
 model Brand {
   id        String   @id @default(uuid())
   name      String   @unique
@@ -71,7 +102,8 @@ model Brand {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  models Model[]
+  models           Model[]
+  serviceProviders ServiceProvider[]
 
   @@map("brands")
 }
@@ -109,15 +141,15 @@ model Generation {
 }
 
 model EngineOption {
-  id           String             @id @default(uuid())
-  generationId String             @map("generation_id")
+  id           String            @id @default(uuid())
+  generationId String            @map("generation_id")
   name         String
-  volumeLiters Float?             @map("volume_liters")
+  volumeLiters Float?            @map("volume_liters")
   fuel         FUEL_TYPE
   transmission TRANSMISSION_TYPE
-  powerHp      Int?               @map("power_hp")
-  createdAt    DateTime           @default(now()) @map("created_at")
-  updatedAt    DateTime           @updatedAt @map("updated_at")
+  powerHp      Int?              @map("power_hp")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
 
   generation   Generation    @relation(fields: [generationId], references: [id], onDelete: Cascade)
   userVehicles UserVehicle[]
@@ -140,18 +172,211 @@ model UserVehicle {
   customYear  Int?    @map("custom_year")
 
   vin         String?
-  plateNumber String?  @map("plate_number")
-  mileageKm   Int?     @map("mileage_km")
+  plateNumber String? @map("plate_number")
+  mileageKm   Int?    @map("mileage_km")
   photo       String?
-  isPrimary   Boolean  @default(false) @map("is_primary")
+  isPrimary   Boolean @default(false) @map("is_primary")
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  engineOption EngineOption? @relation(fields: [engineOptionId], references: [id])
+  engineOption EngineOption? @relation(fields: [engineOptionId], references: [id], onDelete: SetNull)
+  orders       Order[]
 
   @@index([userId])
+  @@index([engineOptionId])
   @@map("user_vehicles")
+}
+
+// ── Servis marketplace (Bosqich 2) ──────────────────────────────────────────
+// Har bir User bittadan ServiceProvider profiliga ega bo'lishi mumkin (PENDING
+// holatda ariza sifatida boshlanadi, admin VERIFIED qilganda User.role ham
+// SERVICE'ga o'zgaradi). ServiceCatalogItem — admin boshqaradigan global
+// xizmat turlari ro'yxati (Diagnostika, Stage 1, Eco Tune...), ServiceOffering
+// ular orasidagi ko'p-ko'pga bog'lanish (narx bilan).
+
+model ServiceProvider {
+  id           String         @id @default(uuid())
+  userId       String         @unique @map("user_id")
+  name         String
+  description  String?
+  logo         String?
+  city         String
+  address      String?
+  lat          Float?
+  lng          Float?
+  phone        String
+  telegram     String?
+  whatsapp     String?
+  instagram    String?
+  workingHours String?        @map("working_hours")
+  status       SERVICE_STATUS @default(PENDING)
+  ratingAvg    Float          @default(0) @map("rating_avg")
+  ratingCount  Int            @default(0) @map("rating_count")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  deletedAt    DateTime?      @map("deleted_at")
+
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offerings       ServiceOffering[]
+  brands          Brand[]
+  orderRecipients OrderRecipient[]
+  acceptedOrders  Order[]           @relation("AcceptedOrders")
+  reviews         Review[]
+
+  @@index([city])
+  @@index([status])
+  @@map("service_providers")
+}
+
+/// `name`/`description` — LocalizedTextSchema (`{uz,ru,en}`) shaklidagi Json, packages/contracts orqali tekshiriladi.
+model ServiceCatalogItem {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  name        Json
+  description Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  offerings ServiceOffering[]
+  orders    Order[]
+
+  @@map("service_catalog_items")
+}
+
+model ServiceOffering {
+  id                   String   @id @default(uuid())
+  serviceProviderId    String   @map("service_provider_id")
+  serviceCatalogItemId String   @map("service_catalog_item_id")
+  priceMin             Int?     @map("price_min")
+  priceMax             Int?     @map("price_max")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  serviceProvider    ServiceProvider    @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  serviceCatalogItem ServiceCatalogItem @relation(fields: [serviceCatalogItemId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceProviderId, serviceCatalogItemId])
+  @@index([serviceProviderId])
+  @@index([serviceCatalogItemId])
+  @@map("service_offerings")
+}
+
+// ── Buyurtmalar, bildirishnoma, sharhlar (Bosqich 3) ────────────────────────
+// Order yuborilganda shahar+xizmat turiga mos barcha VERIFIED servislarga
+// OrderRecipient orqali "broadcast" qilinadi — birinchi qabul qilgan servis
+// `acceptedServiceProvider` bo'ladi. Review faqat COMPLETED orderga (1:1)
+// bog'lanadi, shuning uchun har doim haqiqiy buyurtmaga asoslangan — alohida
+// "verified" ustuni shart emas.
+
+model Order {
+  id                        String       @id @default(uuid())
+  userId                    String       @map("user_id")
+  userVehicleId             String?      @map("user_vehicle_id")
+  serviceCatalogItemId      String       @map("service_catalog_item_id")
+  problemDescription        String       @map("problem_description")
+  city                      String
+  phone                     String
+  status                    ORDER_STATUS @default(NEW)
+  acceptedServiceProviderId String?      @map("accepted_service_provider_id")
+  createdAt                 DateTime     @default(now()) @map("created_at")
+  updatedAt                 DateTime     @updatedAt @map("updated_at")
+
+  user                    User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userVehicle             UserVehicle?       @relation(fields: [userVehicleId], references: [id], onDelete: SetNull)
+  serviceCatalogItem      ServiceCatalogItem @relation(fields: [serviceCatalogItemId], references: [id], onDelete: Restrict)
+  acceptedServiceProvider ServiceProvider?   @relation("AcceptedOrders", fields: [acceptedServiceProviderId], references: [id], onDelete: SetNull)
+  recipients              OrderRecipient[]
+  notifications           Notification[]
+  review                  Review?
+
+  @@index([userId])
+  @@index([userVehicleId])
+  @@index([serviceCatalogItemId])
+  @@index([acceptedServiceProviderId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderRecipient {
+  id                String   @id @default(uuid())
+  orderId           String   @map("order_id")
+  serviceProviderId String   @map("service_provider_id")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  order           Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  serviceProvider ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, serviceProviderId])
+  @@index([orderId])
+  @@index([serviceProviderId])
+  @@map("order_recipients")
+}
+
+model Review {
+  id                String   @id @default(uuid())
+  orderId           String   @unique @map("order_id")
+  userId            String   @map("user_id")
+  serviceProviderId String   @map("service_provider_id")
+  rating            Int
+  comment           String?
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  order           Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceProvider ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([serviceProviderId])
+  @@map("reviews")
+}
+
+/// `title`/`body` ataylab yo'q — matn hech qachon serverdan qaytmaydi (i18n qoidasi, 9-bo'lim).
+/// Frontend `type` (+ kerak bo'lsa `orderId` orqali olingan buyurtma ma'lumoti) asosida tarjima qiladi.
+model Notification {
+  id        String            @id @default(uuid())
+  userId    String            @map("user_id")
+  type      NOTIFICATION_TYPE
+  orderId   String?           @map("order_id")
+  readAt    DateTime?         @map("read_at")
+  createdAt DateTime          @default(now()) @map("created_at")
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order Order? @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([orderId])
+  @@map("notifications")
+}
+
+// ── AI Assistant (Bosqich 4) ─────────────────────────────────────────────────
+// Har bir User bitta doimiy AiConversation'ga ega (ServiceProvider'dagi kabi
+// 1:1) — alohida suhbat-threadlar yo'q, bitta uzluksiz chat tarixi.
+
+model AiConversation {
+  id        String   @id @default(uuid())
+  userId    String   @unique @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages AiMessage[]
+
+  @@map("ai_conversations")
+}
+
+model AiMessage {
+  id             String          @id @default(uuid())
+  conversationId String          @map("conversation_id")
+  role           AI_MESSAGE_ROLE
+  content        String
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  conversation AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("ai_messages")
 }

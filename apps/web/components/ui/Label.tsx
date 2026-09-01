@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 
-// interfaces
+// types
 
-interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
 
 export function Label({ className, ...props }: LabelProps) {
   return <label className={cn('text-sm font-medium leading-none', className)} {...props} />;

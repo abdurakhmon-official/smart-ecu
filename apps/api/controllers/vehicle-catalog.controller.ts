@@ -25,10 +25,6 @@ import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { VehicleCatalogService } from '@/services/vehicle-catalog.service';
 
-/**
- * O'qish (GET) — hamma uchun ochiq (bosh sahifadagi avtomobil tanlash formasi
- * autentifikatsiyasiz ishlaydi). Yozish — faqat ADMIN (katalogni admin boshqaradi).
- */
 @Controller('/vehicle-catalog')
 export class VehicleCatalogController {
   @Inject()

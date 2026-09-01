@@ -5,13 +5,22 @@
     "signUp": "Ro'yxatdan o'tish",
     "signOut": "Chiqish",
     "admin": "Admin panel",
+    "myService": "Servis kabineti",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish",
     "location": "Joylashuv",
     "comingSoon": "Tez orada",
     "notifications": {
       "title": "Bildirishnomalar",
-      "empty": "Hozircha bildirishnoma yo'q"
+      "empty": "Hozircha bildirishnoma yo'q",
+      "markAllRead": "Barchasini o'qilgan deb belgilash",
+      "types": {
+        "ORDER_RECEIVED": "Yangi buyurtma keldi",
+        "ORDER_ACCEPTED": "Buyurtmangiz qabul qilindi",
+        "ORDER_COMPLETED": "Buyurtmangiz yakunlandi",
+        "ORDER_CANCELLED": "Buyurtma bekor qilindi",
+        "REVIEW_RECEIVED": "Sizga yangi sharh qoldirildi"
+      }
     },
     "links": {
       "home": "Bosh sahifa",
@@ -91,6 +100,136 @@
     "save": "Saqlash",
     "saving": "Saqlanmoqda…"
   },
+  "services": {
+    "title": "Servis topish",
+    "searchPlaceholder": "Servis nomi bo'yicha qidirish",
+    "filterCity": "Shahar",
+    "filterBrand": "Brend",
+    "filterService": "Xizmat turi",
+    "allCities": "Barcha shaharlar",
+    "allBrands": "Barcha brendlar",
+    "allServices": "Barcha xizmatlar",
+    "empty": "Hech narsa topilmadi",
+    "viewProfile": "Profilni ko'rish",
+    "reviewsCount": "{count} sharh"
+  },
+  "serviceProfile": {
+    "back": "Servislarga qaytish",
+    "workingHours": "Ish vaqti",
+    "address": "Manzil",
+    "contact": "Bog'lanish",
+    "call": "Qo'ng'iroq qilish",
+    "offerings": "Xizmatlar",
+    "brands": "Qaysi brendlar bilan ishlaydi",
+    "noOfferings": "Hozircha xizmat qo'shilmagan",
+    "noBrands": "Ko'rsatilmagan",
+    "reviewsTitle": "Sharhlar",
+    "noReviews": "Hozircha sharh yo'q",
+    "priceFrom": "{price} so'mdan",
+    "priceRange": "{min}–{max} so'm"
+  },
+  "myService": {
+    "title": "Servis kabineti",
+    "signInRequired": "Servis kabinetini ochish uchun tizimga kiring",
+    "signIn": "Kirish",
+    "applyTitle": "Servis sifatida ro'yxatdan o'tish",
+    "applyDescription": "Servisingiz ma'lumotlarini kiriting. Admin ko'rib chiqib tasdiqlagandan so'ng profilingiz ommaga ko'rinadi.",
+    "apply": "Ariza yuborish",
+    "applying": "Yuborilmoqda…",
+    "status": {
+      "PENDING": "Ko'rib chiqilmoqda",
+      "VERIFIED": "Tasdiqlangan",
+      "SUSPENDED": "Bloklangan"
+    },
+    "statusNote": {
+      "PENDING": "Arizangiz admin tomonidan ko'rib chiqilmoqda — hozircha mijozlarga ko'rinmaydi.",
+      "VERIFIED": "Servisingiz faol va katalogda ko'rinadi.",
+      "SUSPENDED": "Servisingiz admin tomonidan bloklangan va katalogdan yashirilgan."
+    },
+    "tabs": {
+      "profile": "Profil",
+      "offerings": "Xizmatlar va narxlar",
+      "brands": "Brendlar",
+      "orders": "Buyurtmalar"
+    },
+    "inbox": {
+      "empty": "Hozircha buyurtma yo'q",
+      "accept": "Qabul qilish",
+      "complete": "Yakunlash",
+      "acceptedByYou": "Siz qabul qilgansiz",
+      "takenByOther": "Boshqa servis qabul qilgan"
+    },
+    "name": "Servis nomi",
+    "description": "Tavsif",
+    "city": "Shahar",
+    "address": "Manzil",
+    "phone": "Telefon",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "workingHours": "Ish vaqti",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda…",
+    "saved": "Saqlandi",
+    "addOffering": "Xizmat qo'shish",
+    "selectService": "Xizmat turini tanlang",
+    "priceMin": "Narx (dan)",
+    "priceMax": "Narx (gacha)",
+    "add": "Qo'shish",
+    "delete": "O'chirish",
+    "noOfferings": "Hozircha xizmat qo'shilmagan",
+    "selectBrands": "Qaysi avtomobil brendlari bilan ishlashingizni tanlang"
+  },
+  "orders": {
+    "createTitle": "Yangi so'rov",
+    "vehicle": "Avtomobil",
+    "noVehicle": "Avtomobil tanlanmagan",
+    "serviceType": "Xizmat turi",
+    "selectService": "Xizmat turini tanlang",
+    "problemDescription": "Muammoni tavsiflang",
+    "city": "Shahar",
+    "phone": "Telefon",
+    "cancel": "Bekor qilish",
+    "send": "So'rov yuborish",
+    "sending": "Yuborilmoqda…",
+    "signInToOrder": "So'rov yuborish uchun tizimga kiring",
+    "title": "Mening buyurtmalarim",
+    "empty": "Hozircha buyurtma yo'q",
+    "status": {
+      "NEW": "Yangi",
+      "IN_PROGRESS": "Jarayonda",
+      "COMPLETED": "Yakunlangan",
+      "CANCELLED": "Bekor qilingan"
+    },
+    "cancelOrder": "Buyurtmani bekor qilish",
+    "leaveReview": "Sharh qoldirish",
+    "reviewTitle": "Sharh qoldirish",
+    "rating": "Baho",
+    "comment": "Izoh (ixtiyoriy)",
+    "submitReview": "Yuborish",
+    "reviewSubmitted": "Sharh qoldirildi"
+  },
+  "aiAssistant": {
+    "title": "AI Assistant",
+    "subtitle": "Avtomobilingiz belgilarini tasvirlab bering — ehtimoliy sabablarni bilib olasiz, bu aniq tashxis emas.",
+    "signInRequired": "AI Assistant bilan suhbatlashish uchun tizimga kiring",
+    "placeholder": "Muammoni tasvirlang, masalan: \"BMW 530i ko'p yoqilg'i yeyapti\"…",
+    "send": "Yuborish",
+    "newChat": "Yangi suhbat",
+    "newChatConfirm": "Yangi suhbat boshlansinmi? Hozirgi tarix tozalanadi.",
+    "cancel": "Bekor qilish",
+    "confirmNewChat": "Ha, yangidan boshlash",
+    "empty": "Boshlash uchun savol yozing",
+    "disclaimer": "AI javoblari faqat ma'lumot uchun, aniq tashxis emas. Har doim malakali servisda tekshirtiring.",
+    "thinking": "Yozmoqda…",
+    "quickQuestions": {
+      "title": "Tezkor savollar",
+      "checkEngine": "Check Engine chirog'i yonmoqda",
+      "vibration": "Yurishda mashina titraydi",
+      "coldStart": "Sovuqda qiyin yonadi",
+      "fuelConsumption": "Yoqilg'i sarfi oshdi"
+    }
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -116,7 +255,9 @@
   "admin": {
     "nav": {
       "users": "Foydalanuvchilar",
-      "vehicleCatalog": "Avtomobil katalogi"
+      "vehicleCatalog": "Avtomobil katalogi",
+      "serviceCatalog": "Xizmat turlari",
+      "serviceProviders": "Servislar"
     },
     "vehicleCatalog": {
       "title": "Avtomobil katalogi",
@@ -143,6 +284,31 @@
       "delete": "O'chirish",
       "empty": "Hozircha yo'q",
       "deleteConfirm": "Rostdan ham o'chirmoqchimisiz?"
+    },
+    "serviceCatalog": {
+      "title": "Xizmat turlari",
+      "slug": "Slug",
+      "name": "Nomi",
+      "description": "Tavsif",
+      "add": "Qo'shish",
+      "delete": "O'chirish",
+      "empty": "Hozircha yo'q",
+      "deleteConfirm": "Rostdan ham o'chirmoqchimisiz?"
+    },
+    "serviceProviders": {
+      "title": "Servislar",
+      "name": "Nomi",
+      "city": "Shahar",
+      "statusLabel": "Holati",
+      "allStatuses": "Barcha holatlar",
+      "status": {
+        "PENDING": "Kutilmoqda",
+        "VERIFIED": "Tasdiqlangan",
+        "SUSPENDED": "Bloklangan"
+      },
+      "verify": "Tasdiqlash",
+      "suspend": "Bloklash",
+      "empty": "Servis topilmadi"
     },
     "users": {
       "title": "Foydalanuvchilar",
@@ -176,6 +342,12 @@
     "VALIDATION_FAILED": "Tekshiruv muvaffaqiyatsiz",
     "RATE_LIMITED": "So'rovlar juda ko'p, biroz kuting",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "Bu fayl turi ushbu papka uchun ruxsat etilmagan",
-    "ADMIN_CANNOT_MODIFY_SELF": "O'zingizning hisobingiz rolini yoki faollik holatini o'zgartira olmaysiz"
+    "ADMIN_CANNOT_MODIFY_SELF": "O'zingizning hisobingiz rolini yoki faollik holatini o'zgartira olmaysiz",
+    "SERVICE_CATALOG_ITEM_NOT_FOUND": "Xizmat turi topilmadi",
+    "SERVICE_PROVIDER_NOT_FOUND": "Servis topilmadi",
+    "SERVICE_PROVIDER_ALREADY_EXISTS": "Sizda allaqachon servis profili mavjud",
+    "SERVICE_OFFERING_NOT_FOUND": "Xizmat taklifi topilmadi",
+    "AI_ASSISTANT_NOT_CONFIGURED": "AI Assistant vaqtincha ishlamayapti",
+    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Assistant javob bera olmadi, qaytadan urinib ko'ring"
   }
 }

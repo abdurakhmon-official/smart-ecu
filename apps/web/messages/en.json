@@ -5,13 +5,22 @@
     "signUp": "Sign up",
     "signOut": "Sign out",
     "admin": "Admin panel",
+    "myService": "Service cabinet",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "location": "Location",
     "comingSoon": "Coming soon",
     "notifications": {
       "title": "Notifications",
-      "empty": "No notifications yet"
+      "empty": "No notifications yet",
+      "markAllRead": "Mark all as read",
+      "types": {
+        "ORDER_RECEIVED": "New order received",
+        "ORDER_ACCEPTED": "Your order was accepted",
+        "ORDER_COMPLETED": "Your order was completed",
+        "ORDER_CANCELLED": "An order was cancelled",
+        "REVIEW_RECEIVED": "You received a new review"
+      }
     },
     "links": {
       "home": "Home",
@@ -91,6 +100,136 @@
     "save": "Save",
     "saving": "Saving…"
   },
+  "services": {
+    "title": "Find a workshop",
+    "searchPlaceholder": "Search by workshop name",
+    "filterCity": "City",
+    "filterBrand": "Brand",
+    "filterService": "Service type",
+    "allCities": "All cities",
+    "allBrands": "All brands",
+    "allServices": "All services",
+    "empty": "No workshops found",
+    "viewProfile": "View profile",
+    "reviewsCount": "{count} reviews"
+  },
+  "serviceProfile": {
+    "back": "Back to workshops",
+    "workingHours": "Working hours",
+    "address": "Address",
+    "contact": "Contact",
+    "call": "Call",
+    "offerings": "Services",
+    "brands": "Works with",
+    "noOfferings": "No services listed yet",
+    "noBrands": "Not specified",
+    "reviewsTitle": "Reviews",
+    "noReviews": "No reviews yet",
+    "priceFrom": "from {price} UZS",
+    "priceRange": "{min}–{max} UZS"
+  },
+  "myService": {
+    "title": "Service cabinet",
+    "signInRequired": "Sign in to open the service cabinet",
+    "signIn": "Sign in",
+    "applyTitle": "Register as a workshop",
+    "applyDescription": "Fill in your workshop details. An admin will review and verify your profile before it appears publicly.",
+    "apply": "Submit application",
+    "applying": "Submitting…",
+    "status": {
+      "PENDING": "Pending review",
+      "VERIFIED": "Verified",
+      "SUSPENDED": "Suspended"
+    },
+    "statusNote": {
+      "PENDING": "Your application is awaiting admin review — it isn't visible to customers yet.",
+      "VERIFIED": "Your workshop is live and visible in the directory.",
+      "SUSPENDED": "Your workshop has been suspended by an admin and is hidden from the directory."
+    },
+    "tabs": {
+      "profile": "Profile",
+      "offerings": "Services & prices",
+      "brands": "Brands",
+      "orders": "Orders"
+    },
+    "inbox": {
+      "empty": "No orders yet",
+      "accept": "Accept",
+      "complete": "Mark completed",
+      "acceptedByYou": "Accepted by you",
+      "takenByOther": "Taken by another workshop"
+    },
+    "name": "Workshop name",
+    "description": "Description",
+    "city": "City",
+    "address": "Address",
+    "phone": "Phone",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "workingHours": "Working hours",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "addOffering": "Add a service",
+    "selectService": "Select a service",
+    "priceMin": "Price from",
+    "priceMax": "Price to",
+    "add": "Add",
+    "delete": "Delete",
+    "noOfferings": "No services added yet",
+    "selectBrands": "Select the car brands you work with"
+  },
+  "orders": {
+    "createTitle": "New request",
+    "vehicle": "Car",
+    "noVehicle": "No car selected",
+    "serviceType": "Service type",
+    "selectService": "Select a service",
+    "problemDescription": "Describe the problem",
+    "city": "City",
+    "phone": "Phone",
+    "cancel": "Cancel",
+    "send": "Send request",
+    "sending": "Sending…",
+    "signInToOrder": "Sign in to send a request",
+    "title": "My orders",
+    "empty": "No orders yet",
+    "status": {
+      "NEW": "New",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "cancelOrder": "Cancel order",
+    "leaveReview": "Leave a review",
+    "reviewTitle": "Leave a review",
+    "rating": "Rating",
+    "comment": "Comment (optional)",
+    "submitReview": "Submit",
+    "reviewSubmitted": "Review submitted"
+  },
+  "aiAssistant": {
+    "title": "AI Assistant",
+    "subtitle": "Describe your car's symptoms and get probable causes — not a diagnosis.",
+    "signInRequired": "Sign in to chat with the AI Assistant",
+    "placeholder": "Describe the issue, e.g. \"My BMW 530i is using too much fuel\"…",
+    "send": "Send",
+    "newChat": "New conversation",
+    "newChatConfirm": "Start a new conversation? The current history will be cleared.",
+    "cancel": "Cancel",
+    "confirmNewChat": "Yes, start new",
+    "empty": "Ask a question to get started",
+    "disclaimer": "AI answers are informational only, not a diagnosis. Always confirm with a certified workshop.",
+    "thinking": "Thinking…",
+    "quickQuestions": {
+      "title": "Quick questions",
+      "checkEngine": "My check-engine light is on",
+      "vibration": "The car vibrates while driving",
+      "coldStart": "Hard to start when cold",
+      "fuelConsumption": "Fuel consumption increased"
+    }
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -116,7 +255,9 @@
   "admin": {
     "nav": {
       "users": "Users",
-      "vehicleCatalog": "Vehicle catalog"
+      "vehicleCatalog": "Vehicle catalog",
+      "serviceCatalog": "Service catalog",
+      "serviceProviders": "Workshops"
     },
     "vehicleCatalog": {
       "title": "Vehicle catalog",
@@ -143,6 +284,31 @@
       "delete": "Delete",
       "empty": "Nothing yet",
       "deleteConfirm": "Are you sure you want to delete this?"
+    },
+    "serviceCatalog": {
+      "title": "Service catalog",
+      "slug": "Slug",
+      "name": "Name",
+      "description": "Description",
+      "add": "Add",
+      "delete": "Delete",
+      "empty": "Nothing yet",
+      "deleteConfirm": "Are you sure you want to delete this?"
+    },
+    "serviceProviders": {
+      "title": "Workshops",
+      "name": "Name",
+      "city": "City",
+      "statusLabel": "Status",
+      "allStatuses": "All statuses",
+      "status": {
+        "PENDING": "Pending",
+        "VERIFIED": "Verified",
+        "SUSPENDED": "Suspended"
+      },
+      "verify": "Verify",
+      "suspend": "Suspend",
+      "empty": "No workshops found"
     },
     "users": {
       "title": "Users",
@@ -176,6 +342,12 @@
     "VALIDATION_FAILED": "Validation failed",
     "RATE_LIMITED": "Too many requests, please slow down",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "This file type is not allowed for this folder",
-    "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status"
+    "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status",
+    "SERVICE_CATALOG_ITEM_NOT_FOUND": "Service catalog item not found",
+    "SERVICE_PROVIDER_NOT_FOUND": "Workshop not found",
+    "SERVICE_PROVIDER_ALREADY_EXISTS": "You already have a workshop profile",
+    "SERVICE_OFFERING_NOT_FOUND": "Service offering not found",
+    "AI_ASSISTANT_NOT_CONFIGURED": "AI Assistant is temporarily unavailable",
+    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Assistant could not respond, please try again"
   }
 }

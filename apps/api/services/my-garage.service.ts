@@ -7,14 +7,14 @@ import { ok } from '@/utils/response.utils';
 import type { CreateUserVehicleInput, UpdateUserVehicleInput } from '@/inputs/my-garage.input';
 import { UserVehicleNotFoundException } from '@/exceptions/my-garage.exceptions';
 
-const VEHICLE_INCLUDE = {
-  engineOption: {
-    include: { generation: { include: { model: { include: { brand: true } } } } },
-  },
-} as const;
-
 @Injectable()
 export class MyGarageService {
+  private static readonly VEHICLE_INCLUDE = {
+    engineOption: {
+      include: { generation: { include: { model: { include: { brand: true } } } } },
+    },
+  } as const;
+
   @InjectContext()
   private context!: PlatformContext;
 
@@ -25,7 +25,7 @@ export class MyGarageService {
   async list() {
     const vehicles = await prisma.userVehicle.findMany({
       where: { userId: this.currentUserId, deletedAt: null },
-      include: VEHICLE_INCLUDE,
+      include: MyGarageService.VEHICLE_INCLUDE,
       orderBy: [{ isPrimary: 'desc' }, { createdAt: 'asc' }],
     });
 
@@ -44,7 +44,7 @@ export class MyGarageService {
 
       return tx.userVehicle.create({
         data: { ...input, userId, isPrimary },
-        include: VEHICLE_INCLUDE,
+        include: MyGarageService.VEHICLE_INCLUDE,
       });
     });
 
@@ -63,7 +63,7 @@ export class MyGarageService {
         });
       }
 
-      return tx.userVehicle.update({ where: { id: vehicleId }, data: input, include: VEHICLE_INCLUDE });
+      return tx.userVehicle.update({ where: { id: vehicleId }, data: input, include: MyGarageService.VEHICLE_INCLUDE });
     });
 
     return ok(MyGarageService.serialize(vehicle));

@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { useSession } from '@/hooks/use-auth';
 import { useCreateVehicle } from '@/hooks/use-my-garage';
 import { Link } from '@/i18n/navigation';
+import { errorFrom } from '@/lib/errors';
 
 export function HeroVehiclePicker() {
   const t = useTranslations('vehiclePicker');
@@ -27,8 +28,8 @@ export function HeroVehiclePicker() {
       await createVehicle.mutateAsync({ engineOptionId: value.engineOptionId });
       toast.success(t('saved'));
       setSaved(true);
-    } catch {
-      // errorFrom-based toast qilish kerak bo'lsa keyingi bosqichda kengaytiriladi — hozircha sokin fallback.
+    } catch (error) {
+      toast.error(errorFrom(error).message);
     }
   };
 
