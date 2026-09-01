@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "brand": "Smart ECU",
+    "signIn": "Kirish",
+    "signUp": "Ro'yxatdan o'tish",
+    "signOut": "Chiqish",
+    "admin": "Admin panel",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish",
+    "location": "Joylashuv",
+    "comingSoon": "Tez orada",
+    "notifications": {
+      "title": "Bildirishnomalar",
+      "empty": "Hozircha bildirishnoma yo'q"
+    },
+    "links": {
+      "home": "Bosh sahifa",
+      "services": "Xizmatlar",
+      "workshops": "Servislar",
+      "aiAssistant": "AI Assistant",
+      "myGarage": "My Garage",
+      "orders": "Buyurtmalar",
+      "news": "Yangiliklar",
+      "contact": "Aloqa"
+    }
+  },
+  "home": {
+    "title": "Avtomobilingiz uchun aqlli yordamchi",
+    "subtitle": "ECU diagnostika, proshivka, chip tuning va professional servislar — barchasi bir joyda.",
+    "getStarted": "Avtomobilimni tanlash",
+    "signIn": "Kirish",
+    "quickServices": {
+      "title": "Tezkor xizmatlar",
+      "diagnostics": { "title": "ECU Diagnostika", "description": "Xatolik kodlarini aniqlash va tahlil qilish" },
+      "tuning": { "title": "ECU Proshivka", "description": "Stage 1, Stage 2 va custom proshivka" },
+      "eco": { "title": "Yoqilg'i sarfini kamaytirish", "description": "Eco tuning va optimallashtirish" },
+      "findService": { "title": "Servis topish", "description": "Yaqin va ishonchli ECU ustalari" },
+      "aiAssistant": { "title": "AI Assistant", "description": "Savollaringizga AI orqali javob oling" }
+    },
+    "comingSoonNote": "Bu bo'lim keyingi qurish bosqichlarida to'liq ishga tushadi."
+  },
+  "footer": {
+    "copyright": "© {year} Smart ECU"
+  },
+  "auth": {
+    "fields": {
+      "fullName": "F.I.Sh.",
+      "email": "Email",
+      "password": "Parol"
+    },
+    "signIn": {
+      "title": "Kirish",
+      "subtitle": "Xush kelibsiz — davom etish uchun ma'lumotlaringizni kiriting.",
+      "submit": "Kirish",
+      "loading": "Kirilmoqda…"
+    },
+    "signUp": {
+      "title": "Ro'yxatdan o'tish",
+      "subtitle": "Avtomobilingizni qo'shing va boshlang — ro'yxatdan o'tish bepul.",
+      "submit": "Ro'yxatdan o'tish",
+      "loading": "Hisob yaratilmoqda…"
+    }
+  },
+  "admin": {
+    "nav": {
+      "users": "Foydalanuvchilar"
+    },
+    "users": {
+      "title": "Foydalanuvchilar",
+      "search": "Ism yoki email bo'yicha qidirish",
+      "allRoles": "Barcha rollar",
+      "role": {
+        "CUSTOMER": "Mijoz",
+        "SERVICE": "Servis",
+        "TUNER": "Tuner",
+        "ADMIN": "Admin",
+        "SUPER_ADMIN": "Super admin"
+      },
+      "active": "Faol",
+      "inactive": "Nofaol",
+      "activate": "Faollashtirish",
+      "deactivate": "Faolsizlantirish",
+      "empty": "Foydalanuvchi topilmadi"
+    }
+  },
+  "serverMessages": {
+    "AUTH_EMAIL_TAKEN": "Bu email allaqachon ro'yxatdan o'tgan",
+    "AUTH_INVALID_CREDENTIALS": "Email yoki parol noto'g'ri",
+    "AUTH_ACCOUNT_INACTIVE": "Bu hisob faol emas",
+    "AUTH_USER_NOT_FOUND": "Foydalanuvchi topilmadi",
+    "AUTH_UNAUTHORIZED": "Ruxsat berilmagan",
+    "AUTH_SIGNED_UP": "Muvaffaqiyatli ro'yxatdan o'tildi",
+    "AUTH_SIGNED_OUT": "Tizimdan chiqildi",
+    "VALIDATION_PASSWORD_SHORT": "Parol juda qisqa",
+    "VALIDATION_PASSWORD_LONG": "Parol juda uzun",
+    "VALIDATION_PASSWORD_PERSONAL": "Parolda ismingiz yoki emailingiz bo'lmasligi kerak",
+    "VALIDATION_FAILED": "Tekshiruv muvaffaqiyatsiz",
+    "RATE_LIMITED": "So'rovlar juda ko'p, biroz kuting",
+    "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "Bu fayl turi ushbu papka uchun ruxsat etilmagan",
+    "ADMIN_CANNOT_MODIFY_SELF": "O'zingizning hisobingiz rolini yoki faollik holatini o'zgartira olmaysiz"
+  }
+}

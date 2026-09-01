@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "brand": "Smart ECU",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "admin": "Admin panel",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "location": "Location",
+    "comingSoon": "Coming soon",
+    "notifications": {
+      "title": "Notifications",
+      "empty": "No notifications yet"
+    },
+    "links": {
+      "home": "Home",
+      "services": "Services",
+      "workshops": "Workshops",
+      "aiAssistant": "AI Assistant",
+      "myGarage": "My Garage",
+      "orders": "Orders",
+      "news": "News",
+      "contact": "Contact"
+    }
+  },
+  "home": {
+    "title": "The smart assistant for your car",
+    "subtitle": "ECU diagnostics, remapping, chip tuning and professional services — all in one place.",
+    "getStarted": "Choose your car",
+    "signIn": "Sign in",
+    "quickServices": {
+      "title": "Quick services",
+      "diagnostics": { "title": "ECU Diagnostics", "description": "Detect and analyze fault codes" },
+      "tuning": { "title": "ECU Remapping", "description": "Stage 1, Stage 2 and custom tuning" },
+      "eco": { "title": "Reduce fuel consumption", "description": "Eco tuning and optimization" },
+      "findService": { "title": "Find a workshop", "description": "Nearby, trusted ECU specialists" },
+      "aiAssistant": { "title": "AI Assistant", "description": "Get answers to your questions from AI" }
+    },
+    "comingSoonNote": "This section will come fully online in the next build phases."
+  },
+  "footer": {
+    "copyright": "© {year} Smart ECU"
+  },
+  "auth": {
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "password": "Password"
+    },
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Welcome back — enter your details to continue.",
+      "submit": "Sign in",
+      "loading": "Signing in…"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "subtitle": "Add your car and get started — it's free to join.",
+      "submit": "Sign up",
+      "loading": "Creating account…"
+    }
+  },
+  "admin": {
+    "nav": {
+      "users": "Users"
+    },
+    "users": {
+      "title": "Users",
+      "search": "Search by name or email",
+      "allRoles": "All roles",
+      "role": {
+        "CUSTOMER": "Customer",
+        "SERVICE": "Service",
+        "TUNER": "Tuner",
+        "ADMIN": "Admin",
+        "SUPER_ADMIN": "Super admin"
+      },
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "empty": "No users found"
+    }
+  },
+  "serverMessages": {
+    "AUTH_EMAIL_TAKEN": "This email is already registered",
+    "AUTH_INVALID_CREDENTIALS": "Invalid email or password",
+    "AUTH_ACCOUNT_INACTIVE": "This account is inactive",
+    "AUTH_USER_NOT_FOUND": "User not found",
+    "AUTH_UNAUTHORIZED": "Unauthorized",
+    "AUTH_SIGNED_UP": "Registered successfully",
+    "AUTH_SIGNED_OUT": "Signed out",
+    "VALIDATION_PASSWORD_SHORT": "Password is too short",
+    "VALIDATION_PASSWORD_LONG": "Password is too long",
+    "VALIDATION_PASSWORD_PERSONAL": "Password must not contain your name or email",
+    "VALIDATION_FAILED": "Validation failed",
+    "RATE_LIMITED": "Too many requests, please slow down",
+    "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "This file type is not allowed for this folder",
+    "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status"
+  }
+}
