@@ -6,6 +6,7 @@ import type { CreateServiceProviderInput, UpdateServiceProviderInput } from '@/i
 import { CreateServiceOfferingInputSchema, UpdateServiceOfferingInputSchema } from '@/inputs/service-offering.input';
 import type { CreateServiceOfferingInput, UpdateServiceOfferingInput } from '@/inputs/service-offering.input';
 import { Authenticate, Authorized } from '@/middlewares/auth.middleware';
+import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { MyServiceService } from '@/services/my-service.service';
 
 @Controller('/my-service')
@@ -21,6 +22,7 @@ export class MyServiceController {
 
   @Post('/')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async apply(@BodyParams() body: CreateServiceProviderInput) {
     const data = CreateServiceProviderInputSchema.parse(body);
     return this.myServiceService.apply(data);
@@ -28,6 +30,7 @@ export class MyServiceController {
 
   @Put('/')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async update(@BodyParams() body: UpdateServiceProviderInput) {
     const data = UpdateServiceProviderInputSchema.parse(body);
     return this.myServiceService.update(data);
@@ -35,6 +38,7 @@ export class MyServiceController {
 
   @Post('/offerings')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async addOffering(@BodyParams() body: CreateServiceOfferingInput) {
     const data = CreateServiceOfferingInputSchema.parse(body);
     return this.myServiceService.addOffering(data);
@@ -42,6 +46,7 @@ export class MyServiceController {
 
   @Put('/offerings/:id')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async updateOffering(@PathParams('id') id: string, @BodyParams() body: UpdateServiceOfferingInput) {
     const data = UpdateServiceOfferingInputSchema.parse(body);
     return this.myServiceService.updateOffering(id, data);
@@ -49,6 +54,7 @@ export class MyServiceController {
 
   @Delete('/offerings/:id')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async removeOffering(@PathParams('id') id: string) {
     return this.myServiceService.removeOffering(id);
   }

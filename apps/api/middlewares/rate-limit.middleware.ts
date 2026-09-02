@@ -109,6 +109,7 @@ export const RATE_LIMITS = {
   admin: { bucket: 'admin', windowSeconds: 60, max: 120 },
   adminHeavy: { bucket: 'admin-heavy', windowSeconds: 3600, max: 5 },
   ai: { bucket: 'ai', windowSeconds: 60, max: 12 },
+  write: { bucket: 'write', windowSeconds: 60, max: 30 },
 } as const satisfies Record<string, RateLimitOptions>;
 
 export type { RateLimitBucket, RateLimitOptions };

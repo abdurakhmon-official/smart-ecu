@@ -1,15 +1,20 @@
 import { Inject, Injectable, InjectContext } from '@tsed/di';
 import { PlatformContext } from '@tsed/common';
 import type { Request } from 'express';
+import type { SigninOutput } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { comparePassword, createAccessToken, hashPassword, needsRehash } from '@/modules/auth';
 import { clearLoginFailures, loginBlockedFor, LOGIN_GUARD, recordLoginFailure } from '@/utils/login-guard.utils';
 import { TooManyRequests } from '@/middlewares/rate-limit.middleware';
 import { TokenService } from '@/services/token.service';
+import { MfaChallengeService } from '@/services/mfa-challenge.service';
+import { TwoFactorService } from '@/services/two-factor.service';
 import { USER_PUBLIC_SELECT } from '@/utils/constants';
 import { USER_ROLE } from '../generated/prisma';
 import type { SignupInput, SigninInput } from '@/inputs/auth.input';
+import type { TwoFactorVerifyInput } from '@/inputs/two-factor.input';
 import { AccountInactiveException, EmailAlreadyTakenException, InvalidCredentialsException } from '@/exceptions/auth.exceptions';
+import { MfaChallengeInvalidException, TwoFactorInvalidCodeException } from '@/exceptions/two-factor.exceptions';
 import { UserNotFoundException } from '@/exceptions/user.exceptions';
 
 @Injectable()
@@ -19,6 +24,12 @@ export class AuthService {
 
   @Inject()
   private tokenService!: TokenService;
+
+  @Inject()
+  private mfaChallengeService!: MfaChallengeService;
+
+  @Inject()
+  private twoFactorService!: TwoFactorService;
 
   private get request() {
     return this.context.getRequest<Request>();
@@ -88,7 +99,29 @@ export class AuthService {
       await this.rehashPassword(user.id, input.password);
     }
 
-    return { success: true, data: createAccessToken(user) };
+    if (user.twoFactorEnabledAt) {
+      const mfaToken = await this.mfaChallengeService.create(user.id);
+      return { success: true, data: { mfaRequired: true, mfaToken } satisfies SigninOutput };
+    }
+
+    return { success: true, data: { mfaRequired: false, ...createAccessToken(user) } satisfies SigninOutput };
+  }
+
+  async verifyTwoFactor(input: TwoFactorVerifyInput) {
+    const userId = await this.mfaChallengeService.resolve(input.mfaToken);
+    if (!userId) throw new MfaChallengeInvalidException();
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || user.deletedAt || !user.active) throw new MfaChallengeInvalidException();
+
+    const valid = await this.twoFactorService.verifyCode(user, input.code);
+    if (!valid) throw new TwoFactorInvalidCodeException();
+
+    // Faqat muvaffaqiyatli tasdiqlangandan keyin bekor qilinadi — noto'g'ri kod
+    // challenge'ni yo'q qilib qo'ymasligi kerak (foydalanuvchi qayta urinishi mumkin).
+    await this.mfaChallengeService.invalidate(input.mfaToken);
+
+    return { success: true, data: { mfaRequired: false, ...createAccessToken(user) } satisfies SigninOutput };
   }
 
   async me() {
@@ -99,9 +132,16 @@ export class AuthService {
 
     if (!user || user.deletedAt) throw new UserNotFoundException(this.user?.id ?? '');
 
+    const { twoFactorEnabledAt, telegramChatId, ...rest } = user;
+
     return {
       success: true,
-      data: { ...user, isAdmin: user.role === USER_ROLE.ADMIN || user.role === USER_ROLE.SUPER_ADMIN },
+      data: {
+        ...rest,
+        isAdmin: user.role === USER_ROLE.ADMIN || user.role === USER_ROLE.SUPER_ADMIN,
+        twoFactorEnabled: twoFactorEnabledAt !== null,
+        telegramLinked: telegramChatId !== null,
+      },
     };
   }
 

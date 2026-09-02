@@ -63,6 +63,25 @@ const config = merge(
     anthropic: {
       apiKey: process.env.ANTHROPIC_API_KEY || '',
     },
+
+    payme: {
+      merchantId: process.env.PAYME_MERCHANT_ID || '',
+      merchantKey: process.env.PAYME_MERCHANT_KEY || '',
+      checkoutUrl: process.env.PAYME_CHECKOUT_URL || 'https://checkout.paycom.uz',
+    },
+
+    click: {
+      merchantId: process.env.CLICK_MERCHANT_ID || '',
+      serviceId: process.env.CLICK_SERVICE_ID || '',
+      secretKey: process.env.CLICK_SECRET_KEY || '',
+      checkoutUrl: process.env.CLICK_CHECKOUT_URL || 'https://my.click.uz/services/pay',
+    },
+
+    telegram: {
+      botToken: process.env.TELEGRAM_BOT_TOKEN || '',
+      botUsername: process.env.TELEGRAM_BOT_USERNAME || '',
+      webhookSecret: process.env.TELEGRAM_WEBHOOK_SECRET || '',
+    },
   },
   envConfig,
 );

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import type { UserVehicleOutput } from '@repo/contracts';
 import { AddVehicleDialog } from '@/components/my-garage/AddVehicleDialog';
 import { EditVehicleDialog } from '@/components/my-garage/EditVehicleDialog';
+import { VehicleHealthBadge } from '@/components/my-garage/VehicleHealthBadge';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -85,6 +86,8 @@ export function MyGarageView() {
               {vehicle.plateNumber && <span>{vehicle.plateNumber}</span>}
               {typeof vehicle.mileageKm === 'number' && <span>{vehicle.mileageKm.toLocaleString()} km</span>}
             </div>
+
+            <VehicleHealthBadge vehicleId={vehicle.id} />
 
             <div className="mt-auto flex flex-wrap gap-2 pt-2">
               {!vehicle.isPrimary && (

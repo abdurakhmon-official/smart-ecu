@@ -6,6 +6,9 @@
     "signOut": "Sign out",
     "admin": "Admin panel",
     "myService": "Service cabinet",
+    "myTuner": "Tuner cabinet",
+    "account": "Account",
+    "reportAnalyzer": "Report Analyzer",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "location": "Location",
@@ -19,14 +22,19 @@
         "ORDER_ACCEPTED": "Your order was accepted",
         "ORDER_COMPLETED": "Your order was completed",
         "ORDER_CANCELLED": "An order was cancelled",
-        "REVIEW_RECEIVED": "You received a new review"
+        "REVIEW_RECEIVED": "You received a new review",
+        "ADMIN_BROADCAST": "Announcement",
+        "TUNING_ORDER_RECEIVED": "New tuning order received",
+        "TUNING_ORDER_STATUS_CHANGED": "Your tuning order status changed"
       }
     },
     "links": {
       "home": "Home",
       "services": "Services",
       "workshops": "Workshops",
+      "tuners": "Tuners",
       "aiAssistant": "AI Assistant",
+      "pricing": "Pricing",
       "myGarage": "My Garage",
       "orders": "Orders",
       "news": "News",
@@ -98,7 +106,11 @@
     "cancel": "Cancel",
     "confirmDelete": "Yes, delete",
     "save": "Save",
-    "saving": "Saving…"
+    "saving": "Saving…",
+    "health": {
+      "title": "Vehicle health score",
+      "score": "Health: {score}/100"
+    }
   },
   "services": {
     "title": "Find a workshop",
@@ -230,6 +242,139 @@
       "fuelConsumption": "Fuel consumption increased"
     }
   },
+  "tuners": {
+    "title": "Find a tuner",
+    "subtitle": "ECU chip-tuning specialists — Stage 1/2, Eco, and custom remapping.",
+    "searchPlaceholder": "Search by tuner name",
+    "filterCity": "City",
+    "allBrands": "All brands",
+    "empty": "No tuners found",
+    "viewProfile": "View profile"
+  },
+  "tunerProfile": {
+    "back": "Back to tuners",
+    "call": "Call",
+    "brands": "Works with",
+    "noBrands": "Not specified"
+  },
+  "tuningOrders": {
+    "createTitle": "New tuning request",
+    "vehicle": "Car",
+    "noVehicle": "No car selected",
+    "serviceType": "Service type",
+    "selectService": "Select a service",
+    "problemDescription": "Describe what you want",
+    "cancel": "Cancel",
+    "send": "Send request",
+    "sending": "Sending…",
+    "signInToOrder": "Sign in to send a request"
+  },
+  "myTuner": {
+    "title": "Tuner cabinet",
+    "signInRequired": "Sign in to open the tuner cabinet",
+    "signIn": "Sign in",
+    "applyTitle": "Register as a tuner",
+    "applyDescription": "Fill in your tuner profile. An admin will review and verify it before it appears publicly.",
+    "apply": "Submit application",
+    "applying": "Submitting…",
+    "status": {
+      "PENDING": "Pending review",
+      "VERIFIED": "Verified",
+      "SUSPENDED": "Suspended"
+    },
+    "statusNote": {
+      "PENDING": "Your application is awaiting admin review — it isn't visible to customers yet.",
+      "VERIFIED": "Your tuner profile is live and visible in the directory.",
+      "SUSPENDED": "Your profile has been suspended by an admin and is hidden from the directory."
+    },
+    "tabs": {
+      "profile": "Profile",
+      "brands": "Brands",
+      "orders": "Orders"
+    },
+    "name": "Tuner name",
+    "description": "Description",
+    "city": "City",
+    "address": "Address",
+    "phone": "Phone",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "workingHours": "Working hours",
+    "save": "Save",
+    "saving": "Saving…",
+    "selectBrands": "Select the car brands you tune",
+    "orders": {
+      "empty": "No tuning orders yet",
+      "status": {
+        "NEW": "New",
+        "IN_PROGRESS": "In progress",
+        "WAITING_FOR_LOG": "Waiting for log",
+        "READY": "Ready",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled"
+      },
+      "uploadFile": "Upload file",
+      "fileKind": {
+        "ORIGINAL": "Original",
+        "MODIFIED": "Modified",
+        "LOG": "Log"
+      },
+      "powerAfterHp": "Power after (hp)",
+      "torqueAfterNm": "Torque after (Nm)",
+      "fuelConsumptionAfter": "Fuel after (L/100km)",
+      "saveResults": "Save results",
+      "verified": "Verified"
+    }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Choose the plan that fits your workshop or tuning business.",
+    "plans": {
+      "FREE": "Free",
+      "PRO": "Pro",
+      "BUSINESS": "Business"
+    },
+    "current": "Current plan",
+    "free": "Free",
+    "somPerMonth": "UZS / month",
+    "signInToSubscribe": "Sign in to subscribe",
+    "payWith": "Pay with {provider}"
+  },
+  "reportAnalyzer": {
+    "title": "AI Report Analyzer",
+    "subtitle": "Upload a photo of a diagnostic screen or repair estimate — AI will flag how urgent it looks.",
+    "signInRequired": "Sign in to use the report analyzer",
+    "signIn": "Sign in",
+    "uploadReport": "Upload report",
+    "analyzing": "Analyzing…",
+    "empty": "No reports analyzed yet",
+    "severity": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "UNKNOWN": "Unknown"
+    }
+  },
+  "account": {
+    "title": "Account",
+    "signInRequired": "Sign in to view your account",
+    "signIn": "Sign in",
+    "subscription": {
+      "title": "Subscription",
+      "currentPlan": "Current plan",
+      "until": "until",
+      "managePlan": "Manage plan"
+    },
+    "telegram": {
+      "title": "Telegram notifications",
+      "linked": "Your Telegram is linked — you'll receive notifications there.",
+      "notLinked": "Link your Telegram to receive order and status notifications.",
+      "generateCode": "Generate link code",
+      "openBot": "Open bot to finish linking",
+      "unlink": "Unlink"
+    }
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -250,14 +395,51 @@
       "subtitle": "Add your car and get started — it's free to join.",
       "submit": "Sign up",
       "loading": "Creating account…"
+    },
+    "twoFactor": {
+      "title": "Two-factor verification",
+      "subtitle": "Enter the 6-digit code from your authenticator app, or a backup code.",
+      "codeLabel": "Code",
+      "codePlaceholder": "123456",
+      "verify": "Verify",
+      "verifying": "Verifying…"
     }
   },
   "admin": {
     "nav": {
+      "dashboard": "Dashboard",
       "users": "Users",
       "vehicleCatalog": "Vehicle catalog",
       "serviceCatalog": "Service catalog",
-      "serviceProviders": "Workshops"
+      "serviceProviders": "Workshops",
+      "tuners": "Tuners",
+      "orders": "Orders",
+      "payments": "Payments",
+      "reviews": "Reviews",
+      "notifications": "Announcements",
+      "auditLog": "Audit log",
+      "security": "Security"
+    },
+    "stats": {
+      "title": "Dashboard",
+      "users": "Users",
+      "serviceProviders": "Workshops",
+      "serviceProvidersPending": "Pending workshops",
+      "orders": "Orders",
+      "ordersNew": "New orders",
+      "vehicles": "Vehicles",
+      "reviews": "Reviews",
+      "avgRating": "Avg. rating",
+      "aiConversations": "AI conversations",
+      "usersByRole": "Users by role",
+      "customers": "Customers",
+      "services": "Services",
+      "tuners": "Tuners",
+      "admins": "Admins",
+      "ordersByStatus": "Orders by status",
+      "ordersInProgress": "In progress",
+      "ordersCompleted": "Completed",
+      "ordersCancelled": "Cancelled"
     },
     "vehicleCatalog": {
       "title": "Vehicle catalog",
@@ -310,6 +492,89 @@
       "suspend": "Suspend",
       "empty": "No workshops found"
     },
+    "orders": {
+      "title": "Orders",
+      "filterCity": "City",
+      "allStatuses": "All statuses",
+      "empty": "No orders found"
+    },
+    "tuners": {
+      "title": "Tuners",
+      "name": "Name",
+      "city": "City",
+      "statusLabel": "Status",
+      "allStatuses": "All statuses",
+      "status": {
+        "PENDING": "Pending",
+        "VERIFIED": "Verified",
+        "SUSPENDED": "Suspended"
+      },
+      "verify": "Verify",
+      "suspend": "Suspend",
+      "empty": "No tuners found"
+    },
+    "payments": {
+      "title": "Payments",
+      "allStatuses": "All statuses",
+      "plan": "Plan",
+      "provider": "Provider",
+      "amount": "Amount",
+      "statusLabel": "Status",
+      "date": "Date",
+      "status": {
+        "PENDING": "Pending",
+        "PAID": "Paid",
+        "CANCELLED": "Cancelled",
+        "FAILED": "Failed"
+      },
+      "empty": "No payments found"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "empty": "No reviews found",
+      "rating": "Rating",
+      "delete": "Delete",
+      "deleteConfirmTitle": "Delete review",
+      "deleteConfirmDescription": "This cannot be undone. The workshop's rating will be recalculated.",
+      "cancel": "Cancel",
+      "confirmDelete": "Yes, delete"
+    },
+    "notifications": {
+      "title": "Send announcement",
+      "subtitle": "Sends an in-app notification to the selected audience, in all three languages.",
+      "message": "Message",
+      "audience": "Audience",
+      "role": {
+        "ALL": "Everyone",
+        "CUSTOMER": "Customers",
+        "SERVICE": "Workshops",
+        "TUNER": "Tuners"
+      },
+      "send": "Send",
+      "sending": "Sending…",
+      "sent": "Sent to {count} users"
+    },
+    "auditLog": {
+      "title": "Audit log",
+      "empty": "No entries yet",
+      "by": "by"
+    },
+    "security": {
+      "title": "Security",
+      "twoFactorTitle": "Two-factor authentication",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "startSetup": "Set up 2FA",
+      "scanQr": "Scan this QR code with an authenticator app (e.g. Google Authenticator), or enter the code manually.",
+      "codeLabel": "6-digit code",
+      "confirmEnable": "Confirm and enable",
+      "backupCodesIntro": "Save these backup codes somewhere safe — each can be used once if you lose access to your authenticator.",
+      "done": "Done",
+      "startDisable": "Disable 2FA",
+      "confirmDisable": "Confirm disable",
+      "verifying": "Verifying…",
+      "cancel": "Cancel"
+    },
     "users": {
       "title": "Users",
       "search": "Search by name or email",
@@ -348,6 +613,22 @@
     "SERVICE_PROVIDER_ALREADY_EXISTS": "You already have a workshop profile",
     "SERVICE_OFFERING_NOT_FOUND": "Service offering not found",
     "AI_ASSISTANT_NOT_CONFIGURED": "AI Assistant is temporarily unavailable",
-    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Assistant could not respond, please try again"
+    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Assistant could not respond, please try again",
+    "TWO_FACTOR_SETUP_REQUIRED": "Start 2FA setup before enabling it",
+    "TWO_FACTOR_ALREADY_ENABLED": "Two-factor authentication is already enabled",
+    "TWO_FACTOR_NOT_ENABLED": "Two-factor authentication is not enabled",
+    "TWO_FACTOR_INVALID_CODE": "Invalid or expired code",
+    "MFA_CHALLENGE_INVALID": "This sign-in challenge has expired, please sign in again",
+    "REVIEW_NOT_FOUND": "Review not found",
+    "TUNER_PROFILE_NOT_FOUND": "Tuner not found",
+    "TUNER_PROFILE_ALREADY_EXISTS": "You already have a tuner profile",
+    "TUNING_ORDER_NOT_FOUND": "Tuning order not found",
+    "TUNING_ORDER_NOT_CANCELLABLE": "Only a new, unstarted tuning order can be cancelled",
+    "ECU_FILE_KIND_NOT_ALLOWED": "This file kind is not allowed for this action",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "This payment method is temporarily unavailable",
+    "USER_VEHICLE_NOT_FOUND": "Vehicle not found",
+    "REPORT_ANALYZER_NOT_CONFIGURED": "Report analyzer is temporarily unavailable",
+    "REPORT_FILE_NOT_FOUND": "Uploaded file could not be found, please try again",
+    "REPORT_ANALYSIS_NOT_FOUND": "Report analysis not found"
   }
 }

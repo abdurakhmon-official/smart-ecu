@@ -1,10 +1,14 @@
-import { Injectable } from '@tsed/di';
+import { Inject, InjectContext, Injectable } from '@tsed/di';
+import { PlatformContext } from '@tsed/common';
+import type { Request } from 'express';
 import prisma from '@/modules/db';
 import { Prisma, SERVICE_STATUS } from '../generated/prisma';
 import { ok } from '@/utils/response.utils';
+import { requireUserId } from '@/utils/errors.utils';
 import { serializeServiceCatalogItem } from '@/utils/service-catalog.utils';
 import { ServiceProviderQuerySchema, AdminServiceProviderQuerySchema } from '@/inputs/service-provider.input';
 import { ServiceProviderNotFoundException } from '@/exceptions/service-provider.exceptions';
+import { AuditLogService } from '@/services/audit-log.service';
 
 // types
 
@@ -22,6 +26,12 @@ export class ServiceProviderService {
     brands: true,
     offerings: { include: { serviceCatalogItem: true } },
   } as const satisfies Prisma.ServiceProviderInclude;
+
+  @InjectContext()
+  private context!: PlatformContext;
+
+  @Inject()
+  private auditLogService!: AuditLogService;
 
   async list(rawQuery: unknown) {
     const { city, brandId, serviceCatalogItemId, search, page, size } = ServiceProviderQuerySchema.parse(rawQuery);
@@ -63,6 +73,8 @@ export class ServiceProviderService {
       });
     });
 
+    await this.recordModeration('SERVICE_PROVIDER_VERIFIED', id);
+
     return ok(ServiceProviderService.serialize(updated));
   }
 
@@ -74,7 +86,18 @@ export class ServiceProviderService {
       include: ServiceProviderService.INCLUDE,
     });
 
+    await this.recordModeration('SERVICE_PROVIDER_SUSPENDED', id);
+
     return ok(ServiceProviderService.serialize(updated));
+  }
+
+  private async recordModeration(action: string, targetId: string): Promise<void> {
+    await this.auditLogService.record({
+      actorId: requireUserId(this.context.getRequest<Request>().user),
+      action,
+      targetType: 'ServiceProvider',
+      targetId,
+    });
   }
 
   private async findPage(where: Prisma.ServiceProviderWhereInput, page: number, size: number) {

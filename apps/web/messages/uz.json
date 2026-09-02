@@ -6,6 +6,9 @@
     "signOut": "Chiqish",
     "admin": "Admin panel",
     "myService": "Servis kabineti",
+    "myTuner": "Tuner kabineti",
+    "account": "Hisobim",
+    "reportAnalyzer": "Hisobot tahlili",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish",
     "location": "Joylashuv",
@@ -19,14 +22,19 @@
         "ORDER_ACCEPTED": "Buyurtmangiz qabul qilindi",
         "ORDER_COMPLETED": "Buyurtmangiz yakunlandi",
         "ORDER_CANCELLED": "Buyurtma bekor qilindi",
-        "REVIEW_RECEIVED": "Sizga yangi sharh qoldirildi"
+        "REVIEW_RECEIVED": "Sizga yangi sharh qoldirildi",
+        "ADMIN_BROADCAST": "E'lon",
+        "TUNING_ORDER_RECEIVED": "Yangi tuning buyurtmasi keldi",
+        "TUNING_ORDER_STATUS_CHANGED": "Tuning buyurtmangiz holati o'zgardi"
       }
     },
     "links": {
       "home": "Bosh sahifa",
       "services": "Xizmatlar",
       "workshops": "Servislar",
+      "tuners": "Tunerlar",
       "aiAssistant": "AI Assistant",
+      "pricing": "Tariflar",
       "myGarage": "My Garage",
       "orders": "Buyurtmalar",
       "news": "Yangiliklar",
@@ -98,7 +106,11 @@
     "cancel": "Bekor qilish",
     "confirmDelete": "Ha, o'chirish",
     "save": "Saqlash",
-    "saving": "Saqlanmoqda…"
+    "saving": "Saqlanmoqda…",
+    "health": {
+      "title": "Avtomobil salomatlik indeksi",
+      "score": "Salomatlik: {score}/100"
+    }
   },
   "services": {
     "title": "Servis topish",
@@ -230,6 +242,139 @@
       "fuelConsumption": "Yoqilg'i sarfi oshdi"
     }
   },
+  "tuners": {
+    "title": "Tuner topish",
+    "subtitle": "ECU chip-tuning ustalari — Stage 1/2, Eco va individual proshivka.",
+    "searchPlaceholder": "Tuner nomi bo'yicha qidirish",
+    "filterCity": "Shahar",
+    "allBrands": "Barcha brendlar",
+    "empty": "Tuner topilmadi",
+    "viewProfile": "Profilni ko'rish"
+  },
+  "tunerProfile": {
+    "back": "Tunerlarga qaytish",
+    "call": "Qo'ng'iroq qilish",
+    "brands": "Qaysi brendlar bilan ishlaydi",
+    "noBrands": "Ko'rsatilmagan"
+  },
+  "tuningOrders": {
+    "createTitle": "Yangi tuning so'rovi",
+    "vehicle": "Avtomobil",
+    "noVehicle": "Avtomobil tanlanmagan",
+    "serviceType": "Xizmat turi",
+    "selectService": "Xizmat turini tanlang",
+    "problemDescription": "Nima xohlashingizni tasvirlang",
+    "cancel": "Bekor qilish",
+    "send": "So'rov yuborish",
+    "sending": "Yuborilmoqda…",
+    "signInToOrder": "So'rov yuborish uchun tizimga kiring"
+  },
+  "myTuner": {
+    "title": "Tuner kabineti",
+    "signInRequired": "Tuner kabinetini ochish uchun tizimga kiring",
+    "signIn": "Kirish",
+    "applyTitle": "Tuner sifatida ro'yxatdan o'tish",
+    "applyDescription": "Tuner profilingizni to'ldiring. Admin ko'rib chiqib tasdiqlagandan so'ng profilingiz katalogda ko'rinadi.",
+    "apply": "Ariza yuborish",
+    "applying": "Yuborilmoqda…",
+    "status": {
+      "PENDING": "Ko'rib chiqilmoqda",
+      "VERIFIED": "Tasdiqlangan",
+      "SUSPENDED": "Bloklangan"
+    },
+    "statusNote": {
+      "PENDING": "Arizangiz admin tomonidan ko'rib chiqilmoqda — hozircha mijozlarga ko'rinmaydi.",
+      "VERIFIED": "Profilingiz faol va katalogda ko'rinadi.",
+      "SUSPENDED": "Profilingiz admin tomonidan bloklangan va katalogdan yashirilgan."
+    },
+    "tabs": {
+      "profile": "Profil",
+      "brands": "Brendlar",
+      "orders": "Buyurtmalar"
+    },
+    "name": "Tuner nomi",
+    "description": "Tavsif",
+    "city": "Shahar",
+    "address": "Manzil",
+    "phone": "Telefon",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "workingHours": "Ish vaqti",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda…",
+    "selectBrands": "Qaysi avtomobil brendlarini tuning qilishingizni tanlang",
+    "orders": {
+      "empty": "Hozircha tuning buyurtmasi yo'q",
+      "status": {
+        "NEW": "Yangi",
+        "IN_PROGRESS": "Jarayonda",
+        "WAITING_FOR_LOG": "Log kutilmoqda",
+        "READY": "Tayyor",
+        "COMPLETED": "Yakunlangan",
+        "CANCELLED": "Bekor qilingan"
+      },
+      "uploadFile": "Fayl yuklash",
+      "fileKind": {
+        "ORIGINAL": "Original",
+        "MODIFIED": "O'zgartirilgan",
+        "LOG": "Log"
+      },
+      "powerAfterHp": "Quvvat, keyin (ot kuchi)",
+      "torqueAfterNm": "Moment, keyin (Nm)",
+      "fuelConsumptionAfter": "Sarfi, keyin (L/100km)",
+      "saveResults": "Natijalarni saqlash",
+      "verified": "Tasdiqlangan"
+    }
+  },
+  "pricing": {
+    "title": "Tariflar",
+    "subtitle": "Servisingiz yoki tuning biznesingizga mos tarifni tanlang.",
+    "plans": {
+      "FREE": "Bepul",
+      "PRO": "Pro",
+      "BUSINESS": "Biznes"
+    },
+    "current": "Joriy tarif",
+    "free": "Bepul",
+    "somPerMonth": "so'm / oy",
+    "signInToSubscribe": "Obuna bo'lish uchun tizimga kiring",
+    "payWith": "{provider} orqali to'lash"
+  },
+  "reportAnalyzer": {
+    "title": "AI Hisobot tahlili",
+    "subtitle": "Diagnostika ekrani yoki ta'mirlash smetasi rasmini yuklang — AI qanchalik shoshilinch ekanini baholaydi.",
+    "signInRequired": "Hisobot tahlilidan foydalanish uchun tizimga kiring",
+    "signIn": "Kirish",
+    "uploadReport": "Hisobot yuklash",
+    "analyzing": "Tahlil qilinmoqda…",
+    "empty": "Hozircha tahlil qilingan hisobot yo'q",
+    "severity": {
+      "LOW": "Past",
+      "MEDIUM": "O'rtacha",
+      "HIGH": "Yuqori",
+      "UNKNOWN": "Noma'lum"
+    }
+  },
+  "account": {
+    "title": "Hisobim",
+    "signInRequired": "Hisobingizni ko'rish uchun tizimga kiring",
+    "signIn": "Kirish",
+    "subscription": {
+      "title": "Obuna",
+      "currentPlan": "Joriy tarif",
+      "until": "muddati",
+      "managePlan": "Tarifni boshqarish"
+    },
+    "telegram": {
+      "title": "Telegram bildirishnomalari",
+      "linked": "Telegram'ingiz ulangan — bildirishnomalar shu yerga keladi.",
+      "notLinked": "Buyurtma va holat bildirishnomalarini olish uchun Telegram'ni ulang.",
+      "generateCode": "Ulash kodini olish",
+      "openBot": "Ulashni yakunlash uchun botni ochish",
+      "unlink": "Uzish"
+    }
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -250,14 +395,51 @@
       "subtitle": "Avtomobilingizni qo'shing va boshlang — ro'yxatdan o'tish bepul.",
       "submit": "Ro'yxatdan o'tish",
       "loading": "Hisob yaratilmoqda…"
+    },
+    "twoFactor": {
+      "title": "Ikki bosqichli tasdiqlash",
+      "subtitle": "Authenticator ilovasidagi 6 xonali kodni yoki zaxira kodni kiriting.",
+      "codeLabel": "Kod",
+      "codePlaceholder": "123456",
+      "verify": "Tasdiqlash",
+      "verifying": "Tekshirilmoqda…"
     }
   },
   "admin": {
     "nav": {
+      "dashboard": "Boshqaruv paneli",
       "users": "Foydalanuvchilar",
       "vehicleCatalog": "Avtomobil katalogi",
       "serviceCatalog": "Xizmat turlari",
-      "serviceProviders": "Servislar"
+      "serviceProviders": "Servislar",
+      "tuners": "Tunerlar",
+      "orders": "Buyurtmalar",
+      "payments": "To'lovlar",
+      "reviews": "Sharhlar",
+      "notifications": "E'lonlar",
+      "auditLog": "Amallar jurnali",
+      "security": "Xavfsizlik"
+    },
+    "stats": {
+      "title": "Boshqaruv paneli",
+      "users": "Foydalanuvchilar",
+      "serviceProviders": "Servislar",
+      "serviceProvidersPending": "Kutilayotgan servislar",
+      "orders": "Buyurtmalar",
+      "ordersNew": "Yangi buyurtmalar",
+      "vehicles": "Avtomobillar",
+      "reviews": "Sharhlar",
+      "avgRating": "O'rtacha reyting",
+      "aiConversations": "AI suhbatlari",
+      "usersByRole": "Rol bo'yicha foydalanuvchilar",
+      "customers": "Mijozlar",
+      "services": "Servislar",
+      "tuners": "Tunerlar",
+      "admins": "Adminlar",
+      "ordersByStatus": "Holat bo'yicha buyurtmalar",
+      "ordersInProgress": "Jarayonda",
+      "ordersCompleted": "Yakunlangan",
+      "ordersCancelled": "Bekor qilingan"
     },
     "vehicleCatalog": {
       "title": "Avtomobil katalogi",
@@ -310,6 +492,89 @@
       "suspend": "Bloklash",
       "empty": "Servis topilmadi"
     },
+    "orders": {
+      "title": "Buyurtmalar",
+      "filterCity": "Shahar",
+      "allStatuses": "Barcha holatlar",
+      "empty": "Buyurtma topilmadi"
+    },
+    "tuners": {
+      "title": "Tunerlar",
+      "name": "Nomi",
+      "city": "Shahar",
+      "statusLabel": "Holati",
+      "allStatuses": "Barcha holatlar",
+      "status": {
+        "PENDING": "Kutilmoqda",
+        "VERIFIED": "Tasdiqlangan",
+        "SUSPENDED": "Bloklangan"
+      },
+      "verify": "Tasdiqlash",
+      "suspend": "Bloklash",
+      "empty": "Tuner topilmadi"
+    },
+    "payments": {
+      "title": "To'lovlar",
+      "allStatuses": "Barcha holatlar",
+      "plan": "Tarif",
+      "provider": "Provayder",
+      "amount": "Summa",
+      "statusLabel": "Holati",
+      "date": "Sana",
+      "status": {
+        "PENDING": "Kutilmoqda",
+        "PAID": "To'langan",
+        "CANCELLED": "Bekor qilingan",
+        "FAILED": "Xato"
+      },
+      "empty": "To'lov topilmadi"
+    },
+    "reviews": {
+      "title": "Sharhlar",
+      "empty": "Sharh topilmadi",
+      "rating": "Baho",
+      "delete": "O'chirish",
+      "deleteConfirmTitle": "Sharhni o'chirish",
+      "deleteConfirmDescription": "Bu amalni ortga qaytarib bo'lmaydi. Servisning reytingi qayta hisoblanadi.",
+      "cancel": "Bekor qilish",
+      "confirmDelete": "Ha, o'chirish"
+    },
+    "notifications": {
+      "title": "E'lon yuborish",
+      "subtitle": "Tanlangan auditoriyaga uch tilda ilova ichidagi bildirishnoma yuboradi.",
+      "message": "Xabar",
+      "audience": "Auditoriya",
+      "role": {
+        "ALL": "Barchasi",
+        "CUSTOMER": "Mijozlar",
+        "SERVICE": "Servislar",
+        "TUNER": "Tunerlar"
+      },
+      "send": "Yuborish",
+      "sending": "Yuborilmoqda…",
+      "sent": "{count} foydalanuvchiga yuborildi"
+    },
+    "auditLog": {
+      "title": "Amallar jurnali",
+      "empty": "Hozircha yozuv yo'q",
+      "by": "kim:"
+    },
+    "security": {
+      "title": "Xavfsizlik",
+      "twoFactorTitle": "Ikki bosqichli tasdiqlash",
+      "enabled": "Yoqilgan",
+      "disabled": "O'chirilgan",
+      "startSetup": "2FA sozlash",
+      "scanQr": "Authenticator ilovasi (masalan, Google Authenticator) bilan shu QR kodni skanerlang yoki kodni qo'lda kiriting.",
+      "codeLabel": "6 xonali kod",
+      "confirmEnable": "Tasdiqlash va yoqish",
+      "backupCodesIntro": "Bu zaxira kodlarni ishonchli joyda saqlang — authenticatorga kirish imkoni bo'lmaganda har biri bir marta ishlatiladi.",
+      "done": "Tayyor",
+      "startDisable": "2FA'ni o'chirish",
+      "confirmDisable": "O'chirishni tasdiqlash",
+      "verifying": "Tekshirilmoqda…",
+      "cancel": "Bekor qilish"
+    },
     "users": {
       "title": "Foydalanuvchilar",
       "search": "Ism yoki email bo'yicha qidirish",
@@ -348,6 +613,22 @@
     "SERVICE_PROVIDER_ALREADY_EXISTS": "Sizda allaqachon servis profili mavjud",
     "SERVICE_OFFERING_NOT_FOUND": "Xizmat taklifi topilmadi",
     "AI_ASSISTANT_NOT_CONFIGURED": "AI Assistant vaqtincha ishlamayapti",
-    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Assistant javob bera olmadi, qaytadan urinib ko'ring"
+    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Assistant javob bera olmadi, qaytadan urinib ko'ring",
+    "TWO_FACTOR_SETUP_REQUIRED": "Avval 2FA sozlashni boshlang",
+    "TWO_FACTOR_ALREADY_ENABLED": "Ikki bosqichli tasdiqlash allaqachon yoqilgan",
+    "TWO_FACTOR_NOT_ENABLED": "Ikki bosqichli tasdiqlash yoqilmagan",
+    "TWO_FACTOR_INVALID_CODE": "Kod noto'g'ri yoki muddati o'tgan",
+    "MFA_CHALLENGE_INVALID": "Kirish muddati tugadi, qaytadan kiring",
+    "REVIEW_NOT_FOUND": "Sharh topilmadi",
+    "TUNER_PROFILE_NOT_FOUND": "Tuner topilmadi",
+    "TUNER_PROFILE_ALREADY_EXISTS": "Sizda allaqachon tuner profili mavjud",
+    "TUNING_ORDER_NOT_FOUND": "Tuning buyurtmasi topilmadi",
+    "TUNING_ORDER_NOT_CANCELLABLE": "Faqat yangi, hali boshlanmagan buyurtmani bekor qilish mumkin",
+    "ECU_FILE_KIND_NOT_ALLOWED": "Bu fayl turi ushbu amal uchun ruxsat etilmagan",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "Bu to'lov usuli vaqtincha ishlamayapti",
+    "USER_VEHICLE_NOT_FOUND": "Avtomobil topilmadi",
+    "REPORT_ANALYZER_NOT_CONFIGURED": "Hisobot tahlili vaqtincha ishlamayapti",
+    "REPORT_FILE_NOT_FOUND": "Yuklangan fayl topilmadi, qaytadan urinib ko'ring",
+    "REPORT_ANALYSIS_NOT_FOUND": "Hisobot tahlili topilmadi"
   }
 }

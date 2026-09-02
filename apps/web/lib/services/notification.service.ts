@@ -1,4 +1,4 @@
-import type { NotificationOutput, NotificationQuery } from '@repo/contracts';
+import type { BroadcastNotificationInput, NotificationOutput, NotificationQuery } from '@repo/contracts';
 import { BaseService, type Paged } from '@/lib/services/base.service';
 
 class NotificationService extends BaseService<NotificationOutput, never, never> {
@@ -6,6 +6,10 @@ class NotificationService extends BaseService<NotificationOutput, never, never> 
 
   async list(query: Partial<NotificationQuery> = {}): Promise<Paged<NotificationOutput>> {
     return this.sendGetPaged<NotificationOutput>('', query);
+  }
+
+  async broadcast(input: BroadcastNotificationInput) {
+    return this.sendPost<{ recipientCount: number }, BroadcastNotificationInput>('/broadcast', input);
   }
 
   async unreadCount() {

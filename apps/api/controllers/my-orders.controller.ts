@@ -6,6 +6,7 @@ import type { CreateOrderInput } from '@/inputs/order.input';
 import { CreateReviewInputSchema } from '@/inputs/review.input';
 import type { CreateReviewInput } from '@/inputs/review.input';
 import { Authenticate, Authorized } from '@/middlewares/auth.middleware';
+import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { MyOrdersService } from '@/services/my-orders.service';
 
 @Controller('/my-orders')
@@ -21,6 +22,7 @@ export class MyOrdersController {
 
   @Post('/')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async create(@BodyParams() body: CreateOrderInput) {
     const data = CreateOrderInputSchema.parse(body);
     return this.myOrdersService.create(data);
@@ -34,12 +36,14 @@ export class MyOrdersController {
 
   @Put('/:id/cancel')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async cancel(@PathParams('id') id: string) {
     return this.myOrdersService.cancel(id);
   }
 
   @Post('/:id/review')
   @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.write)
   async review(@PathParams('id') id: string, @BodyParams() body: CreateReviewInput) {
     const data = CreateReviewInputSchema.parse(body);
     return this.myOrdersService.review(id, data);

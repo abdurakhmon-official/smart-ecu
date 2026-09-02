@@ -12,10 +12,16 @@ export const ReviewQuerySchema = z.object({
   size: z.coerce.number().int().positive().max(50).default(20),
 });
 
+export const AdminReviewQuerySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  size: z.coerce.number().int().positive().max(50).default(20),
+});
+
 // types
 
 export type CreateReviewInput = z.infer<typeof CreateReviewInputSchema>;
 export type ReviewQuery = z.infer<typeof ReviewQuerySchema>;
+export type AdminReviewQuery = z.infer<typeof AdminReviewQuerySchema>;
 
 // interfaces
 
@@ -25,6 +31,7 @@ export interface ReviewOutput {
   userId: string;
   customerName: string;
   serviceProviderId: string;
+  serviceProviderName: string;
   rating: number;
   comment: string | null;
   createdAt: string;

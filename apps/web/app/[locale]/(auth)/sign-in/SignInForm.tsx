@@ -3,8 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { SigninInputSchema, type SigninInput } from '@repo/contracts';
+import { TwoFactorStep } from '@/app/[locale]/(auth)/sign-in/TwoFactorStep';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { FormField } from '@/components/ui/FormField';
@@ -17,6 +19,7 @@ export function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const signIn = useSignIn();
+  const [mfaToken, setMfaToken] = useState<string | null>(null);
 
   const {
     register,
@@ -27,13 +30,21 @@ export function SignInForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signIn.mutateAsync(data);
+      const result = await signIn.mutateAsync(data);
+      if (result.mfaRequired) {
+        setMfaToken(result.mfaToken);
+        return;
+      }
       router.push(searchParams.get('next') || '/');
     } catch (error) {
       const detail = errorFrom(error);
       setError('root', { message: detail.message });
     }
   });
+
+  if (mfaToken) {
+    return <TwoFactorStep mfaToken={mfaToken} onSuccess={() => router.push(searchParams.get('next') || '/')} />;
+  }
 
   return (
     <Card className="w-full max-w-sm">

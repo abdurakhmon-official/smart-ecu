@@ -1,2 +1,2 @@
-export { NotificationQuerySchema } from '@repo/contracts';
-export type { NotificationQuery } from '@repo/contracts';
+export { BroadcastNotificationInputSchema, NotificationQuerySchema } from '@repo/contracts';
+export type { BroadcastNotificationInput, NotificationQuery } from '@repo/contracts';

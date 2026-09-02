@@ -10,10 +10,18 @@ export function AdminSubNav() {
 
   // add more tabs here as the admin panel grows
   const tabs = [
+    { href: '/admin', label: t('dashboard') },
     { href: '/admin/users', label: t('users') },
     { href: '/admin/vehicle-catalog', label: t('vehicleCatalog') },
     { href: '/admin/service-catalog', label: t('serviceCatalog') },
     { href: '/admin/service-providers', label: t('serviceProviders') },
+    { href: '/admin/tuners', label: t('tuners') },
+    { href: '/admin/orders', label: t('orders') },
+    { href: '/admin/payments', label: t('payments') },
+    { href: '/admin/reviews', label: t('reviews') },
+    { href: '/admin/notifications', label: t('notifications') },
+    { href: '/admin/audit-log', label: t('auditLog') },
+    { href: '/admin/security', label: t('security') },
   ] as const;
 
   return (

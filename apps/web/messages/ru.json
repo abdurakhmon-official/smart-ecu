@@ -6,6 +6,9 @@
     "signOut": "Выйти",
     "admin": "Админ-панель",
     "myService": "Кабинет сервиса",
+    "myTuner": "Кабинет тюнера",
+    "account": "Аккаунт",
+    "reportAnalyzer": "Анализ отчётов",
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню",
     "location": "Местоположение",
@@ -19,14 +22,19 @@
         "ORDER_ACCEPTED": "Ваш заказ принят",
         "ORDER_COMPLETED": "Ваш заказ завершён",
         "ORDER_CANCELLED": "Заказ отменён",
-        "REVIEW_RECEIVED": "Вы получили новый отзыв"
+        "REVIEW_RECEIVED": "Вы получили новый отзыв",
+        "ADMIN_BROADCAST": "Объявление",
+        "TUNING_ORDER_RECEIVED": "Получен новый заказ на тюнинг",
+        "TUNING_ORDER_STATUS_CHANGED": "Статус вашего заказа на тюнинг изменился"
       }
     },
     "links": {
       "home": "Главная",
       "services": "Услуги",
       "workshops": "Сервисы",
+      "tuners": "Тюнеры",
       "aiAssistant": "AI Ассистент",
+      "pricing": "Тарифы",
       "myGarage": "Мой гараж",
       "orders": "Заказы",
       "news": "Новости",
@@ -98,7 +106,11 @@
     "cancel": "Отмена",
     "confirmDelete": "Да, удалить",
     "save": "Сохранить",
-    "saving": "Сохранение…"
+    "saving": "Сохранение…",
+    "health": {
+      "title": "Индекс здоровья автомобиля",
+      "score": "Здоровье: {score}/100"
+    }
   },
   "services": {
     "title": "Найти сервис",
@@ -230,6 +242,139 @@
       "fuelConsumption": "Увеличился расход топлива"
     }
   },
+  "tuners": {
+    "title": "Найти тюнера",
+    "subtitle": "Специалисты по чип-тюнингу ECU — Stage 1/2, Eco и индивидуальная прошивка.",
+    "searchPlaceholder": "Поиск по имени тюнера",
+    "filterCity": "Город",
+    "allBrands": "Все марки",
+    "empty": "Тюнеры не найдены",
+    "viewProfile": "Смотреть профиль"
+  },
+  "tunerProfile": {
+    "back": "Назад к тюнерам",
+    "call": "Позвонить",
+    "brands": "Работает с марками",
+    "noBrands": "Не указано"
+  },
+  "tuningOrders": {
+    "createTitle": "Новый запрос на тюнинг",
+    "vehicle": "Автомобиль",
+    "noVehicle": "Автомобиль не выбран",
+    "serviceType": "Вид услуги",
+    "selectService": "Выберите вид услуги",
+    "problemDescription": "Опишите, что хотите получить",
+    "cancel": "Отмена",
+    "send": "Отправить запрос",
+    "sending": "Отправка…",
+    "signInToOrder": "Войдите, чтобы отправить запрос"
+  },
+  "myTuner": {
+    "title": "Кабинет тюнера",
+    "signInRequired": "Войдите, чтобы открыть кабинет тюнера",
+    "signIn": "Войти",
+    "applyTitle": "Регистрация в качестве тюнера",
+    "applyDescription": "Заполните профиль тюнера. После проверки администратором профиль появится в каталоге.",
+    "apply": "Отправить заявку",
+    "applying": "Отправка…",
+    "status": {
+      "PENDING": "На рассмотрении",
+      "VERIFIED": "Подтверждён",
+      "SUSPENDED": "Заблокирован"
+    },
+    "statusNote": {
+      "PENDING": "Ваша заявка рассматривается администратором — пока не видна клиентам.",
+      "VERIFIED": "Ваш профиль активен и виден в каталоге.",
+      "SUSPENDED": "Ваш профиль заблокирован администратором и скрыт из каталога."
+    },
+    "tabs": {
+      "profile": "Профиль",
+      "brands": "Марки",
+      "orders": "Заказы"
+    },
+    "name": "Имя тюнера",
+    "description": "Описание",
+    "city": "Город",
+    "address": "Адрес",
+    "phone": "Телефон",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "workingHours": "Режим работы",
+    "save": "Сохранить",
+    "saving": "Сохранение…",
+    "selectBrands": "Выберите марки автомобилей, которые вы тюните",
+    "orders": {
+      "empty": "Заказов на тюнинг пока нет",
+      "status": {
+        "NEW": "Новый",
+        "IN_PROGRESS": "В процессе",
+        "WAITING_FOR_LOG": "Ожидание лога",
+        "READY": "Готово",
+        "COMPLETED": "Завершён",
+        "CANCELLED": "Отменён"
+      },
+      "uploadFile": "Загрузить файл",
+      "fileKind": {
+        "ORIGINAL": "Оригинал",
+        "MODIFIED": "Модифицированный",
+        "LOG": "Лог"
+      },
+      "powerAfterHp": "Мощность после (л.с.)",
+      "torqueAfterNm": "Момент после (Нм)",
+      "fuelConsumptionAfter": "Расход после (л/100км)",
+      "saveResults": "Сохранить результаты",
+      "verified": "Подтверждено"
+    }
+  },
+  "pricing": {
+    "title": "Тарифы",
+    "subtitle": "Выберите тариф, подходящий вашему сервису или тюнинг-бизнесу.",
+    "plans": {
+      "FREE": "Бесплатный",
+      "PRO": "Про",
+      "BUSINESS": "Бизнес"
+    },
+    "current": "Текущий тариф",
+    "free": "Бесплатно",
+    "somPerMonth": "сум / мес",
+    "signInToSubscribe": "Войдите, чтобы подписаться",
+    "payWith": "Оплатить через {provider}"
+  },
+  "reportAnalyzer": {
+    "title": "AI Анализ отчётов",
+    "subtitle": "Загрузите фото диагностического экрана или сметы на ремонт — AI оценит срочность.",
+    "signInRequired": "Войдите, чтобы использовать анализ отчётов",
+    "signIn": "Войти",
+    "uploadReport": "Загрузить отчёт",
+    "analyzing": "Анализ…",
+    "empty": "Пока нет проанализированных отчётов",
+    "severity": {
+      "LOW": "Низкая",
+      "MEDIUM": "Средняя",
+      "HIGH": "Высокая",
+      "UNKNOWN": "Неизвестно"
+    }
+  },
+  "account": {
+    "title": "Аккаунт",
+    "signInRequired": "Войдите, чтобы увидеть свой аккаунт",
+    "signIn": "Войти",
+    "subscription": {
+      "title": "Подписка",
+      "currentPlan": "Текущий тариф",
+      "until": "до",
+      "managePlan": "Управлять тарифом"
+    },
+    "telegram": {
+      "title": "Telegram-уведомления",
+      "linked": "Ваш Telegram привязан — уведомления будут приходить туда.",
+      "notLinked": "Привяжите Telegram, чтобы получать уведомления о заказах и статусах.",
+      "generateCode": "Получить код привязки",
+      "openBot": "Открыть бота для завершения привязки",
+      "unlink": "Отвязать"
+    }
+  },
   "footer": {
     "copyright": "© {year} Smart ECU"
   },
@@ -250,14 +395,51 @@
       "subtitle": "Добавьте автомобиль и начните — регистрация бесплатна.",
       "submit": "Зарегистрироваться",
       "loading": "Создание аккаунта…"
+    },
+    "twoFactor": {
+      "title": "Двухфакторная проверка",
+      "subtitle": "Введите 6-значный код из приложения-аутентификатора или резервный код.",
+      "codeLabel": "Код",
+      "codePlaceholder": "123456",
+      "verify": "Подтвердить",
+      "verifying": "Проверка…"
     }
   },
   "admin": {
     "nav": {
+      "dashboard": "Панель",
       "users": "Пользователи",
       "vehicleCatalog": "Каталог авто",
       "serviceCatalog": "Виды услуг",
-      "serviceProviders": "Сервисы"
+      "serviceProviders": "Сервисы",
+      "tuners": "Тюнеры",
+      "orders": "Заказы",
+      "payments": "Платежи",
+      "reviews": "Отзывы",
+      "notifications": "Объявления",
+      "auditLog": "Журнал действий",
+      "security": "Безопасность"
+    },
+    "stats": {
+      "title": "Панель управления",
+      "users": "Пользователи",
+      "serviceProviders": "Сервисы",
+      "serviceProvidersPending": "На рассмотрении",
+      "orders": "Заказы",
+      "ordersNew": "Новые заказы",
+      "vehicles": "Автомобили",
+      "reviews": "Отзывы",
+      "avgRating": "Средний рейтинг",
+      "aiConversations": "AI-диалоги",
+      "usersByRole": "Пользователи по ролям",
+      "customers": "Клиенты",
+      "services": "Сервисы",
+      "tuners": "Тюнеры",
+      "admins": "Админы",
+      "ordersByStatus": "Заказы по статусу",
+      "ordersInProgress": "В процессе",
+      "ordersCompleted": "Завершены",
+      "ordersCancelled": "Отменены"
     },
     "vehicleCatalog": {
       "title": "Каталог автомобилей",
@@ -310,6 +492,89 @@
       "suspend": "Заблокировать",
       "empty": "Сервисы не найдены"
     },
+    "orders": {
+      "title": "Заказы",
+      "filterCity": "Город",
+      "allStatuses": "Все статусы",
+      "empty": "Заказы не найдены"
+    },
+    "tuners": {
+      "title": "Тюнеры",
+      "name": "Название",
+      "city": "Город",
+      "statusLabel": "Статус",
+      "allStatuses": "Все статусы",
+      "status": {
+        "PENDING": "На рассмотрении",
+        "VERIFIED": "Подтверждён",
+        "SUSPENDED": "Заблокирован"
+      },
+      "verify": "Подтвердить",
+      "suspend": "Заблокировать",
+      "empty": "Тюнеры не найдены"
+    },
+    "payments": {
+      "title": "Платежи",
+      "allStatuses": "Все статусы",
+      "plan": "Тариф",
+      "provider": "Провайдер",
+      "amount": "Сумма",
+      "statusLabel": "Статус",
+      "date": "Дата",
+      "status": {
+        "PENDING": "Ожидает",
+        "PAID": "Оплачен",
+        "CANCELLED": "Отменён",
+        "FAILED": "Ошибка"
+      },
+      "empty": "Платежи не найдены"
+    },
+    "reviews": {
+      "title": "Отзывы",
+      "empty": "Отзывы не найдены",
+      "rating": "Оценка",
+      "delete": "Удалить",
+      "deleteConfirmTitle": "Удалить отзыв",
+      "deleteConfirmDescription": "Это действие необратимо. Рейтинг сервиса будет пересчитан.",
+      "cancel": "Отмена",
+      "confirmDelete": "Да, удалить"
+    },
+    "notifications": {
+      "title": "Отправить объявление",
+      "subtitle": "Отправляет уведомление в приложении выбранной аудитории на всех трёх языках.",
+      "message": "Сообщение",
+      "audience": "Аудитория",
+      "role": {
+        "ALL": "Все",
+        "CUSTOMER": "Клиенты",
+        "SERVICE": "Сервисы",
+        "TUNER": "Тюнеры"
+      },
+      "send": "Отправить",
+      "sending": "Отправка…",
+      "sent": "Отправлено {count} пользователям"
+    },
+    "auditLog": {
+      "title": "Журнал действий",
+      "empty": "Пока нет записей",
+      "by": "автор:"
+    },
+    "security": {
+      "title": "Безопасность",
+      "twoFactorTitle": "Двухфакторная аутентификация",
+      "enabled": "Включена",
+      "disabled": "Выключена",
+      "startSetup": "Настроить 2FA",
+      "scanQr": "Отсканируйте этот QR-код приложением-аутентификатором (например, Google Authenticator) или введите код вручную.",
+      "codeLabel": "6-значный код",
+      "confirmEnable": "Подтвердить и включить",
+      "backupCodesIntro": "Сохраните эти резервные коды в надёжном месте — каждый можно использовать один раз, если вы потеряете доступ к аутентификатору.",
+      "done": "Готово",
+      "startDisable": "Выключить 2FA",
+      "confirmDisable": "Подтвердить выключение",
+      "verifying": "Проверка…",
+      "cancel": "Отмена"
+    },
     "users": {
       "title": "Пользователи",
       "search": "Поиск по имени или email",
@@ -348,6 +613,22 @@
     "SERVICE_PROVIDER_ALREADY_EXISTS": "У вас уже есть профиль сервиса",
     "SERVICE_OFFERING_NOT_FOUND": "Предложение услуги не найдено",
     "AI_ASSISTANT_NOT_CONFIGURED": "AI Ассистент временно недоступен",
-    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Ассистент не смог ответить, попробуйте ещё раз"
+    "AI_ASSISTANT_UPSTREAM_ERROR": "AI Ассистент не смог ответить, попробуйте ещё раз",
+    "TWO_FACTOR_SETUP_REQUIRED": "Сначала начните настройку 2FA",
+    "TWO_FACTOR_ALREADY_ENABLED": "Двухфакторная аутентификация уже включена",
+    "TWO_FACTOR_NOT_ENABLED": "Двухфакторная аутентификация не включена",
+    "TWO_FACTOR_INVALID_CODE": "Неверный или просроченный код",
+    "MFA_CHALLENGE_INVALID": "Срок действия входа истёк, войдите заново",
+    "REVIEW_NOT_FOUND": "Отзыв не найден",
+    "TUNER_PROFILE_NOT_FOUND": "Тюнер не найден",
+    "TUNER_PROFILE_ALREADY_EXISTS": "У вас уже есть профиль тюнера",
+    "TUNING_ORDER_NOT_FOUND": "Заказ на тюнинг не найден",
+    "TUNING_ORDER_NOT_CANCELLABLE": "Отменить можно только новый, ещё не начатый заказ",
+    "ECU_FILE_KIND_NOT_ALLOWED": "Этот тип файла не разрешён для данного действия",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "Этот способ оплаты временно недоступен",
+    "USER_VEHICLE_NOT_FOUND": "Автомобиль не найден",
+    "REPORT_ANALYZER_NOT_CONFIGURED": "Анализ отчётов временно недоступен",
+    "REPORT_FILE_NOT_FOUND": "Загруженный файл не найден, попробуйте ещё раз",
+    "REPORT_ANALYSIS_NOT_FOUND": "Анализ отчёта не найден"
   }
 }

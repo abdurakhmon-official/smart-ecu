@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookie from 'js-cookie';
 import { useCallback, useEffect, useSyncExternalStore } from 'react';
-import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput } from '@repo/contracts';
+import type { AccessTokenOutput, SigninInput, SigninOutput, SignupInput, TwoFactorVerifyInput, UserOutput } from '@repo/contracts';
 import { TOKEN_COOKIE } from '@/lib/axios';
 import { queryKeys } from '@/lib/query-keys';
 import { authService } from '@/lib/services';
@@ -56,21 +56,45 @@ export const useSession = () => {
   };
 };
 
-export const useSignIn = () => {
+/** Token qabul qilinganda bajariladigan umumiy yakunlash — parol bilan ham, 2FA tasdiqlangandan keyin ham ishlatiladi. */
+const useCompleteSignin = () => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (input: SigninInput) => {
-      const token = await authService.signIn(input);
+  return useCallback(
+    async (token: AccessTokenOutput) => {
       storeToken(token);
-
       const user: UserOutput = await authService.me();
-      return { token, user };
-    },
-    onSuccess: ({ token, user }) => {
       dispatch(setCredentials({ user, token: token.accessToken }));
       queryClient.setQueryData(queryKeys.me, user);
+    },
+    [dispatch, queryClient],
+  );
+};
+
+/**
+ * `SigninOutput` ikki holatdan birini qaytaradi: to'g'ridan-to'g'ri token (`mfaRequired: false`)
+ * yoki 2FA challenge (`mfaRequired: true`) — chaqiruvchi komponent shu bayroqqa qarab
+ * kod so'rash ekranini ko'rsatadi. Faqat birinchi holatda sessiya yakunlanadi.
+ */
+export const useSignIn = () => {
+  const completeSignin = useCompleteSignin();
+
+  return useMutation({
+    mutationFn: (input: SigninInput) => authService.signIn(input),
+    onSuccess: async (result: SigninOutput) => {
+      if (!result.mfaRequired) await completeSignin(result);
+    },
+  });
+};
+
+export const useVerifyTwoFactor = () => {
+  const completeSignin = useCompleteSignin();
+
+  return useMutation({
+    mutationFn: (input: TwoFactorVerifyInput) => authService.verifyTwoFactor(input),
+    onSuccess: async (result: SigninOutput) => {
+      if (!result.mfaRequired) await completeSignin(result);
     },
   });
 };

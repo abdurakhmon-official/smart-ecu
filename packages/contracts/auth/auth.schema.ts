@@ -49,6 +49,8 @@ export interface UserOutput {
   emailVerified: boolean;
   active: boolean;
   isAdmin: boolean;
+  twoFactorEnabled: boolean;
+  telegramLinked: boolean;
 }
 
 export interface AccessTokenOutput {

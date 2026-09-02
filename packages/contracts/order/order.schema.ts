@@ -19,11 +19,19 @@ export const OrderQuerySchema = z.object({
   size: z.coerce.number().int().positive().max(50).default(20),
 });
 
+export const AdminOrderQuerySchema = z.object({
+  status: OrderStatusSchema.optional(),
+  city: z.string().trim().min(1).optional(),
+  page: z.coerce.number().int().positive().default(1),
+  size: z.coerce.number().int().positive().max(50).default(20),
+});
+
 // types
 
 export type OrderStatus = z.infer<typeof OrderStatusSchema>;
 export type CreateOrderInput = z.infer<typeof CreateOrderInputSchema>;
 export type OrderQuery = z.infer<typeof OrderQuerySchema>;
+export type AdminOrderQuery = z.infer<typeof AdminOrderQuerySchema>;
 
 // interfaces
 

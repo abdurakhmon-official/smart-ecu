@@ -1,0 +1,41 @@
+import config from '@/config';
+
+/**
+ * Payme Business Merchant API — checkout-havola formati va Basic-auth tekshiruvi.
+ * Format ("m=...;ac.order_id=...;a=...", base64) yillar davomida barqaror bo'lgan,
+ * lekin bu fayl **jonli hujjatlar orqali to'liq tasdiqlanmagan** (WebFetch orqali faqat
+ * `CreateTransaction`ning aniq maydonlari tasdiqlandi) — ishga tushirishdan oldin
+ * https://developer.help.paycom.uz bilan solishtirib chiqish tavsiya etiladi.
+ */
+
+const TIYIN_PER_SOM = 100;
+const PAYME_AUTH_LOGIN = 'Paycom';
+
+export const buildPaymeCheckoutUrl = (paymentId: string, amountSom: number): string => {
+  const params = `m=${config.payme.merchantId};ac.order_id=${paymentId};a=${amountSom * TIYIN_PER_SOM}`;
+  const encoded = Buffer.from(params).toString('base64');
+
+  return `${config.payme.checkoutUrl}/${encoded}`;
+};
+
+/** Payme so'rovlari `Authorization: Basic base64(Paycom:<merchant_key>)` bilan keladi. */
+export const verifyPaymeAuth = (authorizationHeader: string | undefined): boolean => {
+  if (!authorizationHeader?.startsWith('Basic ')) return false;
+
+  let decoded: string;
+  try {
+    decoded = Buffer.from(authorizationHeader.slice('Basic '.length), 'base64').toString('utf8');
+  } catch {
+    return false;
+  }
+
+  const separatorIndex = decoded.indexOf(':');
+  if (separatorIndex === -1) return false;
+
+  const login = decoded.slice(0, separatorIndex);
+  const key = decoded.slice(separatorIndex + 1);
+
+  return login === PAYME_AUTH_LOGIN && key === config.payme.merchantKey && Boolean(config.payme.merchantKey);
+};
+
+export const somToTiyin = (som: number): number => som * TIYIN_PER_SOM;

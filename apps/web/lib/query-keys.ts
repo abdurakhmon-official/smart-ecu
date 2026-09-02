@@ -36,4 +36,32 @@ export const queryKeys = {
   notificationsUnreadCount: ['notifications-unread-count'] as const,
 
   aiAssistantMessages: ['ai-assistant-messages'] as const,
+
+  adminStats: ['admin-stats'] as const,
+  adminOrdersBase: ['admin-orders'] as const,
+  adminOrders: (query: Record<string, unknown> = {}) => [...queryKeys.adminOrdersBase, query] as const,
+  adminReviewsBase: ['admin-reviews'] as const,
+  adminReviews: (query: Record<string, unknown> = {}) => [...queryKeys.adminReviewsBase, query] as const,
+  adminAuditLogBase: ['admin-audit-log'] as const,
+  adminAuditLog: (query: Record<string, unknown> = {}) => [...queryKeys.adminAuditLogBase, query] as const,
+
+  tunersBase: ['tuners'] as const,
+  tuners: (query: Record<string, unknown> = {}) => [...queryKeys.tunersBase, query] as const,
+  tuner: (id: string) => [...queryKeys.tunersBase, id] as const,
+  adminTunersBase: ['admin-tuners'] as const,
+  adminTuners: (query: Record<string, unknown> = {}) => [...queryKeys.adminTunersBase, query] as const,
+  myTunerBase: ['my-tuner'] as const,
+  myTuningOrdersBase: ['my-tuning-orders'] as const,
+  myTuningOrders: (query: Record<string, unknown> = {}) => [...queryKeys.myTuningOrdersBase, query] as const,
+  tunerOrdersBase: ['tuner-orders'] as const,
+  tunerOrders: (query: Record<string, unknown> = {}) => [...queryKeys.tunerOrdersBase, query] as const,
+
+  subscriptionPlans: ['subscription-plans'] as const,
+  mySubscription: ['my-subscription'] as const,
+  myPayments: ['my-payments'] as const,
+  adminPaymentsBase: ['admin-payments'] as const,
+  adminPayments: (query: Record<string, unknown> = {}) => [...queryKeys.adminPaymentsBase, query] as const,
+
+  vehicleHealthScore: (vehicleId: string) => ['vehicle-health-score', vehicleId] as const,
+  reportAnalysesBase: ['report-analyses'] as const,
 };

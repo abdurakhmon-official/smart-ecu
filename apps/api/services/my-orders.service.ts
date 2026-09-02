@@ -19,7 +19,7 @@ export class MyOrdersService {
   private static readonly ORDER_INCLUDE = {
     serviceCatalogItem: true,
     review: true,
-    acceptedServiceProvider: { select: { userId: true } },
+    acceptedServiceProvider: { select: { userId: true, name: true } },
   } as const satisfies Prisma.OrderInclude;
 
   @InjectContext()
@@ -140,7 +140,7 @@ export class MyOrdersService {
       orderId,
     });
 
-    return ok(this.serializeReview(review));
+    return ok(this.serializeReview(review, order.acceptedServiceProvider.name));
   }
 
   private async getOwnedOrThrow(orderId: string) {
@@ -170,21 +170,25 @@ export class MyOrdersService {
     };
   }
 
-  private serializeReview(review: {
-    id: string;
-    orderId: string;
-    userId: string;
-    serviceProviderId: string;
-    rating: number;
-    comment: string | null;
-    createdAt: Date;
-  }) {
+  private serializeReview(
+    review: {
+      id: string;
+      orderId: string;
+      userId: string;
+      serviceProviderId: string;
+      rating: number;
+      comment: string | null;
+      createdAt: Date;
+    },
+    serviceProviderName: string,
+  ) {
     return {
       id: review.id,
       orderId: review.orderId,
       userId: review.userId,
       customerName: this.currentUser?.fullName ?? '',
       serviceProviderId: review.serviceProviderId,
+      serviceProviderName,
       rating: review.rating,
       comment: review.comment,
       createdAt: review.createdAt.toISOString(),

@@ -7,6 +7,7 @@ import { requireUserId } from '@/utils/errors.utils';
 import type { SetActiveInput, UpdateRoleInput } from '@/inputs/user.input';
 import { USER_ROLE } from '../generated/prisma';
 import { AdminCannotModifySelfException, UserNotFoundException } from '@/exceptions/user.exceptions';
+import { AuditLogService } from '@/services/audit-log.service';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,9 @@ export class UserService {
 
   @InjectContext()
   private context!: PlatformContext;
+
+  @Inject()
+  private auditLogService!: AuditLogService;
 
   private get user() {
     return this.context.getRequest<Request>().user;
@@ -96,6 +100,14 @@ export class UserService {
       select: UserService.LIST_SELECT,
     });
 
+    await this.auditLogService.record({
+      actorId: this.currentUserId,
+      action: 'USER_ROLE_CHANGED',
+      targetType: 'User',
+      targetId: userId,
+      metadata: { role: input.role },
+    });
+
     return { success: true, data: { ...user, createdAt: user.createdAt.toISOString() } };
   }
 
@@ -107,6 +119,13 @@ export class UserService {
       where: { id: userId },
       data: { active: input.active },
       select: UserService.LIST_SELECT,
+    });
+
+    await this.auditLogService.record({
+      actorId: this.currentUserId,
+      action: input.active ? 'USER_ACTIVATED' : 'USER_DEACTIVATED',
+      targetType: 'User',
+      targetId: userId,
     });
 
     return { success: true, data: { ...user, createdAt: user.createdAt.toISOString() } };

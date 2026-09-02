@@ -12,19 +12,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
+import { useAppLocale } from '@/hooks/use-app-locale';
 import { useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications, useUnreadCount } from '@/hooks/use-notifications';
+import { pickLocalized } from '@/lib/localized';
 import { cn } from '@/lib/utils';
 
 const dotClass = (readAt: string | null) => cn('mt-1.5 size-2 shrink-0 rounded-full', readAt ? 'bg-transparent' : 'bg-primary');
 
 export function NotificationBell() {
   const t = useTranslations('nav.notifications');
+  const locale = useAppLocale();
   const { data: unread } = useUnreadCount();
   const { data: notifications } = useNotifications({ size: 5 });
   const markRead = useMarkNotificationRead();
   const markAllRead = useMarkAllNotificationsRead();
 
   const count = unread?.count ?? 0;
+
+  const labelFor = (notification: NotificationOutput): string =>
+    notification.type === 'ADMIN_BROADCAST' && notification.broadcastMessage
+      ? pickLocalized(notification.broadcastMessage, locale)
+      : t(`types.${notification.type}`);
 
   return (
     <DropdownMenu>
@@ -62,7 +70,7 @@ export function NotificationBell() {
               onSelect={() => !notification.readAt && markRead.mutate(notification.id)}
             >
               <span className={dotClass(notification.readAt)} />
-              <span className="flex-1 text-sm">{t(`types.${notification.type}`)}</span>
+              <span className="flex-1 text-sm">{labelFor(notification)}</span>
             </DropdownMenuItem>
           ))
         )}

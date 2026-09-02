@@ -36,6 +36,7 @@ export class S3Service {
   private static readonly UPLOAD_URL_EXPIRY = 15 * 60;
   private static readonly SELF_SERVICE_FOLDERS: UploadFolder[] = ['avatar'];
   private static readonly AUTHENTICATED_FOLDERS: UploadFolder[] = ['document'];
+  private static readonly TUNER_FOLDERS: UploadFolder[] = ['ecu-file'];
   private static readonly DEFAULT_EXTENSIONS: Record<string, string> = {
     'image/png': '.png',
     'image/jpeg': '.jpg',
@@ -211,6 +212,7 @@ export class S3Service {
     if (S3Service.SELF_SERVICE_FOLDERS.includes(folder)) return;
     if (this.user?.role === USER_ROLE.ADMIN) return;
     if (S3Service.AUTHENTICATED_FOLDERS.includes(folder) && this.user) return;
+    if (S3Service.TUNER_FOLDERS.includes(folder) && this.user?.role === USER_ROLE.TUNER) return;
 
     throw new Forbidden('admin access required');
   }

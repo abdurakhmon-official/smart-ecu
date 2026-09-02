@@ -57,11 +57,68 @@ enum NOTIFICATION_TYPE {
   ORDER_COMPLETED
   ORDER_CANCELLED
   REVIEW_RECEIVED
+  ADMIN_BROADCAST
+  TUNING_ORDER_RECEIVED
+  TUNING_ORDER_STATUS_CHANGED
 }
 
 enum AI_MESSAGE_ROLE {
   USER
   ASSISTANT
+}
+
+// Tuner kanban bosqichlari (Bosqich 6, 15-bo'lim): NEW → IN_PROGRESS → WAITING_FOR_LOG
+// (tuner mijozdan log so'ragan) → READY (proshivka tayyor, yuklab olishga tayyor) → COMPLETED.
+enum TUNING_ORDER_STATUS {
+  NEW
+  IN_PROGRESS
+  WAITING_FOR_LOG
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum ECU_FILE_KIND {
+  ORIGINAL
+  MODIFIED
+  LOG
+}
+
+// ── Monetizatsiya (Bosqich 7, 26-bo'lim) ─────────────────────────────────────
+// Faqat obuna (subscription) qamrab olingan — komissiya/premium listing/reklama
+// keyingi bosqichga qoldirilgan (26-bo'limning to'liq ko'lami emas, ataylab).
+
+enum SUBSCRIPTION_PLAN {
+  FREE
+  PRO
+  BUSINESS
+}
+
+enum SUBSCRIPTION_STATUS {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+enum PAYMENT_PROVIDER {
+  PAYME
+  CLICK
+}
+
+enum PAYMENT_STATUS {
+  PENDING
+  PAID
+  CANCELLED
+  FAILED
+}
+
+// AI Servis Analizatori (Bosqich 7, 13-bo'lim) — hisobot rasmi yuklanadi, AI muhimlik
+// darajasiga ajratadi. `summary` — AI'ning erkin matni, `AiMessage.content` bilan bir xil
+// asosda saqlanadi ("server matn qaytarmaydi" qoidasi tizim xabarlariga oid, AI javobiga emas).
+enum REPORT_SEVERITY {
+  LOW
+  MEDIUM
+  HIGH
 }
 
 model User {
@@ -80,12 +137,29 @@ model User {
   updatedAt         DateTime  @updatedAt @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
 
-  vehicles        UserVehicle[]
-  serviceProvider ServiceProvider?
-  orders          Order[]
-  reviews         Review[]
-  notifications   Notification[]
-  aiConversation  AiConversation?
+  // Admin 2FA (Bosqich 5, TOTP). `twoFactorSecret` faqat setup bosqichida yozilib,
+  // `twoFactorEnabledAt` tasdiqlangandan keyingina o'rnatiladi — shu oralikda login
+  // hali 2FA talab qilmaydi (setup yakunlanmagan hisoblanadi).
+  twoFactorSecret    String?   @map("two_factor_secret")
+  twoFactorEnabledAt DateTime? @map("two_factor_enabled_at")
+
+  // Telegram bot (Bosqich 7, 20/21-bo'lim) — bog'langandan keyin buyurtma/status xabarlari yuboriladi.
+  telegramChatId String? @unique @map("telegram_chat_id")
+
+  vehicles             UserVehicle[]
+  serviceProvider      ServiceProvider?
+  orders               Order[]
+  reviews              Review[]
+  notifications        Notification[]
+  aiConversation       AiConversation?
+  twoFactorBackupCodes TwoFactorBackupCode[]
+  auditLogs            AuditLog[]
+  tunerProfile         TunerProfile?
+  tuningOrders         TuningOrder[]
+  uploadedEcuFiles     EcuFile[]
+  subscription         Subscription?
+  payments             Payment[]
+  reportAnalyses       ServiceReportAnalysis[]
 
   @@index([email])
   @@map("users")
@@ -104,6 +178,7 @@ model Brand {
 
   models           Model[]
   serviceProviders ServiceProvider[]
+  tunerProfiles    TunerProfile[]
 
   @@map("brands")
 }
@@ -184,6 +259,7 @@ model UserVehicle {
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   engineOption EngineOption? @relation(fields: [engineOptionId], references: [id], onDelete: SetNull)
   orders       Order[]
+  tuningOrders TuningOrder[]
 
   @@index([userId])
   @@index([engineOptionId])
@@ -240,8 +316,9 @@ model ServiceCatalogItem {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  offerings ServiceOffering[]
-  orders    Order[]
+  offerings    ServiceOffering[]
+  orders       Order[]
+  tuningOrders TuningOrder[]
 
   @@map("service_catalog_items")
 }
@@ -336,13 +413,17 @@ model Review {
 
 /// `title`/`body` ataylab yo'q — matn hech qachon serverdan qaytmaydi (i18n qoidasi, 9-bo'lim).
 /// Frontend `type` (+ kerak bo'lsa `orderId` orqali olingan buyurtma ma'lumoti) asosida tarjima qiladi.
+/// Yagona istisno — `ADMIN_BROADCAST`: bu holatda matn admin tomonidan yozilgan, oldindan
+/// ma'lum bo'lmagan erkin kontent, shuning uchun `broadcastMessage` (`LocalizedText`, xuddi
+/// `ServiceCatalogItem.description` kabi — admin uz/ru/en'da kiritadi) orqali saqlanadi.
 model Notification {
-  id        String            @id @default(uuid())
-  userId    String            @map("user_id")
-  type      NOTIFICATION_TYPE
-  orderId   String?           @map("order_id")
-  readAt    DateTime?         @map("read_at")
-  createdAt DateTime          @default(now()) @map("created_at")
+  id               String            @id @default(uuid())
+  userId           String            @map("user_id")
+  type             NOTIFICATION_TYPE
+  orderId          String?           @map("order_id")
+  broadcastMessage Json?             @map("broadcast_message")
+  readAt           DateTime?         @map("read_at")
+  createdAt        DateTime          @default(now()) @map("created_at")
 
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   order Order? @relation(fields: [orderId], references: [id], onDelete: SetNull)
@@ -379,4 +460,193 @@ model AiMessage {
 
   @@index([conversationId])
   @@map("ai_messages")
+}
+
+// ── Admin 2FA (Bosqich 5) ─────────────────────────────────────────────────────
+// TOTP asosida. `codeHash` argon2 bilan xeshlanadi (parollar bilan bir xil
+// `hashPassword()` orqali) — plaintext zaxira kod hech qachon saqlanmaydi,
+// faqat generatsiya paytida bir marta foydalanuvchiga ko'rsatiladi.
+
+model TwoFactorBackupCode {
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
+  codeHash  String    @map("code_hash")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("two_factor_backup_codes")
+}
+
+// ── Audit log (Bosqich 5) ─────────────────────────────────────────────────────
+// `action` ataylab enum emas, oddiy String: bu o'sib boruvchi, ochiq to'plam
+// (har safar yangi admin amali qo'shilganda migratsiya talab qilmasligi kerak) —
+// dynamic-standards falsafasidagi "yopiq, oldindan ma'lum to'plam"dan farqli holat.
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String   @map("actor_id")
+  action     String
+  targetType String   @map("target_type")
+  targetId   String?  @map("target_id")
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  actor User @relation(fields: [actorId], references: [id], onDelete: Cascade)
+
+  @@index([actorId])
+  @@index([targetType, targetId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ── Tuner kabineti + ECU file management (Bosqich 6, post-MVP) ───────────────
+// `TunerProfile` — `ServiceProvider`dan ataylab alohida: ikkalasi ham servis
+// biznesi, lekin tuner ish oqimi (fayl almashinuvi, kanban, before/after)
+// tubdan farq qiladi. Buyurtma tayinlash — broadcast emas (Order'dagi kabi),
+// mijoz katalogdan aniq tunerni tanlaydi (chip-tuning — shaxsiy usta tanlash
+// ish oqimi, "birinchi qabul qilgan" poygasi emas).
+
+model TunerProfile {
+  id           String         @id @default(uuid())
+  userId       String         @unique @map("user_id")
+  name         String
+  description  String?
+  logo         String?
+  city         String
+  address      String?
+  lat          Float?
+  lng          Float?
+  phone        String
+  telegram     String?
+  whatsapp     String?
+  instagram    String?
+  workingHours String?        @map("working_hours")
+  status       SERVICE_STATUS @default(PENDING)
+  ratingAvg    Float          @default(0) @map("rating_avg")
+  ratingCount  Int            @default(0) @map("rating_count")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  deletedAt    DateTime?      @map("deleted_at")
+
+  user   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  brands Brand[]
+  orders TuningOrder[]
+
+  @@index([city])
+  @@index([status])
+  @@map("tuner_profiles")
+}
+
+model TuningOrder {
+  id                    String              @id @default(uuid())
+  tunerId               String              @map("tuner_id")
+  userId                String              @map("user_id")
+  userVehicleId         String?             @map("user_vehicle_id")
+  serviceCatalogItemId  String              @map("service_catalog_item_id")
+  problemDescription    String              @map("problem_description")
+  status                TUNING_ORDER_STATUS @default(NEW)
+  // Before/After natijalar (17-bo'lim) — tuner qo'lda kiritadi, `verified` faqat
+  // ikkalasi ham to'ldirilgan va status COMPLETED bo'lganda admin/tuner belgilaydi.
+  powerBeforeHp         Int?                @map("power_before_hp")
+  powerAfterHp          Int?                @map("power_after_hp")
+  torqueBeforeNm        Int?                @map("torque_before_nm")
+  torqueAfterNm         Int?                @map("torque_after_nm")
+  fuelConsumptionBefore Float?              @map("fuel_consumption_before")
+  fuelConsumptionAfter  Float?              @map("fuel_consumption_after")
+  resultsVerified       Boolean             @default(false) @map("results_verified")
+  createdAt             DateTime            @default(now()) @map("created_at")
+  updatedAt             DateTime            @updatedAt @map("updated_at")
+
+  tuner              TunerProfile       @relation(fields: [tunerId], references: [id], onDelete: Cascade)
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userVehicle        UserVehicle?       @relation(fields: [userVehicleId], references: [id], onDelete: SetNull)
+  serviceCatalogItem ServiceCatalogItem @relation(fields: [serviceCatalogItemId], references: [id], onDelete: Restrict)
+  files              EcuFile[]
+
+  @@index([tunerId])
+  @@index([userId])
+  @@index([status])
+  @@map("tuning_orders")
+}
+
+/// Fayllarning o'zi S3'da (`storageKey`) — "ochiq firmware marketplace emas" cheklovi shu bilan
+/// ta'minlanadi: kalit faqat shu buyurtma egasi/tuner/admin ko'ra oladigan API javobida qaytadi.
+model EcuFile {
+  id            String        @id @default(uuid())
+  tuningOrderId String        @map("tuning_order_id")
+  kind          ECU_FILE_KIND
+  storageKey    String        @map("storage_key")
+  originalName  String        @map("original_name")
+  ecuId         String?       @map("ecu_id")
+  software      String?
+  hardware      String?
+  checksum      String?
+  uploadedById  String        @map("uploaded_by_id")
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  tuningOrder TuningOrder @relation(fields: [tuningOrderId], references: [id], onDelete: Cascade)
+  uploadedBy  User        @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+
+  @@index([tuningOrderId])
+  @@map("ecu_files")
+}
+
+// ── Obuna va to'lovlar (Bosqich 7) ────────────────────────────────────────────
+// Har User bitta doimiy Subscription'ga ega (yo'q bo'lsa FREE hisoblanadi —
+// SubscriptionService.getMine() yozuv topilmasa FREE'ni default sifatida qaytaradi,
+// shuning uchun FREE foydalanuvchilar uchun qatorni oldindan yaratish shart emas).
+
+model Subscription {
+  id               String              @id @default(uuid())
+  userId           String              @unique @map("user_id")
+  plan             SUBSCRIPTION_PLAN   @default(FREE)
+  status           SUBSCRIPTION_STATUS @default(ACTIVE)
+  currentPeriodEnd DateTime?           @map("current_period_end")
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@map("subscriptions")
+}
+
+/// `id` — Payme'ning `account.order_id` / Click'ning `merchant_trans_id` sifatida checkout
+/// yaratishda yuboriladi; `providerTransactionId` — provayderning o'z tranzaksiya ID'si
+/// (webhook kelgach to'ldiriladi). `amount` so'mda (Payme chaqiruvida tiyinga aylantiriladi).
+model Payment {
+  id                    String            @id @default(uuid())
+  userId                String            @map("user_id")
+  subscriptionId        String?           @map("subscription_id")
+  plan                  SUBSCRIPTION_PLAN
+  provider              PAYMENT_PROVIDER
+  providerTransactionId String?           @map("provider_transaction_id")
+  amount                Int
+  status                PAYMENT_STATUS    @default(PENDING)
+  createdAt             DateTime          @default(now()) @map("created_at")
+  updatedAt             DateTime          @updatedAt @map("updated_at")
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([provider, providerTransactionId])
+  @@map("payments")
+}
+
+model ServiceReportAnalysis {
+  id         String           @id @default(uuid())
+  userId     String           @map("user_id")
+  storageKey String           @map("storage_key")
+  severity   REPORT_SEVERITY?
+  summary    String?
+  createdAt  DateTime         @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("service_report_analyses")
 }

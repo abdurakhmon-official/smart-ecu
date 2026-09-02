@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import {
   DeleteObjectsCommand,
@@ -57,6 +57,22 @@ export async function putObject(key: string, body: Buffer, contentType?: string)
   );
 
   return key;
+}
+
+/** Fayl baytlarini o'qiydi (masalan, AI'ga yuborish uchun) — `null` topilmasa. */
+export async function getObject(key: string): Promise<Buffer | null> {
+  if (!client) {
+    const path = join(LOCAL_STORAGE_DIR, key);
+    return existsSync(path) ? readFileSync(path) : null;
+  }
+
+  try {
+    const result = await client.send(new GetObjectCommand({ Bucket: config.AWS_S3_BUCKET, Key: key }));
+    const bytes = await result.Body?.transformToByteArray();
+    return bytes ? Buffer.from(bytes) : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function presignDownload(

@@ -3,8 +3,10 @@
  */
 
 export * from "./ai-assistant.input";
+export * from "./audit-log.input";
 export * from "./auth.input";
 export * from "./basic.search";
+export * from "./ecu-file.input";
 export * from "./my-garage.input";
 export * from "./notification.input";
 export * from "./order.input";
@@ -12,5 +14,10 @@ export * from "./review.input";
 export * from "./service-catalog.input";
 export * from "./service-offering.input";
 export * from "./service-provider.input";
+export * from "./service-report-analysis.input";
+export * from "./subscription.input";
+export * from "./tuner-profile.input";
+export * from "./tuning-order.input";
+export * from "./two-factor.input";
 export * from "./user.input";
 export * from "./vehicle-catalog.input";

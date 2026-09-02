@@ -1,4 +1,4 @@
-import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput } from '@repo/contracts';
+import type { AccessTokenOutput, SigninInput, SigninOutput, SignupInput, TwoFactorVerifyInput, UserOutput } from '@repo/contracts';
 import { BaseService } from '@/lib/services/base.service';
 
 export class AuthService extends BaseService<UserOutput, SignupInput, never> {
@@ -9,7 +9,11 @@ export class AuthService extends BaseService<UserOutput, SignupInput, never> {
   }
 
   async signIn(input: SigninInput) {
-    return this.sendPost<AccessTokenOutput>('/signin', input);
+    return this.sendPost<SigninOutput>('/signin', input);
+  }
+
+  async verifyTwoFactor(input: TwoFactorVerifyInput) {
+    return this.sendPost<SigninOutput, TwoFactorVerifyInput>('/2fa/verify', input);
   }
 
   async signOut() {

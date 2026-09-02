@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { NotificationQuery } from '@repo/contracts';
+import type { BroadcastNotificationInput, NotificationQuery } from '@repo/contracts';
 import { queryKeys } from '@/lib/query-keys';
 import { notificationService } from '@/lib/services';
 
@@ -37,5 +37,11 @@ export const useMarkAllNotificationsRead = () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.notificationsBase });
       queryClient.invalidateQueries({ queryKey: queryKeys.notificationsUnreadCount });
     },
+  });
+};
+
+export const useBroadcastNotification = () => {
+  return useMutation({
+    mutationFn: (input: BroadcastNotificationInput) => notificationService.broadcast(input),
   });
 };

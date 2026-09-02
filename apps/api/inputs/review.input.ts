@@ -1,2 +1,2 @@
-export { CreateReviewInputSchema, ReviewQuerySchema } from '@repo/contracts';
-export type { CreateReviewInput, ReviewQuery } from '@repo/contracts';
+export { AdminReviewQuerySchema, CreateReviewInputSchema, ReviewQuerySchema } from '@repo/contracts';
+export type { AdminReviewQuery, CreateReviewInput, ReviewQuery } from '@repo/contracts';

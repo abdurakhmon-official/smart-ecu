@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, LayoutGrid, LogOut, MapPin, Menu, Shield, Store, X } from 'lucide-react';
+import { ChevronDown, FileSearch, LayoutGrid, LogOut, MapPin, Menu, Settings, Shield, Store, Wrench, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
@@ -25,15 +25,20 @@ import { cn } from '@/lib/utils';
  * bosqichlarda real sahifa bilan almashtiriladi. Hozircha vizual joy egallovchi
  * sifatida ko'rsatiladi, shuning uchun `href: null`.
  */
-type NavLinkKey = 'home' | 'services' | 'workshops' | 'aiAssistant' | 'myGarage' | 'orders' | 'news' | 'contact';
+type NavLinkKey = 'home' | 'services' | 'workshops' | 'tuners' | 'aiAssistant' | 'myGarage' | 'orders' | 'pricing' | 'news' | 'contact';
 
-const NAV_LINKS: { key: NavLinkKey; href: '/' | '/my-garage' | '/services' | '/my-orders' | '/ai-assistant' | null }[] = [
+const NAV_LINKS: {
+  key: NavLinkKey;
+  href: '/' | '/my-garage' | '/services' | '/tuners' | '/my-orders' | '/ai-assistant' | '/pricing' | null;
+}[] = [
   { key: 'home', href: '/' },
   { key: 'services', href: null },
   { key: 'workshops', href: '/services' },
+  { key: 'tuners', href: '/tuners' },
   { key: 'aiAssistant', href: '/ai-assistant' },
   { key: 'myGarage', href: '/my-garage' },
   { key: 'orders', href: '/my-orders' },
+  { key: 'pricing', href: '/pricing' },
   { key: 'news', href: null },
   { key: 'contact', href: null },
 ];
@@ -132,6 +137,24 @@ export function Header() {
                     {t('myService')}
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/my-tuner" className="flex items-center gap-2">
+                    <Wrench className="size-4" />
+                    {t('myTuner')}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/report-analyzer" className="flex items-center gap-2">
+                    <FileSearch className="size-4" />
+                    {t('reportAnalyzer')}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/account" className="flex items-center gap-2">
+                    <Settings className="size-4" />
+                    {t('account')}
+                  </Link>
+                </DropdownMenuItem>
                 {isPrivileged && (
                   <DropdownMenuItem asChild>
                     <Link href="/admin" className="flex items-center gap-2">
@@ -202,6 +225,21 @@ export function Header() {
               <Link href="/my-service" onClick={closeMenu}>
                 <Button variant="ghost" size="sm" className="w-full justify-start">
                   {t('myService')}
+                </Button>
+              </Link>
+              <Link href="/my-tuner" onClick={closeMenu}>
+                <Button variant="ghost" size="sm" className="w-full justify-start">
+                  {t('myTuner')}
+                </Button>
+              </Link>
+              <Link href="/report-analyzer" onClick={closeMenu}>
+                <Button variant="ghost" size="sm" className="w-full justify-start">
+                  {t('reportAnalyzer')}
+                </Button>
+              </Link>
+              <Link href="/account" onClick={closeMenu}>
+                <Button variant="ghost" size="sm" className="w-full justify-start">
+                  {t('account')}
                 </Button>
               </Link>
               {isPrivileged && (
