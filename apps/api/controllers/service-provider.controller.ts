@@ -6,13 +6,6 @@ import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { ReviewService } from '@/services/review.service';
 import { ServiceProviderService } from '@/services/service-provider.service';
 
-/**
- * O'qish — hamma uchun ochiq, lekin faqat `VERIFIED` servislar ko'rinadi
- * (servis katalogi, qidiruv, servis profil sahifasi). Moderatsiya — ADMIN.
- *
- * `/admin` — statik marshrut, shuning uchun `/:id`dan OLDIN e'lon qilinadi
- * (aks holda `admin` qiymati `:id` sifatida talqin qilinishi mumkin edi).
- */
 @Controller('/service-providers')
 export class ServiceProviderController {
   @Inject()

@@ -51,7 +51,7 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
           <Providers>
             <MessageBridge />
             <Header />
-            {children}
+            <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
           </Providers>
         </NextIntlClientProvider>

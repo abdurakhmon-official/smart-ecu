@@ -22,7 +22,6 @@ export const NotificationQuerySchema = z.object({
 
 export const BroadcastRoleSchema = z.enum(['ALL', 'CUSTOMER', 'SERVICE', 'TUNER']);
 
-/** Admin barcha foydalanuvchilarga (yoki bitta rolga) e'lon yuboradi — uz/ru/en'da kiritiladi. */
 export const BroadcastNotificationInputSchema = z.object({
   message: LocalizedTextSchema,
   role: BroadcastRoleSchema.default('ALL'),
@@ -37,11 +36,6 @@ export type BroadcastNotificationInput = z.infer<typeof BroadcastNotificationInp
 
 // interfaces
 
-/**
- * `title`/`body` yo'q — matn serverdan qaytmaydi, frontend `type` bo'yicha tarjima qiladi.
- * Yagona istisno — `ADMIN_BROADCAST`: bu holatda `broadcastMessage` admin tomonidan
- * uz/ru/en'da yozilgan haqiqiy kontent (`ServiceCatalogItem.description` bilan bir xil pattern).
- */
 export interface NotificationOutput {
   id: string;
   type: NotificationType;

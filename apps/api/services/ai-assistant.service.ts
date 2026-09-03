@@ -25,10 +25,6 @@ export class AiAssistantService {
   private static readonly MAX_TOKENS = 1024;
   private static readonly MAX_HISTORY_MESSAGES = 20;
 
-  /**
-   * 4-bo'lim talabi: AI hech qachon aniq tashxis qo'ymaydi — faqat ehtimoliy sabablar va
-   * diagnostika tavsiyasi beradi, doim malakali servisga murojaat qilishni tavsiya qiladi.
-   */
   private static readonly SYSTEM_PROMPT = [
     "Sen Smart ECU platformasidagi avtomobil bo'yicha yordamchi assistentsan.",
     "Foydalanuvchi tasvirlagan avtomobil muammosiga javob berasan.",

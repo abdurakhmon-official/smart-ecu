@@ -13,10 +13,6 @@ interface PaymeParams {
   reason?: number;
 }
 
-/**
- * Payme JSON-RPC xatosi — controller `error.code`/`error.message`ni to'g'ridan-to'g'ri
- * javob tanasiga yozadi (Ts.ED'ning odatiy `{success,data}` konvertidan chetlab o'tadi).
- */
 export class PaymeRpcError extends Error {
   constructor(
     readonly code: number,
@@ -26,12 +22,6 @@ export class PaymeRpcError extends Error {
   }
 }
 
-/**
- * `CreateTransaction`ning aniq maydonlari (WebFetch orqali tasdiqlangan) bo'yicha
- * qurilgan; qolgan metodlar (`Perform`/`Cancel`/`CheckTransaction`) Payme'ning
- * yillar davomida barqaror bo'lgan umumiy naqshiga asoslangan — jonli sandbox
- * kredentsial kelgach real so'rovlar bilan tekshirilishi kerak.
- */
 @Injectable()
 export class PaymeService {
   @Inject()
@@ -67,7 +57,6 @@ export class PaymeService {
     const payment = await this.getOrderOrThrow(params.account?.order_id);
     if (params.amount !== somToTiyin(payment.amount)) throw new PaymeRpcError(-31001);
 
-    // Idempotentlik: bir xil `id` bilan qayta so'rov kelsa, yangi holat yaratmasdan mavjudini qaytaradi.
     if (payment.providerTransactionId && payment.providerTransactionId !== params.id) {
       throw new PaymeRpcError(-31008);
     }

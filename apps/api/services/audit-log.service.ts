@@ -18,10 +18,6 @@ interface RecordAuditLogParams {
 export class AuditLogService {
   private static readonly INCLUDE = { actor: { select: { fullName: true, email: true } } } as const;
 
-  /**
-   * Boshqa servislar tomonidan chaqiriladigan ichki metod (controller'ga bevosita ochilmagan) —
-   * xatolik audit yozuvini butun amalni to'xtatmasligi kerak, shuning uchun xato yutiladi.
-   */
   async record(params: RecordAuditLogParams): Promise<void> {
     try {
       await prisma.auditLog.create({
@@ -30,8 +26,6 @@ export class AuditLogService {
           action: params.action,
           targetType: params.targetType,
           targetId: params.targetId,
-          // `metadata` chaqiruvchi tomonidan doim plain JSON-serializable obyekt sifatida beriladi —
-          // Prisma'ning JsonValue ittifoqi `unknown` maydonlarni qabul qilmagani uchun cast kerak.
           metadata: params.metadata as Prisma.InputJsonValue | undefined,
         },
       });

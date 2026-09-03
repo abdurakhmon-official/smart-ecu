@@ -15,7 +15,6 @@ import { PaymentProviderNotConfiguredException } from '@/exceptions/billing.exce
 
 @Injectable()
 export class SubscriptionService {
-  /** Boshlang'ich narxlar — hozircha qattiq belgilangan, admin-boshqaruvga keyinroq o'tkaziladi (dynamic-standards). */
   private static readonly PLAN_PRICES: Record<SUBSCRIPTION_PLAN, SubscriptionPlanInfo> = {
     FREE: { plan: 'FREE', priceSom: 0, periodDays: 0 },
     PRO: { plan: 'PRO', priceSom: 99_000, periodDays: 30 },
@@ -52,8 +51,6 @@ export class SubscriptionService {
   async initiatePayment(input: InitiatePaymentInput) {
     const info = SubscriptionService.PLAN_PRICES[input.plan];
 
-    // Provayder sozlanganini oldindan tekshiradi — aks holda muvaffaqiyatsiz urinish uchun ham
-    // PENDING yozuv qoldirib ketiladi (orfan qator).
     SubscriptionService.assertProviderConfigured(input.provider);
 
     const payment = await prisma.payment.create({
@@ -93,7 +90,6 @@ export class SubscriptionService {
     return ok(payments.map(SubscriptionService.serializePayment), { meta: { page, limit: size, total } });
   }
 
-  /** Payme/Click webhook servislari (`PaymeService`/`ClickService`, `@Inject()` orqali) chaqiradi. */
   async markPaid(paymentId: string, providerTransactionId: string): Promise<void> {
     const payment = await prisma.payment.findUnique({ where: { id: paymentId } });
     if (!payment || payment.status === PAYMENT_STATUS.PAID) return;

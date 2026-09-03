@@ -1,11 +1,5 @@
 import { BadRequest, Forbidden, Unauthorized } from '@tsed/exceptions';
 
-/**
- * Har bir domen uchun custom typed exception (rule: api standards.md §5) — generic
- * `notFound()`/`badRequest()` helper yoki xom `new Unauthorized(...)` o'rniga. Har biri
- * `_code`ni doim birga tashiydi — `error.middleware` shu orqali tarjima qiladi.
- */
-
 export class AuthenticationRequiredException extends Unauthorized {
   readonly _code = 'AUTH_UNAUTHORIZED';
 

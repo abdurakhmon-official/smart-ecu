@@ -25,11 +25,6 @@ export interface ClickResponse {
   error_note: string;
 }
 
-/**
- * Click.uz Shop API — Prepare/Complete. `@/modules/click`dagi kabi, jonli hujjatlar
- * orqali to'liq tasdiqlanmagan (keng tarqalgan, barqaror naqshga asoslangan);
- * sandbox kredentsial kelgach tekshirilishi kerak.
- */
 @Injectable()
 export class ClickService {
   @Inject()

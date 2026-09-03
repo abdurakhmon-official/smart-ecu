@@ -22,12 +22,6 @@ const MIME_BY_EXTENSION: Record<string, ImageMediaType> = {
   '.webp': 'image/webp',
 };
 
-/**
- * AI Servis Analizatori (Bosqich 7, 13-bo'lim) — hisobot rasmini (diagnostika ekrani,
- * smeta va h.k.) tahlil qilib, muhimlik darajasiga ajratadi. Faqat rasm qabul qilinadi
- * (PDF emas) — Claude'ning PDF-hujjat qabul qilish sxemasi jonli hujjatlar orqali
- * tekshirilmagani uchun ataylab qoldirilgan (v1'da xavfsiz, tasdiqlangan yo'l tanlandi).
- */
 @Injectable()
 export class ServiceReportAnalyzerService {
   private static readonly MODEL = 'claude-sonnet-5';
@@ -111,7 +105,6 @@ export class ServiceReportAnalyzerService {
 
       return { severity, summary: parsed.summary ?? null };
     } catch {
-      // Model JSON qaytarmasa ham javobni yo'qotmaymiz — xom matn `summary` sifatida saqlanadi.
       return { severity: null, summary: textBlock.text };
     }
   }

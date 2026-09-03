@@ -13,12 +13,6 @@ interface TelegramUpdateBody {
   };
 }
 
-/**
- * Telegram'ning o'zi chaqiradigan webhook — himoya webhook URL'ning o'ziga qo'shiladigan
- * `?secret=` parametri orqali (Telegram `setWebhook`da `secret_token` ham qo'llab-quvvatlaydi,
- * lekin soddalik uchun query-parametr yetarli — bot hali ulanmagan, `TELEGRAM_WEBHOOK_SECRET`
- * bo'sh bo'lsa so'rov rad etiladi).
- */
 @Controller('/telegram')
 export class TelegramWebhookController {
   @Inject()

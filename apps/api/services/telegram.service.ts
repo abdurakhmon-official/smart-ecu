@@ -20,8 +20,6 @@ interface TelegramWebhookUpdate {
 
 type Locale = 'uz' | 'ru' | 'en';
 
-/** Har bir `NOTIFICATION_TYPE` uchun Telegram matni — bu API javobi emas, tashqi kanalga
- * yuboriladigan xabar, shuning uchun "server matn qaytarmaydi" qoidasidan mustasno. */
 const NOTIFICATION_MESSAGES: Record<string, Record<Locale, string>> = {
   ORDER_RECEIVED: { uz: '🔧 Yangi buyurtma keldi.', ru: '🔧 Получен новый заказ.', en: '🔧 New order received.' },
   ORDER_ACCEPTED: { uz: '✅ Buyurtmangiz qabul qilindi.', ru: '✅ Ваш заказ принят.', en: '✅ Your order was accepted.' },

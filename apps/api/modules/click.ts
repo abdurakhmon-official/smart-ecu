@@ -1,14 +1,6 @@
 import { createHash } from 'node:crypto';
 import config from '@/config';
 
-/**
- * Click.uz Shop API — checkout-havola va `sign_string` MD5 formulasi.
- * Bu fayl **jonli hujjatlar orqali to'liq tasdiqlanmagan** (docs.click.uz sahifalari
- * JS bilan render qilinadi, avtomatik o'qish imkonsiz bo'ldi) — formula uzoq vaqtdan
- * beri barqaror va keng tarqalgan namunaga asoslangan, lekin ishga tushirishdan oldin
- * https://docs.click.uz bilan qo'lda solishtirib chiqish shart.
- */
-
 interface ClickPrepareSignParams {
   clickTransId: string;
   serviceId: string;
@@ -60,7 +52,6 @@ export const verifyClickCompleteSignature = (params: ClickCompleteSignParams, si
   return expected === signString && Boolean(config.click.secretKey);
 };
 
-/** Click xato kodlari (Shop API "error" maydoni) — eng ko'p ishlatiladiganlari. */
 export const CLICK_ERROR = {
   SUCCESS: 0,
   SIGN_CHECK_FAILED: -1,

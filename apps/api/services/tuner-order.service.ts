@@ -15,7 +15,6 @@ import { NotificationService } from '@/services/notification.service';
 
 // types
 
-/** Kanban bosqichlari orasidagi ruxsat etilgan o'tishlar — orqaga qaytish mumkin, faqat yakunlangan/bekor qilingandan keyin emas. */
 const TERMINAL_STATUSES: TUNING_ORDER_STATUS[] = [TUNING_ORDER_STATUS.COMPLETED, TUNING_ORDER_STATUS.CANCELLED];
 
 @Injectable()
@@ -69,13 +68,11 @@ export class TunerOrderService {
       include: TunerOrderService.INCLUDE,
     });
 
-    // `Notification.orderId` faqat generic `Order`ga FK — `TuningOrder` uchun bog'lanmaydi, shuning uchun berilmaydi.
     await this.notificationService.create({ userId: order.userId, type: NOTIFICATION_TYPE.TUNING_ORDER_STATUS_CHANGED });
 
     return ok(TunerOrderService.serialize(updated));
   }
 
-  /** Before/After (17-bo'lim). `COMPLETED` bosqichda va kamida bitta "after" qiymat kiritilganda "Verified" avtomatik belgilanadi. */
   async setResults(orderId: string, input: SetTuningResultsInput) {
     const order = await this.getOwnedOrThrow(orderId);
 
@@ -91,7 +88,6 @@ export class TunerOrderService {
     return ok(TunerOrderService.serialize(updated));
   }
 
-  /** Tuner faqat `ORIGINAL`/`MODIFIED` yuklaydi — `LOG`ni mijoz o'zi yuklaydi (`MyTuningOrderService.uploadFile`). */
   async uploadFile(orderId: string, input: CreateEcuFileInput) {
     await this.getOwnedOrThrow(orderId);
     if (input.kind === ECU_FILE_KIND.LOG) {

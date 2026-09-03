@@ -17,12 +17,9 @@ import config from '../config';
 
 const prisma = new PrismaClient();
 
-// Demo hisoblar barchasi shu parol bilan — mahalliy sinov uchun.
 const DEMO_PASSWORD = 'Password123!';
 const CITIES = ['Toshkent', 'Samarqand', 'Buxoro', 'Andijon', 'Namangan', "Farg'ona"];
 
-// `faker.seed()` — har safar `db:seed` ishga tushirilganda bir xil ma'lumot generatsiya qilinishi
-// uchun (email/ism/manzillar barqaror bo'ladi, `upsert`/idempotentlik tekshiruvlari ishlaydi).
 faker.seed(20260902);
 
 const seedAdmin = async (): Promise<void> => {
@@ -49,12 +46,6 @@ const seedAdmin = async (): Promise<void> => {
   console.info(`[seed] admin ready: ${email}`);
 };
 
-/**
- * Namunaviy avtomobil katalogi yozuvi — haqiqiy reference-data emas, faqat
- * dev/testing muhitida forma va CRUD oqimini tekshirish uchun (§13: hajm/test
- * ma'lumotlari faqat production bo'lmagan muhitda). Haqiqiy katalog admin panel
- * orqali to'ldiriladi.
- */
 const seedVehicleCatalog = async (): Promise<void> => {
   const brand = await prisma.brand.upsert({ where: { name: 'BMW' }, update: {}, create: { name: 'BMW' } });
 
@@ -192,7 +183,6 @@ interface DemoContext {
 const randomItem = <T>(items: T[]): T => items[Math.floor(Math.random() * items.length)];
 const randomSubset = <T>(items: T[], count: number): T[] => faker.helpers.arrayElements(items, Math.min(count, items.length));
 
-/** N ta CUSTOMER hisobini yaratadi (faker ismlari bilan, hammasi bir xil `DEMO_PASSWORD`). */
 const seedCustomers = async (count: number): Promise<{ id: string; fullName: string }[]> => {
   const customers: { id: string; fullName: string }[] = [];
   const hashedPassword = await hashPassword(DEMO_PASSWORD);
@@ -348,7 +338,6 @@ const seedCustomerVehicles = async (customers: { id: string }[], engineOptionIds
   return vehicleIds;
 };
 
-/** Mos shahar+xizmat bo'yicha VERIFIED servislarni topadi — haqiqiy broadcast mantig'ini takrorlaydi. */
 const findMatchingProviders = async (city: string, serviceCatalogItemId: string) => {
   return prisma.serviceProvider.findMany({
     where: {
@@ -360,11 +349,6 @@ const findMatchingProviders = async (city: string, serviceCatalogItemId: string)
   });
 };
 
-/**
- * ~N ta buyurtma — turli holatda, COMPLETED bo'lganlariga sharh + reyting yangilanishi bilan.
- * Shahar+xizmat turi tasodifiy emas, balki mavjud servis takliflaridan tanlanadi — aks holda
- * ko'pchilik kombinatsiya hech kimga mos kelmay, buyurtma yaratilmay qolar edi.
- */
 const seedOrders = async (
   customers: { id: string; fullName: string }[],
   vehicleIds: string[],
@@ -377,9 +361,10 @@ const seedOrders = async (
   if (offerings.length === 0) return;
 
   let created = 0;
+  const attempts = customers.length * 2;
 
-  for (let index = 0; index < 10; index += 1) {
-    const customer = randomItem(customers);
+  for (let index = 0; index < attempts; index += 1) {
+    const customer = customers[index % customers.length];
     const offering = randomItem(offerings);
     const catalogItem = catalogItems.find((item) => item.id === offering.serviceCatalogItemId) ?? randomItem(catalogItems);
     const city = offering.serviceProvider.city;
@@ -442,7 +427,6 @@ const seedOrders = async (
   console.info(`[seed] ${created} orders ready (with matching reviews/notifications)`);
 };
 
-/** ~6 ta tuning buyurtmasi — kanban bosqichlari bo'ylab taqsimlangan, COMPLETED'lariga ECU fayl + natijalar bilan. */
 const seedTuningOrders = async (customers: { id: string }[], vehicleIds: string[], catalogItems: { id: string; slug: string }[]): Promise<void> => {
   const tuningItems = catalogItems.filter((item) => item.slug.startsWith('stage') || item.slug === 'eco-tune' || item.slug === 'custom-tune');
   if (tuningItems.length === 0) return;
@@ -460,65 +444,68 @@ const seedTuningOrders = async (customers: { id: string }[], vehicleIds: string[
   ];
 
   let created = 0;
+  let customerCursor = 0;
 
-  for (const status of statuses) {
-    const customer = randomItem(customers);
-    const tuner = randomItem(tuners);
+  for (const tuner of tuners) {
+    for (const status of statuses) {
+      const customer = customers[customerCursor % customers.length];
+      customerCursor += 1;
 
-    const order = await prisma.tuningOrder.create({
-      data: {
-        tunerId: tuner.id,
-        userId: customer.id,
-        userVehicleId: vehicleIds.length ? randomItem(vehicleIds) : undefined,
-        serviceCatalogItemId: randomItem(tuningItems).id,
-        problemDescription: faker.lorem.sentence(),
-        status,
-        ...(status === TUNING_ORDER_STATUS.COMPLETED
-          ? {
-              powerBeforeHp: faker.number.int({ min: 150, max: 250 }),
-              powerAfterHp: faker.number.int({ min: 260, max: 340 }),
-              torqueBeforeNm: faker.number.int({ min: 250, max: 400 }),
-              torqueAfterNm: faker.number.int({ min: 410, max: 550 }),
-              fuelConsumptionBefore: faker.number.float({ min: 9, max: 12, fractionDigits: 1 }),
-              fuelConsumptionAfter: faker.number.float({ min: 7, max: 9, fractionDigits: 1 }),
-              resultsVerified: true,
-            }
-          : {}),
-      },
-    });
-
-    if (status === TUNING_ORDER_STATUS.WAITING_FOR_LOG || status === TUNING_ORDER_STATUS.READY || status === TUNING_ORDER_STATUS.COMPLETED) {
-      await prisma.ecuFile.create({
+      const order = await prisma.tuningOrder.create({
         data: {
-          tuningOrderId: order.id,
-          kind: ECU_FILE_KIND.ORIGINAL,
-          storageKey: `ecu-file/demo/${order.id}-original.bin`,
-          originalName: 'original.bin',
-          software: 'Bosch EDC17',
-          uploadedById: tuner.userId,
+          tunerId: tuner.id,
+          userId: customer.id,
+          userVehicleId: vehicleIds.length ? randomItem(vehicleIds) : undefined,
+          serviceCatalogItemId: randomItem(tuningItems).id,
+          problemDescription: faker.lorem.sentence(),
+          status,
+          ...(status === TUNING_ORDER_STATUS.COMPLETED
+            ? {
+                powerBeforeHp: faker.number.int({ min: 150, max: 250 }),
+                powerAfterHp: faker.number.int({ min: 260, max: 340 }),
+                torqueBeforeNm: faker.number.int({ min: 250, max: 400 }),
+                torqueAfterNm: faker.number.int({ min: 410, max: 550 }),
+                fuelConsumptionBefore: faker.number.float({ min: 9, max: 12, fractionDigits: 1 }),
+                fuelConsumptionAfter: faker.number.float({ min: 7, max: 9, fractionDigits: 1 }),
+                resultsVerified: true,
+              }
+            : {}),
         },
       });
+
+      if (status === TUNING_ORDER_STATUS.WAITING_FOR_LOG || status === TUNING_ORDER_STATUS.READY || status === TUNING_ORDER_STATUS.COMPLETED) {
+        await prisma.ecuFile.create({
+          data: {
+            tuningOrderId: order.id,
+            kind: ECU_FILE_KIND.ORIGINAL,
+            storageKey: `ecu-file/demo/${order.id}-original.bin`,
+            originalName: 'original.bin',
+            software: 'Bosch EDC17',
+            uploadedById: tuner.userId,
+          },
+        });
+      }
+
+      if (status === TUNING_ORDER_STATUS.COMPLETED) {
+        await prisma.ecuFile.create({
+          data: {
+            tuningOrderId: order.id,
+            kind: ECU_FILE_KIND.MODIFIED,
+            storageKey: `ecu-file/demo/${order.id}-modified.bin`,
+            originalName: 'stage1.bin',
+            software: 'Bosch EDC17',
+            uploadedById: tuner.userId,
+          },
+        });
+      }
+
+      await prisma.notification.create({ data: { userId: tuner.userId, type: NOTIFICATION_TYPE.TUNING_ORDER_RECEIVED } });
+
+      created += 1;
     }
-
-    if (status === TUNING_ORDER_STATUS.COMPLETED) {
-      await prisma.ecuFile.create({
-        data: {
-          tuningOrderId: order.id,
-          kind: ECU_FILE_KIND.MODIFIED,
-          storageKey: `ecu-file/demo/${order.id}-modified.bin`,
-          originalName: 'stage1.bin',
-          software: 'Bosch EDC17',
-          uploadedById: tuner.userId,
-        },
-      });
-    }
-
-    await prisma.notification.create({ data: { userId: tuner.userId, type: NOTIFICATION_TYPE.TUNING_ORDER_RECEIVED } });
-
-    created += 1;
   }
 
-  console.info(`[seed] ${created} tuning orders ready (kanban bosqichlari bo'ylab)`);
+  console.info(`[seed] ${created} tuning orders ready (har bir tuner uchun to'liq kanban)`);
 };
 
 /** Bitta mijozga PRO obuna + PAID to'lov yozuvi — obuna UI'sini bo'sh holatda emas ko'rish uchun. */
@@ -550,7 +537,6 @@ const seedSubscription = async (customer: { id: string }): Promise<void> => {
   console.info('[seed] 1 demo subscription + payment ready');
 };
 
-/** Admin e'loni namunasi — `NotificationBell`da `ADMIN_BROADCAST` ko'rinishini tekshirish uchun. */
 const seedBroadcastNotification = async (customers: { id: string }[], adminId: string | undefined): Promise<void> => {
   if (!adminId || customers.length === 0) return;
 
@@ -571,12 +557,6 @@ const seedBroadcastNotification = async (customers: { id: string }[], adminId: s
   console.info(`[seed] broadcast notification sent to ${customers.length} customers`);
 };
 
-/**
- * Bosqich 0-7 bo'ylab namunaviy ma'lumotlar — foydalanuvchilar, servis/tuner profillari,
- * avtomobillar, buyurtmalar, sharhlar, bildirishnomalar, obuna. Faqat production bo'lmagan
- * muhitda (§13). Idempotent: agar birinchi mijoz allaqachon mavjud bo'lsa, butunlay o'tkazib
- * yuboriladi (faker'ning `seed()` bilan qat'iylashtirilgan chiqishi tufayli xavfsiz tekshiruv).
- */
 const seedDemoData = async (): Promise<void> => {
   const marker = await prisma.user.findUnique({ where: { email: 'customer1@smartecu.local' } });
   if (marker) {

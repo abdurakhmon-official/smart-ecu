@@ -7,11 +7,6 @@ interface LocalEntry {
   expiresAt: number;
 }
 
-/**
- * Parol to'g'ri kiritilgandan keyin, lekin TOTP kod tasdiqlanmasdan oldingi oraliq holat —
- * `TokenService`ning revoke-list pattern'iga o'xshab, Redis asosiy, Redis ishlamasa
- * jarayon-ichi Map'ga tushadi (bitta instansli deploy uchun yetarli).
- */
 @Injectable()
 export class MfaChallengeService {
   private static readonly PREFIX = 'mfa-challenge:';
@@ -47,11 +42,6 @@ export class MfaChallengeService {
     return token;
   }
 
-  /**
-   * O'qish — o'chirmaydi. Noto'g'ri kod kiritilganda challenge tirik qolishi kerak
-   * (foydalanuvchi qayta urinishi mumkin), shuning uchun o'chirish faqat muvaffaqiyatli
-   * tasdiqlangandan keyin `invalidate()` orqali alohida chaqiriladi.
-   */
   async resolve(token: string): Promise<string | null> {
     if (isRedisReady()) {
       try {

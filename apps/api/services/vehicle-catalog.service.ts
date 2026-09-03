@@ -20,8 +20,7 @@ import {
 
 @Injectable()
 export class VehicleCatalogService {
-  // ── Brand ──────────────────────────────────────────────────────────────
-
+  // branc
   async listBrands() {
     const brands = await prisma.brand.findMany({ orderBy: { name: 'asc' } });
     return ok(brands.map(VehicleCatalogService.serializeBrand));
@@ -44,8 +43,7 @@ export class VehicleCatalogService {
     return ok(null);
   }
 
-  // ── Model ──────────────────────────────────────────────────────────────
-
+  // model
   async listModels(brandId: string) {
     await this.getBrandOrThrow(brandId);
     const models = await prisma.model.findMany({ where: { brandId }, orderBy: { name: 'asc' } });
@@ -70,8 +68,7 @@ export class VehicleCatalogService {
     return ok(null);
   }
 
-  // ── Generation ─────────────────────────────────────────────────────────
-
+  // generation
   async listGenerations(modelId: string) {
     await this.getModelOrThrow(modelId);
     const generations = await prisma.generation.findMany({ where: { modelId }, orderBy: { yearFrom: 'desc' } });
@@ -96,8 +93,7 @@ export class VehicleCatalogService {
     return ok(null);
   }
 
-  // ── Engine option ──────────────────────────────────────────────────────
-
+  // engine option
   async listEngineOptions(generationId: string) {
     await this.getGenerationOrThrow(generationId);
     const engines = await prisma.engineOption.findMany({ where: { generationId }, orderBy: { name: 'asc' } });
@@ -122,8 +118,7 @@ export class VehicleCatalogService {
     return ok(null);
   }
 
-  // ── lookups ────────────────────────────────────────────────────────────
-
+  // ── helpers ─────────────────────────────────────────────────────────
   private async getBrandOrThrow(brandId: string) {
     const brand = await prisma.brand.findUnique({ where: { id: brandId } });
     if (!brand) throw new BrandNotFoundException(brandId);
@@ -147,8 +142,6 @@ export class VehicleCatalogService {
     if (!engine) throw new EngineOptionNotFoundException(engineOptionId);
     return engine;
   }
-
-  // ── serializers ────────────────────────────────────────────────────────
 
   private static serializeBrand<T extends { createdAt: Date }>(brand: T) {
     return { ...brand, createdAt: brand.createdAt.toISOString() };

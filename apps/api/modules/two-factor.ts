@@ -4,7 +4,6 @@ import QRCode from 'qrcode';
 
 const ISSUER = 'Smart ECU';
 const BACKUP_CODE_COUNT = 8;
-// 0/1/O/I chetlab o'tildi — qo'lda kiritishda adashtirmaslik uchun.
 const generateBackupCodeChunk = customAlphabet('23456789ABCDEFGHJKLMNPQRSTUVWXYZ', 8);
 
 export const generateTotpSecret = (): string => new Secret({ size: 20 }).base32;
@@ -30,7 +29,6 @@ export const generateQrCodeDataUrl = (email: string, secretBase32: string): Prom
   return QRCode.toDataURL(buildOtpauthUrl(email, secretBase32));
 };
 
-/** Format: `XXXX-XXXX` — qo'lda ko'chirib yozish uchun o'qilishi oson bo'lgan alifbo bilan. */
 export const generateBackupCodes = (count = BACKUP_CODE_COUNT): string[] => {
   return Array.from({ length: count }, () => {
     const raw = generateBackupCodeChunk();

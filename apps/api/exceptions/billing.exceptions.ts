@@ -16,7 +16,6 @@ export class PaymentProviderNotConfiguredException extends BadRequest {
   }
 }
 
-/** Payme/Click webhook — noto'g'ri imzo/kalit bilan kelgan so'rov. */
 export class InvalidPaymentSignatureException extends Unauthorized {
   readonly _code = 'INVALID_PAYMENT_SIGNATURE';
 

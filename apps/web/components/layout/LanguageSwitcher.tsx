@@ -1,10 +1,17 @@
 'use client';
 
+import { Check, Globe } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/Button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
 
 const LABELS: Record<string, string> = { uz: "O'zbekcha", ru: 'Русский', en: 'English' };
 
@@ -15,29 +22,31 @@ export function LanguageSwitcher() {
   const router = useRouter();
 
   return (
-    <div role="group" aria-label="Language" className="flex items-center gap-0.5 rounded-lg bg-muted p-0.75">
-      {routing.locales.map((code) => (
-        <button
-          key={code}
-          type="button"
-          aria-pressed={code === locale}
-          onClick={() =>
-            router.replace(
-              // @ts-expect-error -- pathname is dynamically typed by next-intl per route
-              { pathname, params },
-              { locale: code },
-            )
-          }
-          className={cn(
-            'rounded-md px-2.5 py-1.5 text-xs font-semibold transition-colors',
-            code === locale
-              ? 'bg-card text-foreground shadow-sm'
-              : 'text-muted-foreground hover:text-foreground',
-          )}
-        >
-          {LABELS[code] ?? code}
-        </button>
-      ))}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground" aria-label="Language">
+          <Globe className="size-4" />
+          {locale.toUpperCase()}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {routing.locales.map((code) => (
+          <DropdownMenuItem
+            key={code}
+            className="flex items-center justify-between gap-2"
+            onSelect={() =>
+              router.replace(
+                // @ts-expect-error -- pathname is dynamically typed by next-intl per route
+                { pathname, params },
+                { locale: code },
+              )
+            }
+          >
+            {LABELS[code] ?? code}
+            {code === locale && <Check className="size-4" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

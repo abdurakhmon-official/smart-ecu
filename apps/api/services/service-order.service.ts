@@ -59,8 +59,6 @@ export class ServiceOrderService {
     });
     if (!isRecipient) throw new OrderNotFoundException(orderId);
 
-    // Optimistik concurrency: faqat hali NEW bo'lsa yangilanadi — bir nechta servis bir vaqtda
-    // "qabul qilish"ni bossa ham, faqat bittasi muvaffaqiyatli bo'ladi (poyga holatidan himoya).
     const result = await prisma.order.updateMany({
       where: { id: orderId, status: ORDER_STATUS.NEW },
       data: { status: ORDER_STATUS.IN_PROGRESS, acceptedServiceProviderId: provider.id },

@@ -12,12 +12,6 @@ interface PaymeRpcRequest {
   id: number | string;
 }
 
-/**
- * Payme'ning o'zi (bizning frontend emas) chaqiradigan webhook — shuning uchun
- * `@Authorized()` yo'q, JWT o'rniga Payme'ning o'z Basic-auth sxemasi tekshiriladi.
- * Javob shakli ham bizning odatiy `{success,data}` konvertidan farq qiladi — JSON-RPC
- * 2.0 talab qiladi, shuning uchun controller obyektni to'g'ridan-to'g'ri qaytaradi.
- */
 @Controller('/payments/payme')
 export class PaymeController {
   @Inject()

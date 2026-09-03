@@ -5,11 +5,6 @@ import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { TunerService } from '@/services/tuner.service';
 
-/**
- * O'qish — hamma uchun ochiq, lekin faqat `VERIFIED` tunerlar ko'rinadi.
- * Moderatsiya — ADMIN. `/admin` — `/:id`dan OLDIN e'lon qilinadi (`ServiceProviderController`dagi
- * bilan bir xil sabab: aks holda `admin` `:id` sifatida talqin qilinadi).
- */
 @Controller('/tuners')
 export class TunerController {
   @Inject()

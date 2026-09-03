@@ -51,7 +51,6 @@ export interface UserVehicleOutput {
   photo: string | null;
   isPrimary: boolean;
   createdAt: string;
-  /** Katalogdan tanlangan bo'lsa — ko'rsatish uchun to'liq zanjir birga keladi. */
   engineOption:
     | (EngineOptionOutput & {
         generation: GenerationOutput & { model: ModelOutput & { brand: BrandOutput } };

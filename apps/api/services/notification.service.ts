@@ -73,15 +73,12 @@ export class NotificationService {
     return ok(null);
   }
 
-  /** Boshqa servislar (Order, Review) tomonidan chaqiriladigan ichki metod — controller'ga bevosita ochilmagan. */
   async create(params: CreateNotificationParams): Promise<void> {
     await prisma.notification.create({ data: params });
 
-    // Telegram bog'langan bo'lsa parallel yuboriladi — muvaffaqiyatsizlik asosiy oqimni to'xtatmaydi.
     this.telegramService.notify(params.userId, params.type).catch(() => undefined);
   }
 
-  /** Admin e'loni — barcha foydalanuvchilarga yoki bitta rolga. */
   async broadcast(input: BroadcastNotificationInput) {
     const where = input.role === 'ALL' ? {} : { role: input.role as USER_ROLE };
     const recipients = await prisma.user.findMany({

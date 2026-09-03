@@ -88,7 +88,6 @@ export class MyTuningOrderService {
     return ok(this.serialize(updated));
   }
 
-  /** Mijoz faqat `LOG` fayl yuklay oladi (masalan, tuner so'ragan diagnostika logi) — ECU fayllarini faqat tuner yuklaydi. */
   async uploadFile(orderId: string, input: CreateEcuFileInput) {
     await this.getOwnedOrThrow(orderId);
     if (input.kind !== ECU_FILE_KIND.LOG) {

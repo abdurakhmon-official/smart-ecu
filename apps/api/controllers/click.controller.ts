@@ -16,7 +16,6 @@ interface ClickWebhookBody {
   sign_string: string;
 }
 
-/** Click'ning o'zi chaqiradigan webhook'lar — `@Authorized()` yo'q, `sign_string` imzosi tekshiradi. */
 @Controller('/payments/click')
 export class ClickController {
   @Inject()

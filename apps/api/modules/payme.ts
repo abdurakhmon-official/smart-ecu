@@ -1,13 +1,5 @@
 import config from '@/config';
 
-/**
- * Payme Business Merchant API — checkout-havola formati va Basic-auth tekshiruvi.
- * Format ("m=...;ac.order_id=...;a=...", base64) yillar davomida barqaror bo'lgan,
- * lekin bu fayl **jonli hujjatlar orqali to'liq tasdiqlanmagan** (WebFetch orqali faqat
- * `CreateTransaction`ning aniq maydonlari tasdiqlandi) — ishga tushirishdan oldin
- * https://developer.help.paycom.uz bilan solishtirib chiqish tavsiya etiladi.
- */
-
 const TIYIN_PER_SOM = 100;
 const PAYME_AUTH_LOGIN = 'Paycom';
 
@@ -18,7 +10,6 @@ export const buildPaymeCheckoutUrl = (paymentId: string, amountSom: number): str
   return `${config.payme.checkoutUrl}/${encoded}`;
 };
 
-/** Payme so'rovlari `Authorization: Basic base64(Paycom:<merchant_key>)` bilan keladi. */
 export const verifyPaymeAuth = (authorizationHeader: string | undefined): boolean => {
   if (!authorizationHeader?.startsWith('Basic ')) return false;
 

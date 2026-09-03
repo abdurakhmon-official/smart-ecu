@@ -1,9 +1,3 @@
-/**
- * Faylning haqiqiy turini boshlang'ich baytlaridan tekshiradi — client yuborgan
- * `Content-Type`/`mimetype`ga ishonilmaydi (rule: api standards.md §16).
- * Faqat `ALLOWED_MIME_BY_FOLDER`da haqiqatan ishlatiladigan turlar qamrab olinadi.
- */
-
 type Signature = { bytes: number[]; offset?: number };
 
 const SIGNATURES: Record<string, Signature[]> = {
@@ -26,7 +20,6 @@ const matchesAt = (buffer: Buffer, signature: Signature): boolean => {
   return signature.bytes.every((byte, index) => buffer[offset + index] === byte);
 };
 
-/** `text/plain` kabi haqiqiy magic byte'ga ega bo'lmagan turlar uchun `true` qaytadi — tekshirilmaydi. */
 export const matchesMimeType = (buffer: Buffer, mimeType: string): boolean => {
   const signatures = SIGNATURES[mimeType];
   if (!signatures) return true;

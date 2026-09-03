@@ -52,7 +52,6 @@ export class ReviewService {
     return ok(reviews.map(ReviewService.serialize), { meta: { page, limit: size, total } });
   }
 
-  /** Moderatsiya: sharh o'chirilganda servisning `ratingAvg`/`ratingCount`i qayta hisoblanadi. */
   async adminDelete(reviewId: string) {
     const review = await prisma.review.findUnique({ where: { id: reviewId } });
     if (!review) throw new ReviewNotFoundException(reviewId);

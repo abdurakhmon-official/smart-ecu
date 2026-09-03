@@ -18,13 +18,6 @@ export const MAX_UPLOAD_BYTES_BY_FOLDER: Record<UploadFolder, number> = {
   'ecu-file': MAX_ECU_FILE_UPLOAD_BYTES,
 };
 
-/**
- * `ecu-file` ham shu ro'yxatda — lekin "o'qish uchun ochiq" degani emas: haqiqiy
- * ruxsat tekshiruvi `EcuFileService`da (buyurtma egasi/tuner ekanini tekshirib,
- * faqat o'ziga tegishli kalitni qaytaradi) sodir bo'ladi. `AwsController.sign()`
- * o'zi hech qanday egalik tekshiruvi qilmaydi (`avatar`/`document` uchun ham xuddi
- * shunday) — himoya kalitning o'zi `uuid()` bilan taxmin qilib bo'lmasligidan keladi.
- */
 export const READABLE_ASSET_FOLDERS = ['avatar', 'document', 'ecu-file'] as const;
 
 export type ReadableAssetFolder = (typeof READABLE_ASSET_FOLDERS)[number];
@@ -43,7 +36,6 @@ export const UPLOAD_MIME_TYPES: Record<string, 'IMAGE' | 'DOCUMENT' | 'VIDEO' | 
   'video/webm': 'VIDEO',
   'application/zip': 'ARCHIVE',
   'application/x-zip-compressed': 'ARCHIVE',
-  // ECU proshivka fayllari (.bin va sh.k.) — sotuvchiga xos formatlar, umumiy magic byte'ga ega emas.
   'application/octet-stream': 'BINARY',
 };
 

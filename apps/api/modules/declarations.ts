@@ -2,7 +2,6 @@ import { PrismaClient, User } from '../generated/prisma';
 import { AccessTokenPayload } from '@/modules/auth';
 import type Redis from 'ioredis';
 
-/** `twoFactorSecret` ataylab chetlab o'tiladi — hech qachon `request.user`ga (yoki undan API javobiga) tegmasligi kerak. */
 export type AuthenticatedUser = Omit<User, 'password' | 'twoFactorSecret'> & {
   isAdmin: boolean;
 };

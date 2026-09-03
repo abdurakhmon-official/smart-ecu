@@ -67,8 +67,6 @@ enum AI_MESSAGE_ROLE {
   ASSISTANT
 }
 
-// Tuner kanban bosqichlari (Bosqich 6, 15-bo'lim): NEW → IN_PROGRESS → WAITING_FOR_LOG
-// (tuner mijozdan log so'ragan) → READY (proshivka tayyor, yuklab olishga tayyor) → COMPLETED.
 enum TUNING_ORDER_STATUS {
   NEW
   IN_PROGRESS
@@ -83,10 +81,6 @@ enum ECU_FILE_KIND {
   MODIFIED
   LOG
 }
-
-// ── Monetizatsiya (Bosqich 7, 26-bo'lim) ─────────────────────────────────────
-// Faqat obuna (subscription) qamrab olingan — komissiya/premium listing/reklama
-// keyingi bosqichga qoldirilgan (26-bo'limning to'liq ko'lami emas, ataylab).
 
 enum SUBSCRIPTION_PLAN {
   FREE
@@ -112,9 +106,6 @@ enum PAYMENT_STATUS {
   FAILED
 }
 
-// AI Servis Analizatori (Bosqich 7, 13-bo'lim) — hisobot rasmi yuklanadi, AI muhimlik
-// darajasiga ajratadi. `summary` — AI'ning erkin matni, `AiMessage.content` bilan bir xil
-// asosda saqlanadi ("server matn qaytarmaydi" qoidasi tizim xabarlariga oid, AI javobiga emas).
 enum REPORT_SEVERITY {
   LOW
   MEDIUM
@@ -136,14 +127,9 @@ model User {
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
-
-  // Admin 2FA (Bosqich 5, TOTP). `twoFactorSecret` faqat setup bosqichida yozilib,
-  // `twoFactorEnabledAt` tasdiqlangandan keyingina o'rnatiladi — shu oralikda login
-  // hali 2FA talab qilmaydi (setup yakunlanmagan hisoblanadi).
   twoFactorSecret    String?   @map("two_factor_secret")
   twoFactorEnabledAt DateTime? @map("two_factor_enabled_at")
 
-  // Telegram bot (Bosqich 7, 20/21-bo'lim) — bog'langandan keyin buyurtma/status xabarlari yuboriladi.
   telegramChatId String? @unique @map("telegram_chat_id")
 
   vehicles             UserVehicle[]
@@ -164,10 +150,6 @@ model User {
   @@index([email])
   @@map("users")
 }
-
-// ── Avtomobil katalogi (Bosqich 1) ──────────────────────────────────────────
-// Ierarxiya: Brand → Model → Generation → EngineOption. My Garage yozuvlari
-// EngineOption'ga bog'lanadi (yoki, katalogda topilmasa, erkin matn bilan).
 
 model Brand {
   id        String   @id @default(uuid())
@@ -234,14 +216,11 @@ model EngineOption {
   @@map("engine_options")
 }
 
-// ── My Garage (Bosqich 1) ───────────────────────────────────────────────────
-
 model UserVehicle {
   id             String  @id @default(uuid())
   userId         String  @map("user_id")
   engineOptionId String? @map("engine_option_id")
 
-  // Katalogda topilmagan avtomobil uchun erkin kiritish (engineOptionId bo'sh bo'lganda ishlatiladi).
   customBrand String? @map("custom_brand")
   customModel String? @map("custom_model")
   customYear  Int?    @map("custom_year")
@@ -265,13 +244,6 @@ model UserVehicle {
   @@index([engineOptionId])
   @@map("user_vehicles")
 }
-
-// ── Servis marketplace (Bosqich 2) ──────────────────────────────────────────
-// Har bir User bittadan ServiceProvider profiliga ega bo'lishi mumkin (PENDING
-// holatda ariza sifatida boshlanadi, admin VERIFIED qilganda User.role ham
-// SERVICE'ga o'zgaradi). ServiceCatalogItem — admin boshqaradigan global
-// xizmat turlari ro'yxati (Diagnostika, Stage 1, Eco Tune...), ServiceOffering
-// ular orasidagi ko'p-ko'pga bog'lanish (narx bilan).
 
 model ServiceProvider {
   id           String         @id @default(uuid())
@@ -307,7 +279,6 @@ model ServiceProvider {
   @@map("service_providers")
 }
 
-/// `name`/`description` — LocalizedTextSchema (`{uz,ru,en}`) shaklidagi Json, packages/contracts orqali tekshiriladi.
 model ServiceCatalogItem {
   id          String   @id @default(uuid())
   slug        String   @unique
@@ -340,13 +311,6 @@ model ServiceOffering {
   @@index([serviceCatalogItemId])
   @@map("service_offerings")
 }
-
-// ── Buyurtmalar, bildirishnoma, sharhlar (Bosqich 3) ────────────────────────
-// Order yuborilganda shahar+xizmat turiga mos barcha VERIFIED servislarga
-// OrderRecipient orqali "broadcast" qilinadi — birinchi qabul qilgan servis
-// `acceptedServiceProvider` bo'ladi. Review faqat COMPLETED orderga (1:1)
-// bog'lanadi, shuning uchun har doim haqiqiy buyurtmaga asoslangan — alohida
-// "verified" ustuni shart emas.
 
 model Order {
   id                        String       @id @default(uuid())
@@ -411,11 +375,6 @@ model Review {
   @@map("reviews")
 }
 
-/// `title`/`body` ataylab yo'q — matn hech qachon serverdan qaytmaydi (i18n qoidasi, 9-bo'lim).
-/// Frontend `type` (+ kerak bo'lsa `orderId` orqali olingan buyurtma ma'lumoti) asosida tarjima qiladi.
-/// Yagona istisno — `ADMIN_BROADCAST`: bu holatda matn admin tomonidan yozilgan, oldindan
-/// ma'lum bo'lmagan erkin kontent, shuning uchun `broadcastMessage` (`LocalizedText`, xuddi
-/// `ServiceCatalogItem.description` kabi — admin uz/ru/en'da kiritadi) orqali saqlanadi.
 model Notification {
   id               String            @id @default(uuid())
   userId           String            @map("user_id")
@@ -432,10 +391,6 @@ model Notification {
   @@index([orderId])
   @@map("notifications")
 }
-
-// ── AI Assistant (Bosqich 4) ─────────────────────────────────────────────────
-// Har bir User bitta doimiy AiConversation'ga ega (ServiceProvider'dagi kabi
-// 1:1) — alohida suhbat-threadlar yo'q, bitta uzluksiz chat tarixi.
 
 model AiConversation {
   id        String   @id @default(uuid())
@@ -462,11 +417,6 @@ model AiMessage {
   @@map("ai_messages")
 }
 
-// ── Admin 2FA (Bosqich 5) ─────────────────────────────────────────────────────
-// TOTP asosida. `codeHash` argon2 bilan xeshlanadi (parollar bilan bir xil
-// `hashPassword()` orqali) — plaintext zaxira kod hech qachon saqlanmaydi,
-// faqat generatsiya paytida bir marta foydalanuvchiga ko'rsatiladi.
-
 model TwoFactorBackupCode {
   id        String    @id @default(uuid())
   userId    String    @map("user_id")
@@ -479,11 +429,6 @@ model TwoFactorBackupCode {
   @@index([userId])
   @@map("two_factor_backup_codes")
 }
-
-// ── Audit log (Bosqich 5) ─────────────────────────────────────────────────────
-// `action` ataylab enum emas, oddiy String: bu o'sib boruvchi, ochiq to'plam
-// (har safar yangi admin amali qo'shilganda migratsiya talab qilmasligi kerak) —
-// dynamic-standards falsafasidagi "yopiq, oldindan ma'lum to'plam"dan farqli holat.
 
 model AuditLog {
   id         String   @id @default(uuid())
@@ -501,13 +446,6 @@ model AuditLog {
   @@index([createdAt])
   @@map("audit_logs")
 }
-
-// ── Tuner kabineti + ECU file management (Bosqich 6, post-MVP) ───────────────
-// `TunerProfile` — `ServiceProvider`dan ataylab alohida: ikkalasi ham servis
-// biznesi, lekin tuner ish oqimi (fayl almashinuvi, kanban, before/after)
-// tubdan farq qiladi. Buyurtma tayinlash — broadcast emas (Order'dagi kabi),
-// mijoz katalogdan aniq tunerni tanlaydi (chip-tuning — shaxsiy usta tanlash
-// ish oqimi, "birinchi qabul qilgan" poygasi emas).
 
 model TunerProfile {
   id           String         @id @default(uuid())
@@ -548,8 +486,6 @@ model TuningOrder {
   serviceCatalogItemId  String              @map("service_catalog_item_id")
   problemDescription    String              @map("problem_description")
   status                TUNING_ORDER_STATUS @default(NEW)
-  // Before/After natijalar (17-bo'lim) — tuner qo'lda kiritadi, `verified` faqat
-  // ikkalasi ham to'ldirilgan va status COMPLETED bo'lganda admin/tuner belgilaydi.
   powerBeforeHp         Int?                @map("power_before_hp")
   powerAfterHp          Int?                @map("power_after_hp")
   torqueBeforeNm        Int?                @map("torque_before_nm")
@@ -572,8 +508,6 @@ model TuningOrder {
   @@map("tuning_orders")
 }
 
-/// Fayllarning o'zi S3'da (`storageKey`) — "ochiq firmware marketplace emas" cheklovi shu bilan
-/// ta'minlanadi: kalit faqat shu buyurtma egasi/tuner/admin ko'ra oladigan API javobida qaytadi.
 model EcuFile {
   id            String        @id @default(uuid())
   tuningOrderId String        @map("tuning_order_id")
@@ -594,11 +528,6 @@ model EcuFile {
   @@map("ecu_files")
 }
 
-// ── Obuna va to'lovlar (Bosqich 7) ────────────────────────────────────────────
-// Har User bitta doimiy Subscription'ga ega (yo'q bo'lsa FREE hisoblanadi —
-// SubscriptionService.getMine() yozuv topilmasa FREE'ni default sifatida qaytaradi,
-// shuning uchun FREE foydalanuvchilar uchun qatorni oldindan yaratish shart emas).
-
 model Subscription {
   id               String              @id @default(uuid())
   userId           String              @unique @map("user_id")
@@ -614,9 +543,6 @@ model Subscription {
   @@map("subscriptions")
 }
 
-/// `id` — Payme'ning `account.order_id` / Click'ning `merchant_trans_id` sifatida checkout
-/// yaratishda yuboriladi; `providerTransactionId` — provayderning o'z tranzaksiya ID'si
-/// (webhook kelgach to'ldiriladi). `amount` so'mda (Payme chaqiruvida tiyinga aylantiriladi).
 model Payment {
   id                    String            @id @default(uuid())
   userId                String            @map("user_id")

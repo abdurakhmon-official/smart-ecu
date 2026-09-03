@@ -8,10 +8,6 @@ interface RawServiceCatalogItem {
   createdAt: Date;
 }
 
-/**
- * `name`/`description` Prisma'da `Json` — faqat shu domendagi validatsiyalangan
- * Create/Update inputlar orqali yoziladi, shuning uchun `LocalizedText`ga xavfsiz.
- */
 export const serializeServiceCatalogItem = (item: RawServiceCatalogItem) => ({
   id: item.id,
   slug: item.slug,

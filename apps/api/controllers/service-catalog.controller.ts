@@ -7,7 +7,6 @@ import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { ServiceCatalogService } from '@/services/service-catalog.service';
 
-/** O'qish — hamma uchun ochiq (servis kabineti va qidiruv filtri shundan foydalanadi). Yozish — faqat ADMIN. */
 @Controller('/service-catalog')
 export class ServiceCatalogController {
   @Inject()

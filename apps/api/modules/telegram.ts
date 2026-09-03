@@ -4,7 +4,6 @@ const API_BASE = 'https://api.telegram.org';
 
 export const isTelegramConfigured = (): boolean => Boolean(config.telegram.botToken);
 
-/** `botToken` bo'sh bo'lsa hech narsa qilmaydi — Anthropic/S3 kabi, kalit kelgach o'zi ishga tushadi. */
 export const sendTelegramMessage = async (chatId: string, text: string): Promise<void> => {
   if (!isTelegramConfigured()) return;
 

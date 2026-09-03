@@ -8,11 +8,6 @@ import { ok } from '@/utils/response.utils';
 import { requireUserId } from '@/utils/errors.utils';
 import { UserVehicleNotFoundException } from '@/exceptions/my-garage.exceptions';
 
-/**
- * Vehicle Health Score (Bosqich 7, 33-bo'lim) — v1 evristika, tashqi integratsiya kerak
- * emas, faqat mavjud ma'lumotlardan (yosh, probeg, ta'mirlash tarixi) hisoblanadi.
- * Og'irliklar boshlang'ich taxmin — foydalanuvchi fikr-mulohazasi asosida sozlanadi.
- */
 @Injectable()
 export class VehicleHealthService {
   private static readonly AVERAGE_KM_PER_YEAR = 15_000;

@@ -36,7 +36,6 @@ export class TwoFactorService {
     return requireUserId(this.context.getRequest<Request>().user);
   }
 
-  /** Yangi maxfiy kalit generatsiya qilib saqlaydi — `enable()` bilan tasdiqlanmaguncha 2FA hali faol emas. */
   async setup() {
     const userId = this.currentUserId;
     const user = await this.getUserOrThrow(userId);
@@ -91,7 +90,6 @@ export class TwoFactorService {
     return ok(null);
   }
 
-  /** Login oqimida ham (`AuthService.verifyTwoFactor`), `disable()`da ham ishlatiladi — TOTP yoki bitta zaxira kod. */
   async verifyCode(user: TwoFactorCapableUser, code: string): Promise<boolean> {
     if (!user.twoFactorSecret) return false;
     if (verifyTotpCode(user.email, user.twoFactorSecret, code)) return true;

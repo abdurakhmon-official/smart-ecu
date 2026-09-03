@@ -117,8 +117,6 @@ export class AuthService {
     const valid = await this.twoFactorService.verifyCode(user, input.code);
     if (!valid) throw new TwoFactorInvalidCodeException();
 
-    // Faqat muvaffaqiyatli tasdiqlangandan keyin bekor qilinadi — noto'g'ri kod
-    // challenge'ni yo'q qilib qo'ymasligi kerak (foydalanuvchi qayta urinishi mumkin).
     await this.mfaChallengeService.invalidate(input.mfaToken);
 
     return { success: true, data: { mfaRequired: false, ...createAccessToken(user) } satisfies SigninOutput };

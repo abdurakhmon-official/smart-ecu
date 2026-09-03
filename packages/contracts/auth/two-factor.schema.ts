@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 // schemas
 
-/** 6 xonali TOTP kod yoki `XXXX-XXXX` formatidagi zaxira kod — ikkalasi ham shu bitta maydonga tushadi. */
 export const TwoFactorCodeInputSchema = z.object({ code: z.string().trim().min(6).max(9) });
 
 export const TwoFactorVerifyInputSchema = z.object({

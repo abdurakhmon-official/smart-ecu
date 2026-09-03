@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, FileSearch, LayoutGrid, LogOut, MapPin, Menu, Settings, Shield, Store, Wrench, X } from 'lucide-react';
+import { Car, ChevronDown, FileSearch, LogOut, MapPin, Menu, Settings, Shield, Store, Wrench, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
@@ -64,7 +64,7 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 font-bold tracking-tight" onClick={closeMenu}>
           <span className="flex size-8.5 shrink-0 items-center justify-center rounded-[9px] bg-primary">
-            <LayoutGrid className="size-4.5 text-primary-foreground" />
+            <Car className="size-4.5 text-primary-foreground" />
           </span>
           <span className="truncate">{t('brand')}</span>
         </Link>

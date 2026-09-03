@@ -76,7 +76,6 @@ export class MyGarageService {
     await prisma.$transaction(async (tx) => {
       await tx.userVehicle.update({ where: { id: vehicleId }, data: { deletedAt: new Date() } });
 
-      // Asosiy avtomobil o'chirilsa — qolganlaridan eng eskisini asosiy qilib belgilaymiz.
       if (vehicle.isPrimary) {
         const next = await tx.userVehicle.findFirst({
           where: { userId, deletedAt: null, id: { not: vehicleId } },
