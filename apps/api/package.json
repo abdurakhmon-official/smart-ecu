@@ -13,7 +13,7 @@
     "dev": "pnpm barrels && cross-env STAGE=local nodemon --exec ts-node index.ts",
     "start:prod": "cross-env NODE_ENV=production STAGE=production node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js",
     "test": "jest --passWithNoTests",
-    "render:build": "npx prisma generate && pnpm barrels && tsc -p tsconfig.compile.json && npx tsc-alias -p tsconfig.compile.json && pnpm copy:prisma && npx prisma migrate deploy && npx prisma db seed",
+    "render:build": "npx prisma generate && tsc -p tsconfig.compile.json && npx tsc-alias -p tsconfig.compile.json && pnpm copy:prisma && npx prisma migrate deploy && npx prisma db seed",
     "render:start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js",
     "typecheck": "npx tsc --noEmit -p tsconfig.json",
     "generate:prisma": "npx prisma generate",
