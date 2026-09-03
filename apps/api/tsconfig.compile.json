@@ -4,13 +4,13 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
     "noResolve": false,
     "preserveConstEnums": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "noEmit": false,
     "emitDeclarationOnly": false,
-    "inlineSources": true,
+    "inlineSources": false,
     "removeComments": true
   }
 }
