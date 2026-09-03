@@ -8,7 +8,7 @@
   "scripts": {
     "postinstall": "npx prisma generate",
     "build": "npx rimraf dist && pnpm barrels && tsc --project tsconfig.compile.json && npx tsc-alias --project tsconfig.compile.json && pnpm copy:prisma",
-    "barrels": "barrelsby --config .barrelsby.json",
+    "barrels": "cross-env NODE_OPTIONS=--max-old-space-size=4096 barrelsby --config .barrelsby.json",
     "copy:prisma": "node -e \"require('fs').cpSync('generated/prisma','dist/generated/prisma',{recursive:true})\"",
     "dev": "pnpm barrels && cross-env STAGE=local nodemon --exec ts-node index.ts",
     "start:prod": "cross-env NODE_ENV=production STAGE=production node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js",
